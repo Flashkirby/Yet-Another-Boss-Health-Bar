@@ -1,0 +1,10 @@
+author = Flashkirby99
+version = 1.0
+displayName = Yet Another Boss Health Bar
+homepage = https://forums.terraria.org/index.php?threads/yet-another-boss-health-bar.55250/
+
+hideCode = false
+hideResources = false
+includeSource = true
+buildIgnore = *.csproj, *.user, obj\*, bin\*, .vs\*, *.suo, *.sln, .git, *.md, .git\*, *.fw.png *.TMP
+includePDB = false
