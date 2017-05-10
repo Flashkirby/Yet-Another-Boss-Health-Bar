@@ -114,7 +114,7 @@ namespace FKBossHealthBar
                         float Alpha = 0.5f;// 1f - (float)(npcsTracked[i] / Config.HealthBarUIFadeTime);
                         NPC npc = Main.npc[i];
                         errorLine = 112;
-                        BossDisplayInfo.GetHealthBarForNPCOrNull(npc.type).DrawHealthBar(
+                        BossDisplayInfo.GetHealthBarForNPCOrNull(npc.type).DrawHealthBarDefault(
                             spriteBatch, Alpha, stack,
                             npc.life, npc.lifeMax, npc);
                         //drawHealthBar(spriteBatch, start, middle, end, barLength, 

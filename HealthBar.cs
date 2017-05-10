@@ -182,7 +182,55 @@ namespace FKBossHealthBar
             return null;
         }
 
-        public void DrawHealthBar(SpriteBatch spriteBatch, float Alpha, int stackPosition, int life, int lifeMax, NPC npc)
+        /// <summary>
+        /// Draw the health bar in a default position, using Config setup and values
+        /// </summary>
+        /// <param name="spriteBatch">Pass the spritebatch pls</param>
+        /// <param name="Alpha">Alpha between 1f and 0f</param>
+        /// <param name="stackPosition">Array position of the bar to be stacked.</param>
+        /// <param name="life">npc.life</param>
+        /// <param name="lifeMax">npc.lifeMax</param>
+        /// <param name="npc">npc itself for handling certain internal methods</param>
+        public void DrawHealthBarDefault(SpriteBatch spriteBatch, float Alpha, int stackPosition, int life, int lifeMax, NPC npc)
+        {
+            bool SMALLMODE = Config.SmallHealthBars || ForceSmall;
+            Texture2D barM;
+            int x, y, width;
+
+            width = (int)(Main.screenWidth * Config.HealthBarUIScreenLength);
+
+            x = Main.screenWidth / 2 - (width / 2);
+            
+            int midYOffset = 0;
+            if (!SMALLMODE) { midYOffset = GetMidBarOffsetY(); }
+
+            if (SMALLMODE)
+            { barM = GetSmallMidBar(); }
+            else
+            { barM = GetMidBar(); }
+
+            // Get the bottom of the screen and offset x pixels
+            y = Main.screenHeight - Config.HealthBarUIScreenOffset;
+            // Get the height of the side bars as origin
+            y -= midYOffset;
+            // Using the centre as reference, add offset per bar based on its postiion in the stack
+            y -= (barM.Height + Config.HealthBarUIStackOffset) * (stackPosition + 1);
+
+            DrawHealthBar(spriteBatch, x, y, width, Alpha, life, lifeMax, npc);
+        }
+
+        /// <summary>
+        /// Draw the health bar. Don't forget to override the methods if you want to change settings.
+        /// </summary>
+        /// <param name="spriteBatch">Pass the spritebatch pls</param>
+        /// <param name="XLeft">The left of the bar, NOT the bar side frame.</param>
+        /// <param name="yTop">Top of the bar frame (including sides).</param>
+        /// <param name="BarLength">Length of the middle section of the bar.</param>
+        /// <param name="Alpha">Alpha between 1f and 0f</param>
+        /// <param name="life">npc.life</param>
+        /// <param name="lifeMax">npc.lifeMax</param>
+        /// <param name="npc">npc itself for handling certain internal methods</param>
+        public void DrawHealthBar(SpriteBatch spriteBatch, int XLeft, int yTop, int BarLength, float Alpha, int life, int lifeMax, NPC npc)
         {
             bool SMALLMODE = Config.SmallHealthBars || ForceSmall;
 
@@ -209,9 +257,7 @@ namespace FKBossHealthBar
             }
 
             // Length of bar is set relative to the screen
-            int barLength = (int)(Main.screenWidth * Config.HealthBarUIScreenLength);
             // Centre, - bar length, eg. 500 * (1f - 0.4f or 0.6f)
-            int XLeft = Main.screenWidth / 2 - (barLength / 2);
 
             int midXOffset = 0;
             int midYOffset = 0;
@@ -221,21 +267,14 @@ namespace FKBossHealthBar
                 midYOffset = GetMidBarOffsetY();
             }
 
-            // Get the bottom of the screen and offset x pixels
-            int yTop = Main.screenHeight - Config.HealthBarUIScreenOffset;
-            // Get the height of the side bars as origin
-            yTop -= midYOffset;
-            // Using the centre as reference, add offset per bar based on its postiion in the stack
-            yTop -= (barM.Height + Config.HealthBarUIStackOffset) * (stackPosition + 1);
-
             // The very far left where the side frames start
             Vector2 FrameTopLeft = new Vector2(XLeft - barL.Width, yTop);
 
             // Draw Fill
-            drawHealthBarFill(spriteBatch, life, lifeMax, barColour, fill, barLength, XLeft, midXOffset, midYOffset, yTop, SMALLMODE);
+            drawHealthBarFill(spriteBatch, life, lifeMax, barColour, fill, BarLength, XLeft, midXOffset, midYOffset, yTop, SMALLMODE);
 
             // Draw Frame
-            drawHealthBarFrame(spriteBatch, frameColour, barL, barM, barR, barLength, XLeft, midYOffset, yTop, FrameTopLeft);
+            drawHealthBarFrame(spriteBatch, frameColour, barL, barM, barR, BarLength, XLeft, midYOffset, yTop, FrameTopLeft);
 
             //Draw NPC Icon
             if (bossHead != null)
@@ -269,9 +308,9 @@ namespace FKBossHealthBar
             spriteBatch.DrawString(
                 Main.fontMouseText,
                 text,
-                new Vector2(XLeft + barLength / 2, yTop + midYOffset + barM.Height / 2),
+                new Vector2(XLeft + BarLength / 2, yTop + midYOffset + barM.Height / 2),
                 frameColour, 0f,
-                ChatManager.GetStringSize(Main.fontMouseText, text, Vector2.One, barLength) / 2,
+                ChatManager.GetStringSize(Main.fontMouseText, text, Vector2.One, BarLength) / 2,
                 SMALLMODE ? 0.6f : 1.1f, SpriteEffects.None, 0f);
         }
 
