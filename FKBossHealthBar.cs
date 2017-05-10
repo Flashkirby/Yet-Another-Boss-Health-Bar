@@ -1,25 +1,13 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.UI.Chat;
 using Terraria.ModLoader;
+using Terraria.ID;
 
 namespace FKBossHealthBar
 {
     class FKBossHealthBar : Mod
     {
-        public Texture2D TextureBarFill;
-        public Texture2D TextureBarSta;
-        public Texture2D TextureBarMid;
-        public Texture2D TextureBarEnd;
-        public Texture2D TextureBarStaEXP;
-        public Texture2D TextureBarMedEXP;
-        public Texture2D TextureBarEndEXP;
-
-        public const int endXOffset = 30; // texture inset of bar for ends
-        public const int endYOffset = 10; // texture offset between ends and bar
-        public const int endYBotOffset = 16; // offset from bottom of screen
-
         public FKBossHealthBar()
         {
             Properties = new ModProperties()
@@ -40,6 +28,8 @@ namespace FKBossHealthBar
 
         public override void PostDrawInterface(SpriteBatch spriteBatch)
         {
+
+            /*
             int errorLine = 43;
             try
             {
@@ -128,7 +118,6 @@ namespace FKBossHealthBar
                 Main.NewTextMultiline(e.ToString() + ", line " + errorLine);
             }
         }
-        
-
+        */
     }
 }

@@ -53,7 +53,7 @@ namespace FKBossHealthBar
             else
             {
                 // A default healthbar
-                return new HealthBar(npcType);
+                return new HealthBar();
             }
         }
 

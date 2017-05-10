@@ -8,7 +8,8 @@ using Terraria.ModLoader;
 namespace FKBossHealthBar
 {
     /// <summary>
-    /// Class handles the drawing and effects of the health bar, which is in turn manipulated elsewhere
+    /// Class handles the drawing and effects of the health bar, which is in turn manipulated elsewhere.
+    /// One per type of NPC, see BossDisplayInfo
     /// </summary>
     public class HealthBar
     {
@@ -22,15 +23,6 @@ namespace FKBossHealthBar
         public bool ForceSmall = false;
 
         public DisplayType DisplayMode = DisplayType.Standard;
-
-        /// <summary>
-        /// Create a custom health bar for this NPC
-        /// </summary>
-        /// <param name="npc"></param>
-        public HealthBar(int npcType)
-        {
-            BossDisplayInfo.SetCustomHealthBar(npcType, this);
-        }
 
         #region Default Textures
         internal static Texture2D defaultFill; // Fill for health bar
