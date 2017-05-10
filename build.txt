@@ -1,5 +1,5 @@
 author = Flashkirby99
-version = 1.0
+version = 1.0.1
 displayName = Yet Another Boss Health Bar
 homepage = https://forums.terraria.org/index.php?threads/yet-another-boss-health-bar.55250/
 
