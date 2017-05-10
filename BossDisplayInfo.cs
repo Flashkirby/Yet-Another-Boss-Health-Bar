@@ -65,9 +65,10 @@ namespace FKBossHealthBar
                 npc.position.Y > Main.LocalPlayer.position.Y + Config.HealthBarDrawDistance);
 
             HealthBar hb = GetHealthBarForNPCOrNull(npc.type);
-            if (hb != null && hb.ShowHealthBarOverride(npc, tooFar))
+            if (hb != null)
             {
-                return true;
+                if (hb.DisplayMode == HealthBar.DisplayType.Disabled) return false;
+                if (hb.ShowHealthBarOverride(npc, tooFar)) return true;
             }
 
             // Cannot track npcs without a health bar
