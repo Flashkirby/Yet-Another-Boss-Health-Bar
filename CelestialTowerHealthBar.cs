@@ -62,14 +62,14 @@ namespace FKBossHealthBar
             }
         }
 
-        protected override Color GetHealthColour(int life, int lifeMax)
+        protected override Color GetHealthColour(NPC npc, int life, int lifeMax)
         {
             // Is in shield mode?
             if(lifeMax == NPC.LunarShieldPowerNormal || lifeMax == NPC.LunarShieldPowerExpert)
             {
                 return new Color(1f, 1f, 1f);
             }
-            return base.GetHealthColour(life, lifeMax);
+            return base.GetHealthColour(npc, life, lifeMax);
         }
     }
 }

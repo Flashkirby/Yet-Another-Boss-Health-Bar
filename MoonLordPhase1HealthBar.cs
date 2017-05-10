@@ -20,7 +20,7 @@ namespace FKBossHealthBar
             return base.GetBossHeadSource(npc);
         }
 
-        protected override Color GetHealthColour(int life, int lifeMax)
+        protected override Color GetHealthColour(NPC npc, int life, int lifeMax)
         {
             float percent = (float)life / lifeMax;
             float B = 1f, G = 1f;

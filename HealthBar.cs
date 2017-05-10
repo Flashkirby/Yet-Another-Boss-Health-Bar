@@ -149,7 +149,7 @@ namespace FKBossHealthBar
         /// <param name="life"></param>
         /// <param name="lifeMax"></param>
         /// <returns></returns>
-        protected virtual Color GetHealthColour(int life, int lifeMax)
+        protected virtual Color GetHealthColour(NPC npc, int life, int lifeMax)
         {
             float percent = (float)life / lifeMax;
             float R = 1f, G = 1f;
@@ -252,7 +252,7 @@ namespace FKBossHealthBar
 
             // Get variables
             Color frameColour = new Color(1f, 1f, 1f);
-            Color barColour = GetHealthColour(life, lifeMax);
+            Color barColour = GetHealthColour(npc, life, lifeMax);
             frameColour *= Alpha;
             barColour *= Alpha;
             Texture2D bossHead = GetBossHeadTextureOrNull(npc);
