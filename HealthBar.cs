@@ -60,25 +60,25 @@ namespace FKBossHealthBar
         #endregion
         
         #region Virtual Methods
-        public virtual Texture2D GetFillTexture()
+        protected virtual Texture2D GetFillTexture()
         {
             return defaultFill;
         }
-        public virtual Texture2D GetLeftBar()
+        protected virtual Texture2D GetLeftBar()
         {
             if (!Main.expertMode)
             { return defaultSta; }
             else
             { return defaultStaEXP; }
         }
-        public virtual Texture2D GetMidBar()
+        protected virtual Texture2D GetMidBar()
         {
             if (!Main.expertMode)
             { return defaultMid; }
             else
             { return defaultMidEXP; }
         }
-        public virtual Texture2D GetRightBar()
+        protected virtual Texture2D GetRightBar()
         {
             if (!Main.expertMode)
             { return defaultEnd; }
@@ -88,48 +88,48 @@ namespace FKBossHealthBar
         /// <summary>Pixel distance between top of Side bars and top of Centre bar. 
         /// Default 10 is because middle bar must be moved 10 pixels down to match up with the sides.
         /// <para>Small health bars MUST all be the same height, and ignores this. </para></summary>
-        public virtual int GetMidBarOffsetY() { return 10; }
+        protected virtual int GetMidBarOffsetY() { return 10; }
         /// <summary>Pixel distance between right of left side bar and left of centre bar, vice versa for right side.
         /// Default is -30 because the fill texture starts inset into the side bar frames.
         /// <para>Small health bars side frames DO NOT overflow, and ignores this. </para></summary>
-        public virtual int GetMidBarOffsetX() { return -30; }
+        protected virtual int GetMidBarOffsetX() { return -30; }
         /// <summary>
         /// X position of the start of the fill texture decoration. Assumes 1 pixel empty beforehand.
         /// </summary>
         /// <returns></returns>
-        public virtual int GetFillDecoOffsetX() { return 10; }
-        public virtual int GetBossHeadCentreOffsetX() { return 80; }
-        public virtual int GetBossHeadCentreOffsetY() { return 32; }
+        protected virtual int GetFillDecoOffsetX() { return 10; }
+        protected virtual int GetBossHeadCentreOffsetX() { return 80; }
+        protected virtual int GetBossHeadCentreOffsetY() { return 32; }
 
-        public virtual Texture2D GetSmallFillTexture()
+        protected virtual Texture2D GetSmallFillTexture()
         {
             return defaultFillSM;
         }
-        public virtual Texture2D GetSmallLeftBar()
+        protected virtual Texture2D GetSmallLeftBar()
         {
             return defaultStaSM;
         }
-        public virtual Texture2D GetSmallMidBar()
+        protected virtual Texture2D GetSmallMidBar()
         {
             return defaultMidSM;
         }
-        public virtual Texture2D GetSmallRightBar()
+        protected virtual Texture2D GetSmallRightBar()
         {
             return defaultEndSM;
         }
-        public virtual int GetSmallFillDecoOffsetX() { return 4; }
-        public virtual int GetSmallBossHeadCentreOffsetX() { return 14; }
-        public virtual int GetSmallBossHeadCentreOffsetY() { return 14; }
+        protected virtual int GetSmallFillDecoOffsetX() { return 4; }
+        protected virtual int GetSmallBossHeadCentreOffsetX() { return 14; }
+        protected virtual int GetSmallBossHeadCentreOffsetY() { return 14; }
 
         /// <summary>
         /// The NPC type to use when getting the head icon for this NPC, -1 for default behaviour
         /// </summary>
         /// <returns></returns>
-        public virtual int GetBossHeadIndex(NPC npc)
+        protected virtual int GetBossHeadIndex(NPC npc)
         {
             return npc.GetBossHeadTextureIndex();
         }
-        public virtual string GetBossDisplayNameNPCType(NPC npc)
+        protected virtual string GetBossDisplayNameNPCType(NPC npc)
         {
             return npc.displayName;
         }
@@ -140,7 +140,7 @@ namespace FKBossHealthBar
         /// <param name="life"></param>
         /// <param name="lifeMax"></param>
         /// <returns></returns>
-        public virtual Color GetHealthColour(int life, int lifeMax)
+        protected virtual Color GetHealthColour(int life, int lifeMax)
         {
             float percent = (float)life / lifeMax;
             float R = 1f, G = 1f;
