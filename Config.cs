@@ -19,7 +19,7 @@
         /// <summary>How long to fade in/out healthbars</summary>
         public static int HealthBarUIFadeTime = 60;
         /// <summary>Factor of fade time to drop to when mouse is covering</summary>
-        public static float HealthBarUIFadeHover = 0.75f;
+        public static float HealthBarUIFadeHover = 0.25f;
 
         /// <summary>Should the healthbar dramatically fill up on entry</summary>
         public static bool HealthBarFXFillUp = false;

@@ -85,15 +85,20 @@ namespace FKBossHealthBar
 
         public override void PostDrawInterface(SpriteBatch spriteBatch)
         {
+            float Alpha = 1f;
+            if (HealthBar.MouseOver)
+            {
+                Alpha = Config.HealthBarUIFadeHover;
+                HealthBar.MouseOver = false;
+            }
             int stack = 0;
             foreach (NPC npc in Main.npc)
             {
                 if (BossDisplayInfo.CanTrackNPCHealth(npc))
                 {
                     HealthBar hb = BossDisplayInfo.GetHealthBarForNPCOrNull(npc.type);
-                    if (hb == null) continue;
+                    if (hb == null) hb = new HealthBar();
 
-                    float Alpha = 0.5f;
                     hb.DrawHealthBarDefault(
                         spriteBatch, Alpha, stack,
                         npc.life, npc.lifeMax, npc);

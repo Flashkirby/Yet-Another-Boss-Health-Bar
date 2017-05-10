@@ -21,6 +21,11 @@ namespace FKBossHealthBar
         }
 
         /// <summary>
+        /// Global variable for checking if mouse is over bars, in which case fade out
+        /// </summary>
+        public static bool MouseOver = false;
+
+        /// <summary>
         /// Always call the small bar textures when drawing. Typically reserved for minibosses
         /// </summary>
         public bool ForceSmall = false;
@@ -304,6 +309,20 @@ namespace FKBossHealthBar
                 frameColour, 0f,
                 ChatManager.GetStringSize(Main.fontMouseText, text, Vector2.One, BarLength) / 2,
                 SMALLMODE ? 0.6f : 1.1f, SpriteEffects.None, 0f);
+
+            // Check for mouse position
+            if(!MouseOver)
+            {
+                if (Main.mouseY > yTop - Config.HealthBarUIScreenOffset - 30 && 
+                    Main.mouseY < yTop + barM.Height + midYOffset + 30 + Config.HealthBarUIScreenOffset)
+                {
+                    if (Main.mouseX > XLeft + midXOffset - 100 && 
+                        Main.mouseX < XLeft + BarLength + 100 - midXOffset)
+                    {
+                        MouseOver = true;
+                    }
+                }
+            }
         }
 
         private void drawHealthBarFill(SpriteBatch spriteBatch, int life, int lifeMax, Color barColour, Texture2D fill, int barLength, int XLeft, int fillXOffset, int fillYOffset, int yTop, bool SMALLMODE)
