@@ -46,15 +46,8 @@ namespace FKBossHealthBar
         public static HealthBar GetHealthBarForNPCOrNull(int npcType)
         {
             HealthBar hb = null;
-            if (NPCHealthBars.TryGetValue(npcType, out hb))
-            {
-                return hb;
-            }
-            else
-            {
-                // A default healthbar
-                return new HealthBar();
-            }
+            NPCHealthBars.TryGetValue(npcType, out hb);
+            return hb;
         }
 
         public static bool CanTrackNPCHealth(NPC npc)

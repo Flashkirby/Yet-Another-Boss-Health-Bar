@@ -18,17 +18,90 @@ namespace FKBossHealthBar
 
         public override void Load()
         {
-            // Servers don't load textures
+            // Servers don't bother
             if (Main.dedServ) return;
+
+            HealthBar hb;
+
+            #region Invasions
+            // Minibosses use small bars
+            hb = new HealthBar();
+            hb.ForceSmall = true;
+            BossDisplayInfo.SetCustomHealthBar(NPCID.GoblinSummoner, hb);
+            hb = new HealthBar();
+            hb.ForceSmall = true;
+            BossDisplayInfo.SetCustomHealthBar(NPCID.PirateCaptain, hb);
+            hb = new HealthBar();
+            hb.ForceSmall = true;
+            BossDisplayInfo.SetCustomHealthBar(NPCID.Mothron, hb);
+
+            // Pumpkin Moon
+            hb = new HealthBar();
+            hb.ForceSmall = true;
+            BossDisplayInfo.SetCustomHealthBar(NPCID.MourningWood, hb);
+            hb = new HealthBar();
+            BossDisplayInfo.SetCustomHealthBar(NPCID.Pumpking, hb);
+
+            // Frost Moon
+            hb = new HealthBar();
+            hb.ForceSmall = true;
+            BossDisplayInfo.SetCustomHealthBar(NPCID.MourningWood, hb);
+            hb = new HealthBar();
+            hb.ForceSmall = true;
+            BossDisplayInfo.SetCustomHealthBar(NPCID.SantaNK1, hb);
+            hb = new HealthBar();
+            BossDisplayInfo.SetCustomHealthBar(NPCID.IceQueen, hb);
+            #endregion
+
+            // Moon Lord custom example
+            hb = new MoonLordPhase1HealthBar();
+            BossDisplayInfo.SetCustomHealthBar(NPCID.MoonLordHead, hb);
+            BossDisplayInfo.SetCustomHealthBar(NPCID.MoonLordHand, hb);
+            hb = new MoonLordPhase2HealthBar();
+            BossDisplayInfo.SetCustomHealthBar(NPCID.MoonLordCore, hb);
+
+            #region DD2
+            hb = new HealthBar();
+            BossDisplayInfo.SetCustomHealthBar(NPCID.DD2DarkMageT1, hb);
+            hb = new HealthBar();
+            hb.ForceSmall = true;
+            BossDisplayInfo.SetCustomHealthBar(NPCID.DD2DarkMageT3, hb);
+
+            hb = new HealthBar();
+            BossDisplayInfo.SetCustomHealthBar(NPCID.DD2OgreT2, hb);
+            hb = new HealthBar();
+            hb.ForceSmall = true;
+            BossDisplayInfo.SetCustomHealthBar(NPCID.DD2OgreT3, hb);
+
+            hb = new HealthBar();
+            BossDisplayInfo.SetCustomHealthBar(NPCID.DD2Betsy, hb);
+
+            hb = new HealthBar();
+            BossDisplayInfo.SetCustomHealthBar(NPCID.DD2Crystal, hb);
+            #endregion
 
             HealthBar.Initialise(this);
         }
 
-        public int[] npcsTracked = new int[1000];
-
         public override void PostDrawInterface(SpriteBatch spriteBatch)
         {
+            int stack = 0;
+            foreach (NPC npc in Main.npc)
+            {
+                if (BossDisplayInfo.CanTrackNPCHealth(npc))
+                {
+                    HealthBar hb = BossDisplayInfo.GetHealthBarForNPCOrNull(npc.type);
+                    if (hb == null) continue;
 
+                    float Alpha = 0.5f;
+                    hb.DrawHealthBarDefault(
+                        spriteBatch, Alpha, stack,
+                        npc.life, npc.lifeMax, npc);
+
+                    stack++;
+                }
+            }
+        }
             /*
             int errorLine = 43;
             try

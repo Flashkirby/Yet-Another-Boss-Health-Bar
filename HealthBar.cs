@@ -20,6 +20,9 @@ namespace FKBossHealthBar
             Disabled, // Just don't show
         }
 
+        /// <summary>
+        /// Always call the small bar textures when drawing. Typically reserved for minibosses
+        /// </summary>
         public bool ForceSmall = false;
 
         public DisplayType DisplayMode = DisplayType.Standard;
@@ -122,12 +125,13 @@ namespace FKBossHealthBar
         protected virtual int GetSmallBossHeadCentreOffsetY() { return 14; }
 
         /// <summary>
-        /// The NPC type to use when getting the head icon for this NPC, -1 for default behaviour
+        /// The NPC in Main.npc to use as the source of the head icon. 
+        /// Most likely Main.npc[NPC.FindFirstNPC( some_npc_type )];
         /// </summary>
         /// <returns></returns>
-        protected virtual int GetBossHeadIndex(NPC npc)
+        protected virtual NPC GetBossHeadSource(NPC npc)
         {
-            return npc.GetBossHeadTextureIndex();
+            return npc;
         }
         protected virtual string GetBossDisplayNameNPCType(NPC npc)
         {
@@ -158,11 +162,7 @@ namespace FKBossHealthBar
 
         public Texture2D GetBossHeadTextureOrNull(NPC npc)
         {
-            int headSlot = GetBossHeadIndex(npc);
-            if(DisplayMode == DisplayType.Multiple)
-            {
-                // find the first NPC before this with a texture
-            }
+            int headSlot = GetBossHeadSource(npc).GetBossHeadTextureIndex();
             if (headSlot > -1)
             {
                 try
