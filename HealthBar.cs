@@ -163,6 +163,24 @@ namespace FKBossHealthBar
             }
             return new Color(R, G, 0f);
         }
+
+        /// <summary>
+        /// Just in case you REALLY want to override standard behaviour and draw this health bar.
+        /// </summary>
+        /// <param name="npc"></param>
+        /// <returns></returns>
+        public virtual bool ShowHealthBarOverride(NPC npc, bool TooFarAway)
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Just in case you want to change up the values displayed for some reason.
+        /// </summary>
+        /// <param name="npc"></param>
+        /// <param name="life"></param>
+        /// <param name="lifeMax"></param>
+        protected virtual void ShowHealthBarLifeOverride(NPC npc, ref int life, ref int lifeMax) { }
         #endregion
 
         public Texture2D GetBossHeadTextureOrNull(NPC npc)
@@ -230,6 +248,7 @@ namespace FKBossHealthBar
         public void DrawHealthBar(SpriteBatch spriteBatch, int XLeft, int yTop, int BarLength, float Alpha, int life, int lifeMax, NPC npc)
         {
             bool SMALLMODE = Config.SmallHealthBars || ForceSmall;
+            ShowHealthBarLifeOverride(npc, ref life, ref lifeMax);
 
             // Get variables
             Color frameColour = new Color(1f, 1f, 1f);

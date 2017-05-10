@@ -58,8 +58,20 @@ namespace FKBossHealthBar
             // Don't track NPCs which are part of a shared life chain (except the head of course)
             if (npc.realLife >= 0) return false;
 
+            // Too far away to bother showing a health bar
+            bool tooFar = (npc.position.X < Main.LocalPlayer.position.X - Config.HealthBarDrawDistance ||
+                npc.position.X > Main.LocalPlayer.position.X + Config.HealthBarDrawDistance ||
+                npc.position.Y < Main.LocalPlayer.position.Y - Config.HealthBarDrawDistance ||
+                npc.position.Y > Main.LocalPlayer.position.Y + Config.HealthBarDrawDistance);
+
+            HealthBar hb = GetHealthBarForNPCOrNull(npc.type);
+            if (hb != null && hb.ShowHealthBarOverride(npc, tooFar))
+            {
+                return true;
+            }
+
             // Cannot track npcs without a health bar
-            if(npc.immortal || npc.dontTakeDamage || npc.dontTakeDamageFromHostiles)
+            if (npc.immortal || npc.dontTakeDamage || npc.dontTakeDamageFromHostiles || tooFar)
             {
                 return false;
             }
@@ -75,9 +87,8 @@ namespace FKBossHealthBar
                     return false;
                 }
             }
-
             // Someone has specified a healthbar for this NPC?
-            if (GetHealthBarForNPCOrNull(npc.type) != null)
+            if (hb != null)
             {
                 return true;
             }

@@ -53,6 +53,16 @@ namespace FKBossHealthBar
             BossDisplayInfo.SetCustomHealthBar(NPCID.IceQueen, hb);
             #endregion
 
+            // Pillars
+            hb = new CelestialTowerHealthBar();
+            BossDisplayInfo.SetCustomHealthBar(NPCID.LunarTowerSolar, hb);
+            hb = new CelestialTowerHealthBar();
+            BossDisplayInfo.SetCustomHealthBar(NPCID.LunarTowerVortex, hb);
+            hb = new CelestialTowerHealthBar();
+            BossDisplayInfo.SetCustomHealthBar(NPCID.LunarTowerNebula, hb);
+            hb = new CelestialTowerHealthBar();
+            BossDisplayInfo.SetCustomHealthBar(NPCID.LunarTowerStardust, hb);
+
             // Moon Lord custom example
             hb = new MoonLordPhase1HealthBar();
             BossDisplayInfo.SetCustomHealthBar(NPCID.MoonLordHead, hb);

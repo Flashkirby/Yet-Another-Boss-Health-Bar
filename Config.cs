@@ -7,6 +7,8 @@
         /// <summary>Show small health bars</summary>
         public static bool SmallHealthBars = false;
 
+        /// <summary>Distance past which boss health bars are typically ignored</summary>
+        public static int HealthBarDrawDistance = 5000;
         /// <summary>Offset from edge of screen</summary>
         public static int HealthBarUIScreenOffset = 16;
         /// <summary>Y Distance between bars</summary>
