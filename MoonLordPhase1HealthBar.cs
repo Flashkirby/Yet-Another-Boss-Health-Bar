@@ -8,7 +8,6 @@ namespace FKBossHealthBar
     {
         public MoonLordPhase1HealthBar()
         {
-            // First phase is scythes
             DisplayMode = DisplayType.Multiple;
             ForceSmall = true;
         }

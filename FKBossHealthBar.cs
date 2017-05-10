@@ -76,7 +76,7 @@ namespace FKBossHealthBar
             hb = new HealthBar();
             BossDisplayInfo.SetCustomHealthBar(NPCID.DD2Betsy, hb);
 
-            hb = new HealthBar();
+            hb = new DD2CrystalHealthBar();
             BossDisplayInfo.SetCustomHealthBar(NPCID.DD2Crystal, hb);
             #endregion
 

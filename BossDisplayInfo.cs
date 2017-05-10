@@ -59,7 +59,7 @@ namespace FKBossHealthBar
             if (npc.realLife >= 0) return false;
 
             // Cannot track npcs without a health bar
-            if(npc.immortal || npc.dontTakeDamage)
+            if(npc.immortal || npc.dontTakeDamage || npc.dontTakeDamageFromHostiles)
             {
                 return false;
             }
