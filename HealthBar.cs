@@ -39,9 +39,9 @@ namespace FKBossHealthBar
         internal int multiNPCLifeMax = 0;
         internal bool multiNPCLIfeMaxRecordedOnExpert = false;
         /// <summary>
-        /// A multi NPC has drawn this bar already?
+        /// A multi NPC has drawn this bar already? Also used to count.
         /// </summary>
-        internal bool multiShowOnce = false;
+        internal ushort multiShowCount = 0;
 
         internal static void ResetStaticVars()
         {
@@ -49,7 +49,7 @@ namespace FKBossHealthBar
             // Turn off multishow again for this frame
             foreach(KeyValuePair<int, HealthBar> kvp in BossDisplayInfo.NPCHealthBars)
             {
-                kvp.Value.multiShowOnce = false;
+                kvp.Value.multiShowCount = 0;
             }
             
         }
@@ -215,7 +215,6 @@ namespace FKBossHealthBar
                 // Search through npcTypes for a head that may match
                 foreach(NPC n in Main.npc)
                 {
-                    if (!n.active) continue;
                     foreach (int type in multiNPCType)
                     {
                         if (n.type == type)
@@ -289,6 +288,12 @@ namespace FKBossHealthBar
         /// <param name="npc">npc itself for handling certain internal methods</param>
         public void DrawHealthBar(SpriteBatch spriteBatch, int XLeft, int yTop, int BarLength, float Alpha, int life, int lifeMax, NPC npc)
         {
+            if (multiShowCount > 0 && DisplayMode == DisplayType.Multiple)
+            {
+                multiShowCount++;
+                return; // We don't show multiple NPC healthbars for a collective boss. ever.
+            }
+
             bool SMALLMODE = Config.SmallHealthBars || ForceSmall;
             string displayName = "";
             ManageMultipleNPCVars(ref life, ref lifeMax, ref displayName);
@@ -415,17 +420,16 @@ namespace FKBossHealthBar
                 {
                     foreach (NPC n in Main.npc)
                     {
-                        if (!n.active) continue;
                         if (n.type == type)
                         {
-                            life += n.life;
-                            lifeMax += n.lifeMax;
-
                             // Get the names in order of priority
-                            if(displayName == "")
+                            if (displayName == "")
                             {
                                 displayName = GetBossDisplayNameNPC(n);
                             }
+                            if (!n.active) continue;
+                            life += n.life;
+                            lifeMax += n.lifeMax;
                         }
                     }
                 }
@@ -434,7 +438,7 @@ namespace FKBossHealthBar
                 lifeMax = multiNPCLifeMax;
 
                 // Set to true to prevent further draws of the same thing this frame (see BossDisplayInfo)
-                multiShowOnce = true;
+                multiShowCount++;
             }
         }
 
