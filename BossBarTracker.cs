@@ -193,18 +193,20 @@ namespace FKBossHealthBar
             // Reset static vars such as collective healthbars
             HealthBar.ResetStaticVars();
 
-            int stack = 0;
-            foreach(NPC npc in TrackedNPCs.Keys)
+            // The bottom of thhe screen with some offset
+            int maxYStack = (int)(Main.screenHeight * (1f - Config.HealthBarUIMaxStackSize));
+            int stackY = Main.screenHeight - Config.HealthBarUIScreenOffset;
+            foreach (NPC npc in TrackedNPCs.Keys)
             {
                 // Get the healthbar for this tracked NPC
                 HealthBar hb = BossDisplayInfo.GetHealthBarForNPCOrNull(npc.type);
                 if (hb == null) hb = new HealthBar();
 
-                hb.DrawHealthBarDefault(
-                    spriteBatch, GetAlpha(npc), stack,
+                stackY = hb.DrawHealthBarDefault(
+                    spriteBatch, GetAlpha(npc), stackY, maxYStack,
                     npc.life, npc.lifeMax, npc);
 
-                stack++;
+                if (stackY < maxYStack - Config.HealthBarUIMaxStackSize) break;
             }
         }
     }

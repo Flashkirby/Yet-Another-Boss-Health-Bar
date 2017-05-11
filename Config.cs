@@ -13,8 +13,8 @@
         public static int HealthBarUIScreenOffset = 16;
         /// <summary>Y Distance between bars</summary>
         public static int HealthBarUIStackOffset = 6;
-        /// <summary>Max number of bars to show</summary>
-        public static int HealthBarUIMaxStack = 3;
+        /// <summary>Max number screen to allow bars</summary>
+        public static float HealthBarUIMaxStackSize = 0.1f;
         /// <summary>Offset from edge of screen</summary>
         public static float HealthBarUIScreenLength = 0.5f;
 

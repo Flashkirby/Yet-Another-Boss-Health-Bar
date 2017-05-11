@@ -247,7 +247,8 @@ namespace FKBossHealthBar
         /// <param name="life">npc.life</param>
         /// <param name="lifeMax">npc.lifeMax</param>
         /// <param name="npc">npc itself for handling certain internal methods</param>
-        public void DrawHealthBarDefault(SpriteBatch spriteBatch, float Alpha, int stackPosition, int life, int lifeMax, NPC npc)
+        /// <returns>Top Y value, for the stack</returns>
+        public int DrawHealthBarDefault(SpriteBatch spriteBatch, float Alpha, int stackY, int maxStackY, int life, int lifeMax, NPC npc)
         {
             bool SMALLMODE = Config.SmallHealthBars || ForceSmall;
             Texture2D barM;
@@ -266,13 +267,13 @@ namespace FKBossHealthBar
             { barM = GetMidBar(); }
 
             // Get the bottom of the screen and offset x pixels
-            y = Main.screenHeight - Config.HealthBarUIScreenOffset;
+            y = stackY;
             // Get the height of the side bars as origin
             y -= midYOffset;
             // Using the centre as reference, add offset per bar based on its postiion in the stack
-            y -= (barM.Height + Config.HealthBarUIStackOffset) * (stackPosition + 1);
+            y -= (barM.Height + Config.HealthBarUIStackOffset);
 
-            DrawHealthBar(spriteBatch, x, y, width, Alpha, life, lifeMax, npc);
+            return DrawHealthBar(spriteBatch, x, y, width, Alpha, life, lifeMax, npc);
         }
 
         /// <summary>
@@ -286,12 +287,12 @@ namespace FKBossHealthBar
         /// <param name="life">npc.life</param>
         /// <param name="lifeMax">npc.lifeMax</param>
         /// <param name="npc">npc itself for handling certain internal methods</param>
-        public void DrawHealthBar(SpriteBatch spriteBatch, int XLeft, int yTop, int BarLength, float Alpha, int life, int lifeMax, NPC npc)
+        public int DrawHealthBar(SpriteBatch spriteBatch, int XLeft, int yTop, int BarLength, float Alpha, int life, int lifeMax, NPC npc)
         {
             if (multiShowCount > 0 && DisplayMode == DisplayType.Multiple)
             {
                 multiShowCount++;
-                return; // We don't show multiple NPC healthbars for a collective boss. ever.
+                return yTop; // We don't show multiple NPC healthbars for a collective boss. ever.
             }
 
             bool SMALLMODE = Config.SmallHealthBars || ForceSmall;
@@ -395,6 +396,8 @@ namespace FKBossHealthBar
                     }
                 }
             }
+
+            return yTop;
         }
 
         /// <summary>
