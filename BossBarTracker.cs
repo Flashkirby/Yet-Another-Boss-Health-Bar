@@ -97,6 +97,19 @@ namespace FKBossHealthBar
                     // Not in list yet?
                     if (!TrackedNPCs.ContainsKey(npc))
                     {
+                        // IF a copy of this npc exists already, just reuse that
+                        foreach(NPC any in TrackedNPCs.Keys.ToList())
+                        {
+                            if(npc.whoAmI == any.whoAmI)
+                            {
+                                int time = TrackedNPCs[any];
+                                if (time < 0) time += Config.HealthBarUIFadeTime + 1;
+                                TrackedNPCs.Add(npc, time);
+                                TrackedNPCs.Remove(any);
+                                break;
+                            }
+                        }
+
                         // We tracking now
                         TrackedNPCs.Add(npc, (short)Config.HealthBarUIFadeTime);
                     }
@@ -156,17 +169,17 @@ namespace FKBossHealthBar
         private static float GetAlpha(NPC npc)
         {
             float Alpha = 1f;
-            if (HealthBar.MouseOver)
-            {
-                Alpha = Config.HealthBarUIFadeHover;
-            }
 
             try
             {
                 // time will count from X to 0
                 float time = TrackedNPCs[npc];
                 if (time < 0) time += Config.HealthBarUIFadeTime + 1;
-                Alpha = 1f - (time / Config.HealthBarUIFadeTime);
+                if(Config.HealthBarUIFadeTime > 0) Alpha = 1f - (time / Config.HealthBarUIFadeTime);
+                if (HealthBar.MouseOver)
+                {
+                    Alpha = MathHelper.Min(Alpha, Config.HealthBarUIFadeHover);
+                }
                 return Alpha;
             }
             catch
