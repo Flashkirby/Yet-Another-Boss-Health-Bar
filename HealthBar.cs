@@ -160,7 +160,7 @@ namespace FKBossHealthBar
         {
             return npc;
         }
-        protected virtual string GetBossDisplayNameNPCType(NPC npc)
+        protected virtual string GetBossDisplayNameNPC(NPC npc)
         {
             return npc.displayName;
         }
@@ -290,7 +290,8 @@ namespace FKBossHealthBar
         public void DrawHealthBar(SpriteBatch spriteBatch, int XLeft, int yTop, int BarLength, float Alpha, int life, int lifeMax, NPC npc)
         {
             bool SMALLMODE = Config.SmallHealthBars || ForceSmall;
-            ManageMultipleNPCLife(ref life, ref lifeMax);
+            string displayName = "";
+            ManageMultipleNPCVars(ref life, ref lifeMax, ref displayName);
             ShowHealthBarLifeOverride(npc, ref life, ref lifeMax);
 
             // Get variables
@@ -363,7 +364,11 @@ namespace FKBossHealthBar
                     );
             }
 
-            string text = string.Concat(GetBossDisplayNameNPCType(npc), ": ", life, "/", lifeMax);
+            if(DisplayMode != DisplayType.Multiple)
+            {
+                displayName = GetBossDisplayNameNPC(npc);
+            }
+            string text = string.Concat(displayName, ": ", life, "/", lifeMax);
             spriteBatch.DrawString(
                 Main.fontMouseText,
                 text,
@@ -392,7 +397,7 @@ namespace FKBossHealthBar
         /// </summary>
         /// <param name="life"></param>
         /// <param name="lifeMax"></param>
-        private void ManageMultipleNPCLife(ref int life, ref int lifeMax)
+        private void ManageMultipleNPCVars(ref int life, ref int lifeMax, ref string displayName)
         {
             if (DisplayMode == DisplayType.Multiple && multiNPCType != null)
             {
@@ -406,15 +411,21 @@ namespace FKBossHealthBar
                 }
 
                 // First run, only include active
-                    foreach (NPC n in Main.npc)
+                foreach (int type in multiNPCType)
                 {
-                    foreach (int type in multiNPCType)
+                    foreach (NPC n in Main.npc)
                     {
-                        if (n.type == type && n.active)
+                        if (!n.active) continue;
+                        if (n.type == type)
                         {
                             life += n.life;
                             lifeMax += n.lifeMax;
-                            break;
+
+                            // Get the names in order of priority
+                            if(displayName == "")
+                            {
+                                displayName = GetBossDisplayNameNPC(n);
+                            }
                         }
                     }
                 }

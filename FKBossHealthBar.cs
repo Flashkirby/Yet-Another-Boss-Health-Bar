@@ -30,17 +30,15 @@ namespace FKBossHealthBar
 
             hb = new HealthBar();
             BossDisplayInfo.SetCustomHealthBarMultiple(hb,
-                NPCID.Creeper, NPCID.BrainofCthulhu);
+                NPCID.BrainofCthulhu, NPCID.Creeper);
 
             hb = new HealthBar();
             BossDisplayInfo.SetCustomHealthBarMultiple(hb,
-                NPCID.GolemFistLeft, NPCID.GolemFistRight, NPCID.GolemHead,
-                NPCID.Golem);
+                NPCID.Golem, NPCID.GolemHead, NPCID.GolemFistLeft, NPCID.GolemFistRight);
 
             hb = new HealthBar();
             BossDisplayInfo.SetCustomHealthBarMultiple(hb,
-                NPCID.MartianSaucerCannon, NPCID.MartianSaucerTurret,
-                NPCID.MartianSaucerCore);
+                NPCID.MartianSaucerCore, NPCID.MartianSaucerCannon, NPCID.MartianSaucerTurret);
 
             #region Invasions
             // Minibosses use small bars
@@ -49,7 +47,7 @@ namespace FKBossHealthBar
             BossDisplayInfo.SetCustomHealthBar(NPCID.GoblinSummoner, hb);
             hb = new HealthBar();
             BossDisplayInfo.SetCustomHealthBarMultiple(hb,
-                NPCID.PirateShipCannon, NPCID.PirateShip);
+               NPCID.PirateShip, NPCID.PirateShipCannon);
             hb = new HealthBar();
             hb.ForceSmall = true;
             BossDisplayInfo.SetCustomHealthBar(NPCID.PirateCaptain, hb);
