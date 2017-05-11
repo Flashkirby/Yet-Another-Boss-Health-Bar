@@ -4,7 +4,7 @@ using Terraria.ID;
 
 namespace FKBossHealthBar
 {
-    public class MoonLordPhase2HealthBar : HealthBar
+    internal class MoonLordPhase2HealthBar : HealthBar
     {
         protected override NPC GetBossHeadSource(NPC npc)
         {

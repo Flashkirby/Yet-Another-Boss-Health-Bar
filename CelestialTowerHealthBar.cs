@@ -4,7 +4,7 @@ using Terraria.ID;
 
 namespace FKBossHealthBar
 {
-    public class CelestialTowerHealthBar : HealthBar
+    internal class CelestialTowerHealthBar : HealthBar
     {
         public override bool ShowHealthBarOverride(NPC npc, bool TooFarAway)
         {

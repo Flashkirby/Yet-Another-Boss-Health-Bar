@@ -4,7 +4,7 @@ using Terraria.ID;
 
 namespace FKBossHealthBar
 {
-    public class MoonLordPhase1HealthBar : HealthBar
+    internal class MoonLordPhase1HealthBar : HealthBar
     {
         public MoonLordPhase1HealthBar()
         {

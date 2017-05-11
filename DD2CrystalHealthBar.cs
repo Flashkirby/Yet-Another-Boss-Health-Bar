@@ -4,7 +4,7 @@ using Terraria.ID;
 
 namespace FKBossHealthBar
 {
-    public class DD2CrystalHealthBar : HealthBar
+    internal class DD2CrystalHealthBar : HealthBar
     {
         public DD2CrystalHealthBar()
         {
