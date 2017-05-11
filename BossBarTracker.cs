@@ -180,7 +180,10 @@ namespace FKBossHealthBar
                     Alpha = Config.HealthBarUIDefaultAlpha
                         * (1f - (time / Config.HealthBarUIFadeTime));
                 }
-                if (HealthBar.MouseOver > 0)
+                if (HealthBar.MouseOver > 0 || 
+                    Main.playerInventory ||
+                    Main.InReforgeMenu ||
+                    Main.InGuideCraftMenu)
                 {
                     Alpha = MathHelper.Min(Alpha, Config.HealthBarUIDefaultAlpha * Config.HealthBarUIFadeHover);
                 }
