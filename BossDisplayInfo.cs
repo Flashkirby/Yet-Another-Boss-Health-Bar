@@ -36,6 +36,23 @@ namespace FKBossHealthBar
         {
             //Set up value for out
             NPCHealthBars[npcType] = healthBar;
+            healthBar.DisplayMode = HealthBar.DisplayType.Standard;
+        }
+
+        /// <summary>
+        /// Register this health bar as a multiple npc bar, meaning it is shared between all npcs of the types
+        /// </summary>
+        /// <param name="healthBar">Same as usual</param>
+        /// <param name="expectedMax">How many npcs are expected per healthbar?</param>
+        /// <param name="npcTypes"></param>
+        public static void SetCustomHealthBarMultiple(HealthBar healthBar, params int[] npcTypes)
+        {
+            foreach(int npcType in npcTypes)
+            {
+                SetCustomHealthBar(npcType, healthBar);
+            }
+            healthBar.DisplayMode = HealthBar.DisplayType.Multiple;
+            healthBar.multiNPCType = npcTypes;
         }
 
         public static HealthBar GetHealthBarForNPCOrNull(int npcType)
@@ -62,7 +79,7 @@ namespace FKBossHealthBar
             HealthBar hb = GetHealthBarForNPCOrNull(npc.type);
             if (hb != null)
             {
-                if (hb.DisplayMode == HealthBar.DisplayType.Disabled) return false;
+                if (hb.DisplayMode == HealthBar.DisplayType.Disabled || hb.multiShowOnce) return false;
                 if (hb.ShowHealthBarOverride(npc, tooFar)) return true;
             }
 

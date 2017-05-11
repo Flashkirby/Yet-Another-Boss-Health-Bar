@@ -22,12 +22,34 @@ namespace FKBossHealthBar
             if (Main.dedServ) return;
 
             HealthBar hb;
+            hb = new HealthBar();
+            BossDisplayInfo.SetCustomHealthBarMultiple(hb,
+                NPCID.EaterofWorldsHead,
+                NPCID.EaterofWorldsBody,
+                NPCID.EaterofWorldsTail);
+
+            hb = new HealthBar();
+            BossDisplayInfo.SetCustomHealthBarMultiple(hb,
+                NPCID.Creeper, NPCID.BrainofCthulhu);
+
+            hb = new HealthBar();
+            BossDisplayInfo.SetCustomHealthBarMultiple(hb,
+                NPCID.GolemFistLeft, NPCID.GolemFistRight, NPCID.GolemHead,
+                NPCID.Golem);
+
+            hb = new HealthBar();
+            BossDisplayInfo.SetCustomHealthBarMultiple(hb,
+                NPCID.MartianSaucerCannon, NPCID.MartianSaucerTurret,
+                NPCID.MartianSaucerCore);
 
             #region Invasions
             // Minibosses use small bars
             hb = new HealthBar();
             hb.ForceSmall = true;
             BossDisplayInfo.SetCustomHealthBar(NPCID.GoblinSummoner, hb);
+            hb = new HealthBar();
+            BossDisplayInfo.SetCustomHealthBarMultiple(hb,
+                NPCID.PirateShipCannon, NPCID.PirateShip);
             hb = new HealthBar();
             hb.ForceSmall = true;
             BossDisplayInfo.SetCustomHealthBar(NPCID.PirateCaptain, hb);

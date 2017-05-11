@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -16,7 +16,7 @@ namespace FKBossHealthBar
         public enum DisplayType
         {
             Standard, // Uses npc.life and npc.realLife
-            Multiple, // Counts all NPCs of a type and uses collective life vs lifeMax
+            Multiple, // Counts all NPCs of a typelist and uses collective life vs lifeMax
             Disabled, // Just don't show
         }
 
@@ -32,9 +32,26 @@ namespace FKBossHealthBar
 
         public DisplayType DisplayMode = DisplayType.Standard;
 
+        /// <summary>
+        /// All NPC types collected in this health bar, see DisplayType.Multiple
+        /// </summary>
+        internal int[] multiNPCType = null;
+        internal int multiNPCLifeMax = 0;
+        internal bool multiNPCLIfeMaxRecordedOnExpert = false;
+        /// <summary>
+        /// A multi NPC has drawn this bar already?
+        /// </summary>
+        internal bool multiShowOnce = false;
+
         internal static void ResetStaticVars()
         {
             MouseOver = false;
+            // Turn off multishow again for this frame
+            foreach(KeyValuePair<int, HealthBar> kvp in BossDisplayInfo.NPCHealthBars)
+            {
+                kvp.Value.multiShowOnce = false;
+            }
+            
         }
 
         #region Default Textures
@@ -191,6 +208,26 @@ namespace FKBossHealthBar
         public Texture2D GetBossHeadTextureOrNull(NPC npc)
         {
             int headSlot = GetBossHeadSource(npc).GetBossHeadTextureIndex();
+
+            // No slot, but this is a multi bar?
+            if(headSlot < 0 && DisplayMode == DisplayType.Multiple)
+            {
+                // Search through npcTypes for a head that may match
+                foreach(NPC n in Main.npc)
+                {
+                    if (!n.active) continue;
+                    foreach (int type in multiNPCType)
+                    {
+                        if (n.type == type)
+                        {
+                            headSlot = n.GetBossHeadTextureIndex();
+                            if (headSlot > -1) break;
+                        }
+                    }
+                    if (headSlot > -1) break;
+                }
+            }
+
             if (headSlot > -1)
             {
                 try
@@ -253,6 +290,7 @@ namespace FKBossHealthBar
         public void DrawHealthBar(SpriteBatch spriteBatch, int XLeft, int yTop, int BarLength, float Alpha, int life, int lifeMax, NPC npc)
         {
             bool SMALLMODE = Config.SmallHealthBars || ForceSmall;
+            ManageMultipleNPCLife(ref life, ref lifeMax);
             ShowHealthBarLifeOverride(npc, ref life, ref lifeMax);
 
             // Get variables
@@ -324,7 +362,7 @@ namespace FKBossHealthBar
                     frameColour
                     );
             }
-            
+
             string text = string.Concat(GetBossDisplayNameNPCType(npc), ": ", life, "/", lifeMax);
             spriteBatch.DrawString(
                 Main.fontMouseText,
@@ -335,17 +373,57 @@ namespace FKBossHealthBar
                 SMALLMODE ? 0.6f : 1.1f, SpriteEffects.None, 0f);
 
             // Check for mouse position
-            if(!MouseOver)
+            if (!MouseOver)
             {
-                if (Main.mouseY > yTop - Config.HealthBarUIScreenOffset - 30 && 
+                if (Main.mouseY > yTop - Config.HealthBarUIScreenOffset - 30 &&
                     Main.mouseY < yTop + barM.Height + midYOffset + 30 + Config.HealthBarUIScreenOffset)
                 {
-                    if (Main.mouseX > XLeft + midXOffset - 100 && 
+                    if (Main.mouseX > XLeft + midXOffset - 100 &&
                         Main.mouseX < XLeft + BarLength + 100 - midXOffset)
                     {
                         MouseOver = true;
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// Replaces life and life max values to try and collect together multi npc bosses under 1 lifebar
+        /// </summary>
+        /// <param name="life"></param>
+        /// <param name="lifeMax"></param>
+        private void ManageMultipleNPCLife(ref int life, ref int lifeMax)
+        {
+            if (DisplayMode == DisplayType.Multiple && multiNPCType != null)
+            {
+                life = 0; lifeMax = 0;
+
+                // Reset when the life max would change (pretty much only during switching to expert mode)
+                if (multiNPCLIfeMaxRecordedOnExpert != Main.expertMode)
+                {
+                    multiNPCLIfeMaxRecordedOnExpert = Main.expertMode;
+                    multiNPCLifeMax = 0;
+                }
+
+                // First run, only include active
+                    foreach (NPC n in Main.npc)
+                {
+                    foreach (int type in multiNPCType)
+                    {
+                        if (n.type == type && n.active)
+                        {
+                            life += n.life;
+                            lifeMax += n.lifeMax;
+                            break;
+                        }
+                    }
+                }
+                // Get the highest recorded value
+                if (multiNPCLifeMax < lifeMax) multiNPCLifeMax = lifeMax;
+                lifeMax = multiNPCLifeMax;
+
+                // Set to true to prevent further draws of the same thing this frame (see BossDisplayInfo)
+                multiShowOnce = true;
             }
         }
 
