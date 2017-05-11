@@ -13,6 +13,7 @@ namespace FKBossHealthBar
     /// </summary>
     public static class BossDisplayInfo
     {
+        // Matches npc types to healthbar objects
         private static Dictionary<int, HealthBar> npchb;
         internal static Dictionary<int, HealthBar> NPCHealthBars
         {
@@ -25,22 +26,16 @@ namespace FKBossHealthBar
                 return npchb;
             }
         }
-        
+
+        /// <summary>
+        /// Register this health bar to this NPC for use in-game
+        /// </summary>
+        /// <param name="npcType"></param>
+        /// <param name="healthBar"></param>
         public static void SetCustomHealthBar(int npcType, HealthBar healthBar)
         {
             //Set up value for out
-            HealthBar hb = null;
-            if (NPCHealthBars.TryGetValue(npcType, out hb))
-            {
-                // Remove old entry and replace
-                NPCHealthBars.Remove(npcType);
-                NPCHealthBars.Add(npcType, healthBar);
-            }
-            else
-            {
-                //  Add the entry
-                NPCHealthBars.Add(npcType, healthBar);
-            }
+            NPCHealthBars[npcType] = healthBar;
         }
 
         public static HealthBar GetHealthBarForNPCOrNull(int npcType)

@@ -32,6 +32,11 @@ namespace FKBossHealthBar
 
         public DisplayType DisplayMode = DisplayType.Standard;
 
+        internal static void ResetStaticVars()
+        {
+            MouseOver = false;
+        }
+
         #region Default Textures
         internal static Texture2D defaultFill; // Fill for health bar
         internal static Texture2D defaultSta; // Left side of bar frame

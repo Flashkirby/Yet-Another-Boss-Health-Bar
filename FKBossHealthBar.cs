@@ -99,8 +99,10 @@ namespace FKBossHealthBar
             if (HealthBar.MouseOver)
             {
                 Alpha = Config.HealthBarUIFadeHover;
-                HealthBar.MouseOver = false;
             }
+
+            HealthBar.ResetStaticVars();
+
             int stack = 0;
             foreach (NPC npc in Main.npc)
             {
