@@ -23,7 +23,7 @@ namespace FKBossHealthBar
         /// <summary>
         /// Global variable for checking if mouse is over bars, in which case fade out
         /// </summary>
-        public static bool MouseOver = false;
+        public static int MouseOver = 0;
 
         /// <summary>
         /// Always call the small bar textures when drawing. Typically reserved for minibosses
@@ -45,7 +45,7 @@ namespace FKBossHealthBar
 
         internal static void ResetStaticVars()
         {
-            MouseOver = false;
+            if(MouseOver > 0) MouseOver--;
             // Turn off multishow again for this frame
             foreach(KeyValuePair<int, HealthBar> kvp in BossDisplayInfo.NPCHealthBars)
             {
@@ -384,7 +384,7 @@ namespace FKBossHealthBar
                 SMALLMODE ? 0.6f : 1.1f, SpriteEffects.None, 0f);
 
             // Check for mouse position
-            if (!MouseOver)
+            if (MouseOver < 2)
             {
                 if (Main.mouseY > yTop - Config.HealthBarUIScreenOffset - 30 &&
                     Main.mouseY < yTop + barM.Height + midYOffset + 30 + Config.HealthBarUIScreenOffset)
@@ -392,7 +392,7 @@ namespace FKBossHealthBar
                     if (Main.mouseX > XLeft + midXOffset - 100 &&
                         Main.mouseX < XLeft + BarLength + 100 - midXOffset)
                     {
-                        MouseOver = true;
+                        MouseOver = 2;
                     }
                 }
             }

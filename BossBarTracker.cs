@@ -176,7 +176,7 @@ namespace FKBossHealthBar
                 float time = TrackedNPCs[npc];
                 if (time < 0) time += Config.HealthBarUIFadeTime + 1;
                 if(Config.HealthBarUIFadeTime > 0) Alpha = 1f - (time / Config.HealthBarUIFadeTime);
-                if (HealthBar.MouseOver)
+                if (HealthBar.MouseOver > 0)
                 {
                     Alpha = MathHelper.Min(Alpha, Config.HealthBarUIFadeHover);
                 }
