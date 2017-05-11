@@ -168,17 +168,21 @@ namespace FKBossHealthBar
 
         private static float GetAlpha(NPC npc)
         {
-            float Alpha = 1f;
+            float Alpha = Config.HealthBarUIDefaultAlpha;
 
             try
             {
                 // time will count from X to 0
                 float time = TrackedNPCs[npc];
                 if (time < 0) time += Config.HealthBarUIFadeTime + 1;
-                if(Config.HealthBarUIFadeTime > 0) Alpha = 1f - (time / Config.HealthBarUIFadeTime);
+                if (Config.HealthBarUIFadeTime > 0)
+                {
+                    Alpha = Config.HealthBarUIDefaultAlpha
+                        * (1f - (time / Config.HealthBarUIFadeTime));
+                }
                 if (HealthBar.MouseOver > 0)
                 {
-                    Alpha = MathHelper.Min(Alpha, Config.HealthBarUIFadeHover);
+                    Alpha = MathHelper.Min(Alpha, Config.HealthBarUIDefaultAlpha * Config.HealthBarUIFadeHover);
                 }
                 return Alpha;
             }
