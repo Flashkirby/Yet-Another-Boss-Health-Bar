@@ -68,7 +68,7 @@ namespace FKBossHealthBar
             if (!npc.active) return false;
 
             // Don't track NPCs which are part of a shared life chain (except the head of course)
-            if (npc.realLife >= 0) return false;
+            if (npc.realLife >= 0 && npc.realLife != npc.whoAmI) return false;
 
             // Too far away to bother showing a health bar
             bool tooFar = (npc.position.X < Main.LocalPlayer.position.X - Config.HealthBarDrawDistance ||
