@@ -67,7 +67,7 @@ namespace FKBossHealthBar
             // Frost Moon
             hb = new HealthBar();
             hb.ForceSmall = true;
-            BossDisplayInfo.SetCustomHealthBar(NPCID.MourningWood, hb);
+            BossDisplayInfo.SetCustomHealthBar(NPCID.Everscream, hb);
             hb = new HealthBar();
             hb.ForceSmall = true;
             BossDisplayInfo.SetCustomHealthBar(NPCID.SantaNK1, hb);
