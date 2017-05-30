@@ -459,6 +459,7 @@ namespace FKBossHealthBar
             // real length is the screen size for bars, plus any extra inset by side frame graphics
             // friendly reminder fillXOffset is usually negative
             int realLength = 1 + (int)((barLength - fillXOffset * 2 - 1) * ((float)life / lifeMax));
+            if (life <= 0) realLength = 0;
             if (realLength > 0)
             {
                 // Calculate the scale factor to stretch the featureless side of the bar
