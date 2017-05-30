@@ -1,7 +1,68 @@
-﻿namespace FKBossHealthBar
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using Microsoft.Xna.Framework;
+using Terraria;
+using Terraria.DataStructures;
+using Terraria.GameInput;
+using Terraria.ID;
+using Terraria.IO;
+using Terraria.ModLoader;
+using Terraria.GameContent.UI.Chat;
+using Terraria.ModLoader.IO;
+using Terraria.UI;
+using Terraria.UI.Chat;
+
+namespace FKBossHealthBar
 {
     public static class Config
     {
+        //The file will be stored in "Terraria/ModLoader/Mod Configs/Example Mod.json"
+        private static string ConfigPath = Path.Combine(Main.SavePath, "Mod Configs", "Example Mod.json");
+        private static Preferences config;
+        public static void LoadConfig()
+        {
+            // Shamelessly 'borrowed' from WMITF, ty goldenapple
+            // https://forums.terraria.org/index.php?threads/modders-guide-to-config-files-and-optional-features.48581/
+            config = new Preferences(ConfigPath);
+            config.AutoSave = true;
+            if (config.Load())
+            {
+                // Set these values when successfully loaded
+                config.Get("ShowBossHealthBars", ref ShowBossHealthBars);
+                config.Get("SmallHealthBars", ref SmallHealthBars);
+                config.Get("HealthBarDrawDistance", ref HealthBarDrawDistance);
+                config.Get("HealthBarUIScreenOffset", ref HealthBarUIScreenOffset);
+                config.Get("HealthBarUIStackOffset", ref HealthBarUIStackOffset);
+                config.Get("HealthBarUIDefaultAlpha", ref HealthBarUIDefaultAlpha);
+                config.Get("HealthBarUIMaxStackSize", ref HealthBarUIMaxStackSize);
+                config.Get("HealthBarUIScreenLength", ref HealthBarUIScreenLength);
+                config.Get("HealthBarUIFadeTime", ref HealthBarUIFadeTime);
+                config.Get("HealthBarUIFadeHover", ref HealthBarUIFadeHover);
+                config.Get("HealthBarFXFillUp", ref HealthBarFXFillUp);
+                config.Get("HealthBarFXShake", ref HealthBarFXShake);
+                config.Get("HealthBarFXChip", ref HealthBarFXChip);
+            }
+            else
+            {
+                // Put in these values if new
+                config.Put("ShowBossHealthBars", ShowBossHealthBars);
+                config.Put("SmallHealthBars", SmallHealthBars);
+                config.Put("HealthBarDrawDistance", HealthBarDrawDistance);
+                config.Put("HealthBarUIScreenOffset", HealthBarUIScreenOffset);
+                config.Put("HealthBarUIStackOffset", HealthBarUIStackOffset);
+                config.Put("HealthBarUIDefaultAlpha", HealthBarUIDefaultAlpha);
+                config.Put("HealthBarUIMaxStackSize", HealthBarUIMaxStackSize);
+                config.Put("HealthBarUIScreenLength", HealthBarUIScreenLength);
+                config.Put("HealthBarUIFadeTime", HealthBarUIFadeTime);
+                config.Put("HealthBarUIFadeHover", HealthBarUIFadeHover);
+                config.Put("HealthBarFXFillUp", HealthBarFXFillUp);
+                config.Put("HealthBarFXShake", HealthBarFXShake);
+                config.Put("HealthBarFXChip", HealthBarFXChip);
+                config.Save();
+            }
+        }
+
         /// <summary>Show health bars, in case you want to disable it...</summary>
         public static bool ShowBossHealthBars = true;
         /// <summary>Show small health bars</summary>
@@ -13,7 +74,7 @@
         public static int HealthBarUIScreenOffset = 16;
         /// <summary>Y Distance between bars</summary>
         public static int HealthBarUIStackOffset = 6;
-        /// <summary>Max number screen to allow bars</summary>
+        /// <summary>Default bar alpha</summary>
         public static float HealthBarUIDefaultAlpha = 1f;
         /// <summary>Max number screen to allow bars</summary>
         public static float HealthBarUIMaxStackSize = 0.15f;

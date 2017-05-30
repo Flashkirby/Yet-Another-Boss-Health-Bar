@@ -25,6 +25,7 @@ namespace FKBossHealthBar
             // Servers don't bother
             if (Main.dedServ) return;
 
+            Config.LoadConfig();
             try
             {
                 LoadedFKTModSettings = true;
