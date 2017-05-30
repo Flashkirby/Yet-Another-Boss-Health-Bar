@@ -18,7 +18,7 @@ namespace FKBossHealthBar
     public static class Config
     {
         //The file will be stored in "Terraria/ModLoader/Mod Configs/Example Mod.json"
-        private static string ConfigPath = Path.Combine(Main.SavePath, "Mod Configs", "Example Mod.json");
+        private static string ConfigPath = Path.Combine(Main.SavePath, "Mod Configs", "YetAnotherBHB.json");
         private static Preferences config;
         public static void LoadConfig()
         {
@@ -41,7 +41,10 @@ namespace FKBossHealthBar
                 config.Get("HealthBarUIFadeHover", ref HealthBarUIFadeHover);
                 config.Get("HealthBarFXFillUp", ref HealthBarFXFillUp);
                 config.Get("HealthBarFXShake", ref HealthBarFXShake);
+                config.Get("HealthBarFXShakeIntensity", ref HealthBarFXShakeIntensity);
                 config.Get("HealthBarFXChip", ref HealthBarFXChip);
+                config.Get("HealthBarFXChipWaitTime", ref HealthBarFXChipWaitTime);
+                config.Get("HealthBarFXChipSpeed", ref HealthBarFXChipSpeed);
             }
             else
             {
@@ -58,7 +61,10 @@ namespace FKBossHealthBar
                 config.Put("HealthBarUIFadeHover", HealthBarUIFadeHover);
                 config.Put("HealthBarFXFillUp", HealthBarFXFillUp);
                 config.Put("HealthBarFXShake", HealthBarFXShake);
+                config.Put("HealthBarFXShakeIntensity", HealthBarFXShakeIntensity);
                 config.Put("HealthBarFXChip", HealthBarFXChip);
+                config.Put("HealthBarFXChipWaitTime", HealthBarFXChipWaitTime);
+                config.Put("HealthBarFXChipSpeed", HealthBarFXChipSpeed);
                 config.Save();
             }
         }
@@ -94,9 +100,9 @@ namespace FKBossHealthBar
         /// <summary>Should the healthbar dramatically fill up on entry (tied to alpha)</summary>
         public static bool HealthBarFXFillUp = false;
         /// <summary>Should the healthbar shake when depleted</summary>
-        public static bool HealthBarFXShake = false;
+        public static bool HealthBarFXShake = true;
         /// <summary>Pixel shake for shake effect</summary>
-        public static int HealthBarFXShakeIntensity = 1;
+        public static int HealthBarFXShakeIntensity = 5;
         /// <summary>Should the healthbar show damage being chipped away LIKE DARK SOULS</summary>
         public static bool HealthBarFXChip = false;
         /// <summary>Wait before starting the chip drain</summary>

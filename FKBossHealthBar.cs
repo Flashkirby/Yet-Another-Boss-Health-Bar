@@ -33,17 +33,19 @@ namespace FKBossHealthBar
                 setting.AddBool("ShowBossHealthBars", "Enable boss health bars", false);
                 setting.AddBool("SmallHealthBars", "Force small health bars", false);
 
-                setting.AddComment("Transparency: Modify the alpha values for ease of use. ");
+                setting.AddComment("TRANSPARENCY: Modify the alpha values for ease of use. ");
 
                 setting.AddFloat("HealthBarUIDefaultAlpha", "Health bar transparency", 0f, 1f, false);
-                setting.AddFloat("HealthBarUIFadeHover", "Transparency mouseover modifier", 0, 1f, false);
-                setting.AddInt("HealthBarUIFadeTime", "Time to fade health bar in seconds/60", 0, 180, false);
+                setting.AddFloat("HealthBarUIFadeHover", "Mouse Over modifier", 0, 1f, false);
+                setting.AddInt("HealthBarUIFadeTime", "Fade Time (seconds/60)", 0, 180, false);
 
-                setting.AddComment("Fancy Effects: Modify pointless flair and special effects. ");
+                setting.AddComment("FANCY FX: Modify pointless flair and special effects. ");
 
-                setting.AddBool("HealthBarFXFillUp", "Fill up bar on entry", false);
+                setting.AddBool("HealthBarFXFillUp", "Fill Bar on entry", false);
+                setting.AddBool("HealthBarFXShake", "Shake bar with damage", false);
+                setting.AddInt("HealthBarFXShakeIntensity", "Shake intensity", 1, 10, false);
 
-                setting.AddComment("Positioning: Tweak the positions and number of bars. ");
+                setting.AddComment("POSITIONING: Tweak the positions and number of bars. ");
 
                 setting.AddInt("HealthBarUIScreenOffset", "Offset from bottom of screen", 0, 100, false);
                 setting.AddFloat("HealthBarUIScreenLength", "Bar length:screen", 0f, 1f, false);
@@ -172,7 +174,9 @@ namespace FKBossHealthBar
                     setting.Get("HealthBarUIMaxStackSize", ref Config.HealthBarUIMaxStackSize);
 
                     setting.Get("HealthBarFXFillUp", ref Config.HealthBarFXFillUp);
-                    
+                    setting.Get("HealthBarFXShake", ref Config.HealthBarFXShake);
+                    setting.Get("HealthBarFXShakeIntensity", ref Config.HealthBarFXShakeIntensity);
+
                 }
             }
 

@@ -28,6 +28,43 @@ namespace FKBossHealthBar
             }
         }
 
+        private static Dictionary<NPC, int> trackedNPCOldLife;
+        public static Dictionary<NPC, int> TrackedNPCOldLife
+        {
+            get
+            {
+                if (trackedNPCOldLife == null)
+                {
+                    trackedNPCOldLife = new Dictionary<NPC, int>(255);
+                }
+                return trackedNPCOldLife;
+            }
+        }
+        private static Dictionary<NPC, int> trackedNPCChipLife;
+        public static Dictionary<NPC, int> TrackedNPCChipLife
+        {
+            get
+            {
+                if (trackedNPCChipLife == null)
+                {
+                    trackedNPCChipLife = new Dictionary<NPC, int>(255);
+                }
+                return trackedNPCChipLife;
+            }
+        }
+        private static Dictionary<NPC, int> trackedNPCChipTime;
+        public static Dictionary<NPC, int> TrackedNPCChipTime
+        {
+            get
+            {
+                if (trackedNPCChipTime == null)
+                {
+                    trackedNPCChipTime = new Dictionary<NPC, int>(255);
+                }
+                return trackedNPCChipTime;
+            }
+        }
+
         public static void ResetTracker()
         {
             trackedNpcs = null;
@@ -140,6 +177,20 @@ namespace FKBossHealthBar
                         TrackedNPCs.Remove(npc);
                     }
                 }
+
+                if(Config.HealthBarFXShake)
+                {
+                    // Not got it
+                    if (TrackedNPCs.ContainsKey(npc) && !TrackedNPCOldLife.ContainsKey(npc))
+                    {
+                        TrackedNPCOldLife.Add(npc, npc.life);
+                    }
+                    // Shouldn't have it
+                    else if (!TrackedNPCs.ContainsKey(npc) && TrackedNPCOldLife.ContainsKey(npc))
+                    {
+                        TrackedNPCOldLife.Remove(npc);
+                    }
+                }
             }
 
             // Sort the timers
@@ -233,9 +284,24 @@ namespace FKBossHealthBar
                 HealthBar hb = BossDisplayInfo.GetHealthBarForNPCOrNull(npc.type);
                 if (hb == null) hb = new HealthBar();
 
+                int shakeIntensity = 0;
+                if(Config.HealthBarFXShake)
+                {
+                    // Run updates
+                    if (TrackedNPCOldLife.ContainsKey(npc))
+                    {
+                        // Life dropped?
+                        if(TrackedNPCOldLife[npc] > npc.life)
+                        {
+                            shakeIntensity = Config.HealthBarFXShakeIntensity;
+                        }
+                        TrackedNPCOldLife[npc] = npc.life;
+                    }
+                }
+
                 stackY = hb.DrawHealthBarDefault(
                     spriteBatch, GetAlpha(npc), stackY, maxYStack,
-                    GetLife(npc), npc.lifeMax, npc);
+                    GetLife(npc), npc.lifeMax, npc, shakeIntensity);
 
                 if (stackY < maxYStack - Config.HealthBarUIMaxStackSize) break;
             }
