@@ -10,6 +10,8 @@ namespace FKBossHealthBar
 {
     class FKBossHealthBar : Mod
     {
+        public bool LoadedFKTModSettings = false;
+
         public FKBossHealthBar()
         {
             Properties = new ModProperties()
@@ -22,6 +24,25 @@ namespace FKBossHealthBar
         {
             // Servers don't bother
             if (Main.dedServ) return;
+
+            try
+            {
+                LoadedFKTModSettings = true;
+                FKTModSettings.ModSetting setting = FKTModSettings.ModSettingsAPI.CreateModSettingConfig(this);
+                setting.AddBool("ShowBossHealthBars", "Enable boss health bars", false);
+                setting.AddBool("SmallHealthBars", "Force small health bars", false);
+
+                setting.AddComment("TODO: fancy graphical settings");
+
+                setting.AddComment("Settings below are for tweaking the positioning of the health bars");
+
+                setting.AddInt("HealthBarUIScreenOffset", "Offset from bottom of screen", 0, 100, false);
+                setting.AddFloat("HealthBarUIScreenLength", "Bar length:screen", 0f, 1f, false);
+                setting.AddInt("HealthBarUIStackOffset", "Distance between bars", 0, 100, false);
+                setting.AddFloat("HealthBarUIDefaultAlpha", "Health bar transparency", 0f, 1f, false);
+                setting.AddFloat("HealthBarUIMaxStackSize", "Maximum height of bars", 0f, 1f, false);
+            }
+            catch { }
 
             HealthBar hb;
             hb = new HealthBar();
@@ -125,6 +146,23 @@ namespace FKBossHealthBar
 
         public override void PostDrawInterface(SpriteBatch spriteBatch)
         {
+            if (LoadedFKTModSettings)
+            {
+                FKTModSettings.ModSetting setting;
+                if (FKTModSettings.ModSettingsAPI.TryGetModSetting(this, out setting))
+                {
+                    setting.Get("ShowBossHealthBars", ref Config.ShowBossHealthBars);
+                    setting.Get("SmallHealthBars", ref Config.SmallHealthBars);
+
+                    setting.Get("HealthBarUIScreenOffset", ref Config.HealthBarUIScreenOffset);
+                    setting.Get("HealthBarUIScreenLength", ref Config.HealthBarUIScreenLength);
+                    setting.Get("HealthBarUIStackOffset", ref Config.HealthBarUIStackOffset);
+
+                    setting.Get("HealthBarUIDefaultAlpha", ref Config.HealthBarUIDefaultAlpha);
+                    setting.Get("HealthBarUIMaxStackSize", ref Config.HealthBarUIMaxStackSize);
+                }
+            }
+
             if (!Main.gameInactive) BossBarTracker.UpdateNPCTracker();
 
             BossBarTracker.DrawHealthBars(spriteBatch);
