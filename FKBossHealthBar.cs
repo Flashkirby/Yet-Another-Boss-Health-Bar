@@ -33,15 +33,22 @@ namespace FKBossHealthBar
                 setting.AddBool("ShowBossHealthBars", "Enable boss health bars", false);
                 setting.AddBool("SmallHealthBars", "Force small health bars", false);
 
-                setting.AddComment("TODO: fancy graphical settings");
+                setting.AddComment("Transparency: Modify the alpha values for ease of use. ");
 
-                setting.AddComment("Settings below are for tweaking the positioning of the health bars");
+                setting.AddFloat("HealthBarUIDefaultAlpha", "Health bar transparency", 0f, 1f, false);
+                setting.AddFloat("HealthBarUIFadeHover", "Transparency mouseover modifier", 0, 1f, false);
+                setting.AddInt("HealthBarUIFadeTime", "Time to fade health bar in seconds/60", 0, 180, false);
+
+                setting.AddComment("Fancy Effects: Modify pointless flair and special effects. ");
+
+                setting.AddBool("HealthBarFXFillUp", "Fill up bar on entry", false);
+
+                setting.AddComment("Positioning: Tweak the positions and number of bars. ");
 
                 setting.AddInt("HealthBarUIScreenOffset", "Offset from bottom of screen", 0, 100, false);
                 setting.AddFloat("HealthBarUIScreenLength", "Bar length:screen", 0f, 1f, false);
                 setting.AddInt("HealthBarUIStackOffset", "Distance between bars", 0, 100, false);
-                setting.AddFloat("HealthBarUIDefaultAlpha", "Health bar transparency", 0f, 1f, false);
-                setting.AddFloat("HealthBarUIMaxStackSize", "Maximum height of bars", 0f, 1f, false);
+                setting.AddFloat("HealthBarUIMaxStackSize", "Max height% to draw bars", 0f, 1f, false);
             }
             catch { }
 
@@ -160,7 +167,12 @@ namespace FKBossHealthBar
                     setting.Get("HealthBarUIStackOffset", ref Config.HealthBarUIStackOffset);
 
                     setting.Get("HealthBarUIDefaultAlpha", ref Config.HealthBarUIDefaultAlpha);
+                    setting.Get("HealthBarUIFadeHover", ref Config.HealthBarUIFadeHover);
+                    setting.Get("HealthBarUIFadeTime", ref Config.HealthBarUIFadeTimeINT);
                     setting.Get("HealthBarUIMaxStackSize", ref Config.HealthBarUIMaxStackSize);
+
+                    setting.Get("HealthBarFXFillUp", ref Config.HealthBarFXFillUp);
+                    
                 }
             }
 

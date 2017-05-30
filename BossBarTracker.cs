@@ -194,6 +194,30 @@ namespace FKBossHealthBar
                 return 0f;
             }
         }
+        private static int GetLife(NPC npc)
+        {
+            if (Config.HealthBarFXFillUp)
+            {
+                try
+                {
+                    // time will count from X to 0
+                    float time = TrackedNPCs[npc];
+                    if (time >= 0)
+                    {
+                        double normal = 1d - (double)time / Config.HealthBarUIFadeTime;
+                        return (int)(npc.life * normal);
+                    }
+                }
+                catch { }
+                // No life found or time < 0
+                return npc.life;
+            }
+            else
+            {
+                // Default behaviour
+                return npc.life;
+            }
+        }
         public static void DrawHealthBars(SpriteBatch spriteBatch)
         {
 
@@ -211,7 +235,7 @@ namespace FKBossHealthBar
 
                 stackY = hb.DrawHealthBarDefault(
                     spriteBatch, GetAlpha(npc), stackY, maxYStack,
-                    npc.life, npc.lifeMax, npc);
+                    GetLife(npc), npc.lifeMax, npc);
 
                 if (stackY < maxYStack - Config.HealthBarUIMaxStackSize) break;
             }

@@ -37,7 +37,7 @@ namespace FKBossHealthBar
                 config.Get("HealthBarUIDefaultAlpha", ref HealthBarUIDefaultAlpha);
                 config.Get("HealthBarUIMaxStackSize", ref HealthBarUIMaxStackSize);
                 config.Get("HealthBarUIScreenLength", ref HealthBarUIScreenLength);
-                config.Get("HealthBarUIFadeTime", ref HealthBarUIFadeTime);
+                config.Get("HealthBarUIFadeTime", ref HealthBarUIFadeTimeINT);
                 config.Get("HealthBarUIFadeHover", ref HealthBarUIFadeHover);
                 config.Get("HealthBarFXFillUp", ref HealthBarFXFillUp);
                 config.Get("HealthBarFXShake", ref HealthBarFXShake);
@@ -82,15 +82,26 @@ namespace FKBossHealthBar
         public static float HealthBarUIScreenLength = 0.5f;
 
         /// <summary>How long to fade in/out healthbars</summary>
-        public static ushort HealthBarUIFadeTime = 30;
+        public static ushort HealthBarUIFadeTime
+        {
+            get { return (ushort)HealthBarUIFadeTimeINT; }
+            set { HealthBarUIFadeTimeINT = value; }
+        }
+        internal static int HealthBarUIFadeTimeINT = 30; // not the used value, but here for modsettings support
         /// <summary>Alpha to set to when mouse is covering</summary>
         public static float HealthBarUIFadeHover = 0.25f;
 
-        /// <summary>Should the healthbar dramatically fill up on entry</summary>
+        /// <summary>Should the healthbar dramatically fill up on entry (tied to alpha)</summary>
         public static bool HealthBarFXFillUp = false;
         /// <summary>Should the healthbar shake when depleted</summary>
         public static bool HealthBarFXShake = false;
-        /// <summary>Should the healthbar show damage being chipped away</summary>
+        /// <summary>Pixel shake for shake effect</summary>
+        public static int HealthBarFXShakeIntensity = 1;
+        /// <summary>Should the healthbar show damage being chipped away LIKE DARK SOULS</summary>
         public static bool HealthBarFXChip = false;
+        /// <summary>Wait before starting the chip drain</summary>
+        public static int HealthBarFXChipWaitTime = 60;
+        /// <summary>Pixel speed for chip draining speed</summary>
+        public static int HealthBarFXChipSpeed = 2;
     }
 }
