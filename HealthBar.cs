@@ -248,7 +248,7 @@ namespace FKBossHealthBar
         /// <param name="lifeMax">npc.lifeMax</param>
         /// <param name="npc">npc itself for handling certain internal methods</param>
         /// <returns>Top Y value, for the stack</returns>
-        public int DrawHealthBarDefault(SpriteBatch spriteBatch, float Alpha, int stackY, int maxStackY, int life, int lifeMax, NPC npc, int shake)
+        public int DrawHealthBarDefault(SpriteBatch spriteBatch, float Alpha, int stackY, int maxStackY, int life, int lifeMax, NPC npc)
         {
             bool SMALLMODE = Config.SmallHealthBars || ForceSmall;
             Texture2D barM;
@@ -273,7 +273,7 @@ namespace FKBossHealthBar
             // Using the centre as reference, add offset per bar based on its postiion in the stack
             y -= (barM.Height + Config.HealthBarUIStackOffset);
 
-            return DrawHealthBar(spriteBatch, x, y, width, Alpha, life, lifeMax, npc, shake);
+            return DrawHealthBar(spriteBatch, x, y, width, Alpha, life, lifeMax, npc);
         }
 
         /// <summary>
@@ -287,11 +287,8 @@ namespace FKBossHealthBar
         /// <param name="life">npc.life</param>
         /// <param name="lifeMax">npc.lifeMax</param>
         /// <param name="npc">npc itself for handling certain internal methods</param>
-        public int DrawHealthBar(SpriteBatch spriteBatch, int XLeft, int yTop, int BarLength, float Alpha, int life, int lifeMax, NPC npc, int shake)
+        public int DrawHealthBar(SpriteBatch spriteBatch, int XLeft, int yTop, int BarLength, float Alpha, int life, int lifeMax, NPC npc)
         {
-            XLeft += (int)(shake * (Main.rand.Next(2) * 2 - 1));
-            yTop += (int)(shake * (Main.rand.Next(2) * 2 - 1));
-
             if (multiShowCount > 0 && DisplayMode == DisplayType.Multiple)
             {
                 multiShowCount++;
@@ -302,6 +299,58 @@ namespace FKBossHealthBar
             string displayName = "";
             ManageMultipleNPCVars(ref life, ref lifeMax, ref displayName);
             ShowHealthBarLifeOverride(npc, ref life, ref lifeMax);
+            // Fill up FX
+            life = (int)(life * BossBarTracker.GetLifeFillNormal(npc));
+
+            #region shake
+            int shakeIntensity = 0;
+            if (Config.HealthBarFXShake)
+            {
+                // Run updates
+                if (BossBarTracker.TrackedNPCOldLife.ContainsKey(npc))
+                {
+                    // Life dropped?
+                    if (BossBarTracker.TrackedNPCOldLife[npc] > life)
+                    {
+                        shakeIntensity = Config.HealthBarFXShakeIntensity;
+                    }
+                    BossBarTracker.TrackedNPCOldLife[npc] = life;
+                }
+            }
+            XLeft += shakeIntensity * (Main.rand.Next(2) * 2 - 1);
+            yTop += shakeIntensity * (Main.rand.Next(2) * 2 - 1);
+            #endregion
+            
+            #region chip
+            float chipLife = 0f;
+            if (Config.HealthBarFXChip)
+            {
+                if(BossBarTracker.TrackedNPCChipLife.TryGetValue(npc, out chipLife))
+                {
+                    // Can start chipping condition once damage is taken
+                    if (BossBarTracker.TrackedNPCChipLife[npc] > life)
+                    {
+                        // Wait until it reaches the wait time
+                        if (BossBarTracker.TrackedNPCChipTime[npc] < Config.HealthBarFXChipWaitTime)
+                        {
+                            BossBarTracker.TrackedNPCChipTime[npc]++;
+                        }
+                        else
+                        {
+                            BossBarTracker.TrackedNPCChipLife[npc] -= (lifeMax * Config.HealthBarFXChipSpeed * 0.0167f);
+                        }
+                    }
+
+                    // Limit up again, and reset wait time
+                    if (BossBarTracker.TrackedNPCChipLife[npc] < life)
+                    {
+                        BossBarTracker.TrackedNPCChipLife[npc] = life;
+                        BossBarTracker.TrackedNPCChipTime[npc] = 0;
+                    }
+                }
+            }
+            #endregion
+
 
             // Get variables
             Color frameColour = new Color(1f, 1f, 1f);
@@ -340,7 +389,12 @@ namespace FKBossHealthBar
             Vector2 FrameTopLeft = new Vector2(XLeft - barL.Width, yTop);
 
             // Draw Fill
-            drawHealthBarFill(spriteBatch, life, lifeMax, barColour, fill, BarLength, XLeft, midXOffset, midYOffset, yTop, SMALLMODE);
+            int realLength = drawHealthBarFill(spriteBatch, life, lifeMax, barColour, fill, BarLength, XLeft, midXOffset, midYOffset, yTop, SMALLMODE);
+            // Draw Chip
+            if (Config.HealthBarFXChip)
+            {
+                drawHealthBarFill(spriteBatch, (int)chipLife - life, lifeMax, barColour * 0.5f, fill, BarLength, XLeft + realLength, midXOffset, midYOffset, yTop, SMALLMODE);
+            }
 
             // Draw Frame
             drawHealthBarFrame(spriteBatch, frameColour, barL, barM, barR, BarLength, XLeft, midYOffset, yTop, FrameTopLeft);
@@ -448,7 +502,7 @@ namespace FKBossHealthBar
             }
         }
 
-        private void drawHealthBarFill(SpriteBatch spriteBatch, int life, int lifeMax, Color barColour, Texture2D fill, int barLength, int XLeft, int fillXOffset, int fillYOffset, int yTop, bool SMALLMODE)
+        private int drawHealthBarFill(SpriteBatch spriteBatch, int life, int lifeMax, Color barColour, Texture2D fill, int barLength, int XLeft, int fillXOffset, int fillYOffset, int yTop, bool SMALLMODE)
         {
             int decoOffset;
             if (SMALLMODE)
@@ -503,6 +557,8 @@ namespace FKBossHealthBar
                 }
                 catch { }
             }
+
+            return realLength;
         }
 
         private static void drawHealthBarFrame(SpriteBatch spriteBatch, Color frameColour, Texture2D barL, Texture2D barM, Texture2D barR, int barLength, int XLeft, int midYOffset, int yTop, Vector2 FrameTopLeft)

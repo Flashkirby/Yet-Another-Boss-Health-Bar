@@ -100,14 +100,14 @@ namespace FKBossHealthBar
         /// <summary>Should the healthbar dramatically fill up on entry (tied to alpha)</summary>
         public static bool HealthBarFXFillUp = false;
         /// <summary>Should the healthbar shake when depleted</summary>
-        public static bool HealthBarFXShake = true;
+        public static bool HealthBarFXShake = false;
         /// <summary>Pixel shake for shake effect</summary>
-        public static int HealthBarFXShakeIntensity = 5;
+        public static int HealthBarFXShakeIntensity = 3;
         /// <summary>Should the healthbar show damage being chipped away LIKE DARK SOULS</summary>
         public static bool HealthBarFXChip = false;
         /// <summary>Wait before starting the chip drain</summary>
         public static int HealthBarFXChipWaitTime = 60;
-        /// <summary>Pixel speed for chip draining speed</summary>
-        public static int HealthBarFXChipSpeed = 2;
+        /// <summary>Percent speed for chip draining speed</summary>
+        public static float HealthBarFXChipSpeed = 0.2f;
     }
 }

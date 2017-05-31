@@ -16,7 +16,7 @@ namespace FKBossHealthBar
     {
         // Tracks all NPCs that should be drawing healthbars
         private static Dictionary<NPC, int> trackedNpcs;
-        public static Dictionary<NPC, int> TrackedNPCs
+        internal static Dictionary<NPC, int> TrackedNPCs
         {
             get
             {
@@ -29,7 +29,7 @@ namespace FKBossHealthBar
         }
 
         private static Dictionary<NPC, int> trackedNPCOldLife;
-        public static Dictionary<NPC, int> TrackedNPCOldLife
+        internal static Dictionary<NPC, int> TrackedNPCOldLife
         {
             get
             {
@@ -40,20 +40,20 @@ namespace FKBossHealthBar
                 return trackedNPCOldLife;
             }
         }
-        private static Dictionary<NPC, int> trackedNPCChipLife;
-        public static Dictionary<NPC, int> TrackedNPCChipLife
+        private static Dictionary<NPC, float> trackedNPCChipLife;
+        internal static Dictionary<NPC, float> TrackedNPCChipLife
         {
             get
             {
                 if (trackedNPCChipLife == null)
                 {
-                    trackedNPCChipLife = new Dictionary<NPC, int>(255);
+                    trackedNPCChipLife = new Dictionary<NPC, float>(255);
                 }
                 return trackedNPCChipLife;
             }
         }
         private static Dictionary<NPC, int> trackedNPCChipTime;
-        public static Dictionary<NPC, int> TrackedNPCChipTime
+        internal static Dictionary<NPC, int> TrackedNPCChipTime
         {
             get
             {
@@ -183,12 +183,28 @@ namespace FKBossHealthBar
                     // Not got it
                     if (TrackedNPCs.ContainsKey(npc) && !TrackedNPCOldLife.ContainsKey(npc))
                     {
-                        TrackedNPCOldLife.Add(npc, npc.life);
+                        TrackedNPCOldLife.Add(npc, 0);
                     }
                     // Shouldn't have it
                     else if (!TrackedNPCs.ContainsKey(npc) && TrackedNPCOldLife.ContainsKey(npc))
                     {
                         TrackedNPCOldLife.Remove(npc);
+                    }
+                }
+
+                if(Config.HealthBarFXChip)
+                {
+                    // Not got it
+                    if (TrackedNPCs.ContainsKey(npc) && !TrackedNPCChipLife.ContainsKey(npc))
+                    {
+                        TrackedNPCChipLife.Add(npc, 0);
+                        TrackedNPCChipTime.Add(npc, 0);
+                    }
+                    // Shouldn't have it
+                    else if (!TrackedNPCs.ContainsKey(npc) && TrackedNPCChipLife.ContainsKey(npc))
+                    {
+                        TrackedNPCChipLife.Remove(npc);
+                        TrackedNPCChipTime.Remove(npc);
                     }
                 }
             }
@@ -245,7 +261,7 @@ namespace FKBossHealthBar
                 return 0f;
             }
         }
-        private static int GetLife(NPC npc)
+        internal static double GetLifeFillNormal(NPC npc)
         {
             if (Config.HealthBarFXFillUp)
             {
@@ -256,17 +272,17 @@ namespace FKBossHealthBar
                     if (time >= 0)
                     {
                         double normal = 1d - (double)time / Config.HealthBarUIFadeTime;
-                        return (int)(npc.life * normal);
+                        return normal;
                     }
                 }
                 catch { }
                 // No life found or time < 0
-                return npc.life;
+                return 1d;
             }
             else
             {
                 // Default behaviour
-                return npc.life;
+                return 1d;
             }
         }
         public static void DrawHealthBars(SpriteBatch spriteBatch)
@@ -284,24 +300,9 @@ namespace FKBossHealthBar
                 HealthBar hb = BossDisplayInfo.GetHealthBarForNPCOrNull(npc.type);
                 if (hb == null) hb = new HealthBar();
 
-                int shakeIntensity = 0;
-                if(Config.HealthBarFXShake)
-                {
-                    // Run updates
-                    if (TrackedNPCOldLife.ContainsKey(npc))
-                    {
-                        // Life dropped?
-                        if(TrackedNPCOldLife[npc] > npc.life)
-                        {
-                            shakeIntensity = Config.HealthBarFXShakeIntensity;
-                        }
-                        TrackedNPCOldLife[npc] = npc.life;
-                    }
-                }
-
                 stackY = hb.DrawHealthBarDefault(
                     spriteBatch, GetAlpha(npc), stackY, maxYStack,
-                    GetLife(npc), npc.lifeMax, npc, shakeIntensity);
+                    npc.life, npc.lifeMax, npc);
 
                 if (stackY < maxYStack - Config.HealthBarUIMaxStackSize) break;
             }

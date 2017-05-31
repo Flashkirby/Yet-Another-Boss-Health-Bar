@@ -44,6 +44,9 @@ namespace FKBossHealthBar
                 setting.AddBool("HealthBarFXFillUp", "Fill Bar on entry", false);
                 setting.AddBool("HealthBarFXShake", "Shake bar with damage", false);
                 setting.AddInt("HealthBarFXShakeIntensity", "Shake intensity", 1, 10, false);
+                setting.AddBool("HealthBarFXChip", "Show damage chipped away", false);
+                setting.AddInt("HealthBarFXChipWaitTime", "Chip drain wait time", 0, 180, false);
+                setting.AddFloat("HealthBarFXChipSpeed", "Chip drain speed%", 0.001f, 1f, false);
 
                 setting.AddComment("POSITIONING: Tweak the positions and number of bars. ");
 
@@ -176,12 +179,16 @@ namespace FKBossHealthBar
                     setting.Get("HealthBarFXFillUp", ref Config.HealthBarFXFillUp);
                     setting.Get("HealthBarFXShake", ref Config.HealthBarFXShake);
                     setting.Get("HealthBarFXShakeIntensity", ref Config.HealthBarFXShakeIntensity);
+                    setting.Get("HealthBarFXChip", ref Config.HealthBarFXChip);
+                    setting.Get("HealthBarFXChipWaitTime", ref Config.HealthBarFXChipWaitTime);
+                    setting.Get("HealthBarFXChipSpeed", ref Config.HealthBarFXChipSpeed);
 
                 }
             }
 
             if (!Main.gameInactive) BossBarTracker.UpdateNPCTracker();
-
+            
+            if (!Config.ShowBossHealthBars) return;
             BossBarTracker.DrawHealthBars(spriteBatch);
         }
     }
