@@ -6,6 +6,8 @@ using Terraria.ID;
 using System.Collections.Generic;
 using Terraria.DataStructures;
 
+using FKTModSettings;
+
 namespace FKBossHealthBar
 {
     class FKBossHealthBar : Mod
@@ -29,7 +31,7 @@ namespace FKBossHealthBar
             try
             {
                 LoadedFKTModSettings = true;
-                FKTModSettings.ModSetting setting = FKTModSettings.ModSettingsAPI.CreateModSettingConfig(this);
+                ModSetting setting = ModSettingsAPI.CreateModSettingConfig(this);
                 setting.AddBool("ShowBossHealthBars", "Enable boss health bars", false);
                 setting.AddBool("SmallHealthBars", "Force small health bars", false);
 
@@ -161,8 +163,8 @@ namespace FKBossHealthBar
         {
             if (LoadedFKTModSettings)
             {
-                FKTModSettings.ModSetting setting;
-                if (FKTModSettings.ModSettingsAPI.TryGetModSetting(this, out setting))
+                ModSetting setting;
+                if (ModSettingsAPI.TryGetModSetting(this, out setting))
                 {
                     setting.Get("ShowBossHealthBars", ref Config.ShowBossHealthBars);
                     setting.Get("SmallHealthBars", ref Config.SmallHealthBars);
