@@ -161,7 +161,7 @@ namespace FKBossHealthBar
             }
         }
 
-        public override void PostDrawInterface(SpriteBatch spriteBatch)
+        public override void PostUpdateInput()
         {
             if (LoadedFKTModSettings)
             {
@@ -184,7 +184,7 @@ namespace FKBossHealthBar
                     setting.Get("HealthBarFXShake", ref Config.HealthBarFXShake);
                     setting.Get("HealthBarFXShakeIntensity", ref Config.HealthBarFXShakeIntensity);
                     setting.Get("HealthBarFXShakeHorizontal", ref Config.HealthBarFXShakeHorizontal);
-                    
+
                     setting.Get("HealthBarFXChip", ref Config.HealthBarFXChip);
                     setting.Get("HealthBarFXChipWaitTime", ref Config.HealthBarFXChipWaitTime);
                     setting.Get("HealthBarFXChipSpeed", ref Config.HealthBarFXChipSpeed);
@@ -192,7 +192,10 @@ namespace FKBossHealthBar
 
                 }
             }
+        }
 
+        public override void PostDrawInterface(SpriteBatch spriteBatch)
+        {
             if (!Main.gameInactive) BossBarTracker.UpdateNPCTracker();
             
             if (!Config.ShowBossHealthBars) return;
