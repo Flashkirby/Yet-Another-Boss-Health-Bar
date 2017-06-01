@@ -1,10 +1,10 @@
-Where is Boss Health Bars? 'Barack Obama Ross' hasn't updated their mod for the current version of TModLoader so while it works, it won't appear on the current mod browser. It's still acessible by direct link here: javid.ddns.net/tModLoader/download.php?Down=mods/BossHealthBars.tmod?
+What's the difference between this and Boss Health Bars? Preference mostly. Barack Obama Ross' one has more customisation, whereas this one is more silly effects.
 
 Based on the Boss Health Bars mod, but with my own twist on it because why not.
-* Supports multiple boss health bars.
 * Show the boss' head icon.
 * Kinda supports non-standard bosses.
-* Made in about 4 hours therefore high quality.
+* Has vague mod support.
+* Has extra settings stored in Mod Config
 
 Credits: 
 Flashkirby99 - I am making this mod.
