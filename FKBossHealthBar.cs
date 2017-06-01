@@ -30,7 +30,7 @@ namespace FKBossHealthBar
             Config.LoadConfig();
             try
             {
-                LoadedFKTModSettings = true;
+                LoadedFKTModSettings = ModLoader.GetMod("FKTModSettings") != null;
                 ModSetting setting = ModSettingsAPI.CreateModSettingConfig(this);
                 setting.AddBool("ShowBossHealthBars", "Enable Health Bars", false);
                 setting.AddBool("SmallHealthBars", "Force Small Health Bars", false);
@@ -163,7 +163,7 @@ namespace FKBossHealthBar
 
         public override void PostUpdateInput()
         {
-            if (LoadedFKTModSettings)
+            if (LoadedFKTModSettings && !Main.gameMenu)
             {
                 ModSetting setting;
                 if (ModSettingsAPI.TryGetModSetting(this, out setting))
@@ -197,7 +197,7 @@ namespace FKBossHealthBar
         public override void PostDrawInterface(SpriteBatch spriteBatch)
         {
             if (!Main.gameInactive) BossBarTracker.UpdateNPCTracker();
-            
+
             if (!Config.ShowBossHealthBars) return;
             BossBarTracker.DrawHealthBars(spriteBatch);
         }
