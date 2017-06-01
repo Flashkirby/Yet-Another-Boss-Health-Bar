@@ -317,8 +317,9 @@ namespace FKBossHealthBar
                     BossBarTracker.TrackedNPCOldLife[npc] = life;
                 }
             }
-            yTop += shakeIntensity * (Main.rand.Next(2) * 2 - 1);
             if (Config.HealthBarFXShakeHorizontal) XLeft += shakeIntensity * (Main.rand.Next(2) * 2 - 1);
+            shakeIntensity = shakeIntensity * (Main.rand.Next(2) * 2 - 1);
+            yTop += shakeIntensity;
             #endregion
 
             #region chip
@@ -466,6 +467,7 @@ namespace FKBossHealthBar
                 }
             }
 
+            yTop -= shakeIntensity;
             return yTop;
         }
 
