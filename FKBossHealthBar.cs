@@ -32,31 +32,32 @@ namespace FKBossHealthBar
             {
                 LoadedFKTModSettings = true;
                 ModSetting setting = ModSettingsAPI.CreateModSettingConfig(this);
-                setting.AddBool("ShowBossHealthBars", "Enable boss health bars", false);
-                setting.AddBool("SmallHealthBars", "Force small health bars", false);
+                setting.AddBool("ShowBossHealthBars", "Enable Health Bars", false);
+                setting.AddBool("SmallHealthBars", "Force Small Health Bars", false);
 
-                setting.AddComment("TRANSPARENCY: Modify the alpha values for ease of use. ");
+                setting.AddComment("TRANSPARENCY", 1.1f);
 
-                setting.AddFloat("HealthBarUIDefaultAlpha", "Health bar transparency", 0f, 1f, false);
-                setting.AddFloat("HealthBarUIFadeHover", "Mouse Over modifier", 0, 1f, false);
+                setting.AddFloat("HealthBarUIDefaultAlpha", "Default Transparency", 0f, 1f, false);
+                setting.AddFloat("HealthBarUIFadeHover", "Mouse Over Modifier", 0, 1f, false);
                 setting.AddInt("HealthBarUIFadeTime", "Fade Time (seconds/60)", 0, 180, false);
 
-                setting.AddComment("FANCY FX: Modify pointless flair and special effects. ");
+                setting.AddComment("FANCY FX", 1.1f);
 
-                setting.AddBool("HealthBarFXFillUp", "Fill Bar on entry", false);
+                setting.AddBool("HealthBarFXFillUp", "Fill bar on Entry", false);
                 setting.AddBool("HealthBarFXShake", "Shake bar with damage", false);
-                setting.AddInt("HealthBarFXShakeIntensity", "Shake intensity", 1, 10, false);
-                setting.AddBool("HealthBarFXChip", "Show damage chipped away", false);
-                setting.AddBool("HealthBarFXChipNumbers", "Show damage chip numbers", false);
-                setting.AddInt("HealthBarFXChipWaitTime", "Chip drain wait time", 0, 180, false);
+                setting.AddBool("HealthBarFXShakeHorizontal", "Shake bar horizontally", false);
+                setting.AddInt("HealthBarFXShakeIntensity", "Shake bar intensity", 1, 10, false);
+                setting.AddBool("HealthBarFXChip", "Chip damage display", false);
+                setting.AddBool("HealthBarFXChipNumbers", "Chip damage numbers", false);
+                setting.AddInt("HealthBarFXChipWaitTime", "Chip drain delay", 0, 180, false);
                 setting.AddFloat("HealthBarFXChipSpeed", "Chip drain speed%", 0.001f, 1f, false);
 
-                setting.AddComment("POSITIONING: Tweak the positions and number of bars. ");
+                setting.AddComment("POSITIONING", 1.1f);
 
-                setting.AddInt("HealthBarUIScreenOffset", "Offset from bottom of screen", 0, 100, false);
-                setting.AddFloat("HealthBarUIScreenLength", "Bar length:screen", 0f, 1f, false);
+                setting.AddInt("HealthBarUIScreenOffset", "Distance from bottom", 0, 100, false);
                 setting.AddInt("HealthBarUIStackOffset", "Distance between bars", 0, 100, false);
-                setting.AddFloat("HealthBarUIMaxStackSize", "Max height% to draw bars", 0f, 1f, false);
+                setting.AddFloat("HealthBarUIScreenLength", "Screen width:bar scaling", 0f, 1f, false);
+                setting.AddFloat("HealthBarUIMaxStackSize", "Screen height:bar threshold", 0f, 1f, false);
             }
             catch { }
 
@@ -182,6 +183,8 @@ namespace FKBossHealthBar
                     setting.Get("HealthBarFXFillUp", ref Config.HealthBarFXFillUp);
                     setting.Get("HealthBarFXShake", ref Config.HealthBarFXShake);
                     setting.Get("HealthBarFXShakeIntensity", ref Config.HealthBarFXShakeIntensity);
+                    setting.Get("HealthBarFXShakeHorizontal", ref Config.HealthBarFXShakeHorizontal);
+                    
                     setting.Get("HealthBarFXChip", ref Config.HealthBarFXChip);
                     setting.Get("HealthBarFXChipWaitTime", ref Config.HealthBarFXChipWaitTime);
                     setting.Get("HealthBarFXChipSpeed", ref Config.HealthBarFXChipSpeed);

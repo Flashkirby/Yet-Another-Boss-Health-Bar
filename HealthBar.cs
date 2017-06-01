@@ -466,7 +466,6 @@ namespace FKBossHealthBar
                 }
             }
 
-            yTop -= shakeIntensity;
             return yTop;
         }
 
