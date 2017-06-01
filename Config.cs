@@ -43,6 +43,7 @@ namespace FKBossHealthBar
                 config.Get("HealthBarUIFadeHover", ref HealthBarUIFadeHover);
                 config.Get("HealthBarFXFillUp", ref HealthBarFXFillUp);
                 config.Get("HealthBarFXShake", ref HealthBarFXShake);
+                config.Get("HealthBarFXShakeHorizontal", ref HealthBarFXShakeHorizontal);
                 config.Get("HealthBarFXShakeIntensity", ref HealthBarFXShakeIntensity);
                 config.Get("HealthBarFXChip", ref HealthBarFXChip);
                 config.Get("HealthBarFXChipWaitTime", ref HealthBarFXChipWaitTime);
@@ -65,6 +66,7 @@ namespace FKBossHealthBar
                 config.Put("HealthBarUIFadeHover", HealthBarUIFadeHover);
                 config.Put("HealthBarFXFillUp", HealthBarFXFillUp);
                 config.Put("HealthBarFXShake", HealthBarFXShake);
+                config.Put("HealthBarFXShakeHorizontal", HealthBarFXShakeHorizontal);
                 config.Put("HealthBarFXShakeIntensity", HealthBarFXShakeIntensity);
                 config.Put("HealthBarFXChip", HealthBarFXChip);
                 config.Put("HealthBarFXChipWaitTime", HealthBarFXChipWaitTime);
@@ -107,13 +109,15 @@ namespace FKBossHealthBar
         /// <summary>Should the healthbar shake when depleted</summary>
         public static bool HealthBarFXShake = false;
         /// <summary>Pixel shake for shake effect</summary>
-        public static int HealthBarFXShakeIntensity = 3;
+        public static int HealthBarFXShakeIntensity = 2;
+        /// <summary>Should the healthbar shake along the X axis as well</summary>
+        public static bool HealthBarFXShakeHorizontal = false;
         /// <summary>Should the healthbar show damage being chipped away LIKE DARK SOULS</summary>
         public static bool HealthBarFXChip = false;
         /// <summary>Wait before starting the chip drain</summary>
         public static int HealthBarFXChipWaitTime = 60;
         /// <summary>Percent speed for chip draining speed</summary>
-        public static float HealthBarFXChipSpeed = 0.2f;
+        public static float HealthBarFXChipSpeed = 0.5f;
         /// <summary>Should health bar chipping also display damage numbers A BIT LIKE DARK SOULS</summary>
         public static bool HealthBarFXChipNumbers = false;
     }

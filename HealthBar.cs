@@ -312,15 +312,15 @@ namespace FKBossHealthBar
                     // Life dropped?
                     if (BossBarTracker.TrackedNPCOldLife[npc] > life)
                     {
-                        shakeIntensity = Config.HealthBarFXShakeIntensity;
+                        shakeIntensity = Main.rand.Next(Config.HealthBarFXShakeIntensity) + 1;
                     }
                     BossBarTracker.TrackedNPCOldLife[npc] = life;
                 }
             }
-            XLeft += shakeIntensity * (Main.rand.Next(2) * 2 - 1);
             yTop += shakeIntensity * (Main.rand.Next(2) * 2 - 1);
+            if (Config.HealthBarFXShakeHorizontal) XLeft += shakeIntensity * (Main.rand.Next(2) * 2 - 1);
             #endregion
-            
+
             #region chip
             float chipLife = 0f;
             if (Config.HealthBarFXChip)
@@ -466,6 +466,7 @@ namespace FKBossHealthBar
                 }
             }
 
+            yTop -= shakeIntensity;
             return yTop;
         }
 
