@@ -113,7 +113,7 @@ namespace FKBossHealthBar
         /// <summary>Should the healthbar shake along the X axis as well</summary>
         public static bool HealthBarFXShakeHorizontal = false;
         /// <summary>Should the healthbar show damage being chipped away LIKE DARK SOULS</summary>
-        public static bool HealthBarFXChip = false;
+        public static bool HealthBarFXChip = true;
         /// <summary>Wait before starting the chip drain</summary>
         public static int HealthBarFXChipWaitTime = 60;
         /// <summary>Percent speed for chip draining speed</summary>

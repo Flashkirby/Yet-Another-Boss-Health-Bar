@@ -27,6 +27,10 @@ namespace FKBossHealthBar
             // Servers don't bother
             if (Main.dedServ) return;
 
+            DemonHealthBar.DemonBarL = GetTexture("UI/DemonBarStart");
+            DemonHealthBar.DemonBarM = GetTexture("UI/DemonBarMiddle");
+            DemonHealthBar.DemonBarR = GetTexture("UI/DemonBarEnd");
+
             Config.LoadConfig();
             try
             {
@@ -62,6 +66,13 @@ namespace FKBossHealthBar
             catch { }
 
             HealthBar hb;
+
+            hb = new DemonHealthBar();
+            BossDisplayInfo.SetCustomHealthBar(NPCID.EyeofCthulhu, hb);
+            hb = new DemonHealthBar();
+            BossDisplayInfo.SetCustomHealthBar(NPCID.WallofFlesh, hb);
+
+
             hb = new HealthBar();
             BossDisplayInfo.SetCustomHealthBarMultiple(hb,
                 NPCID.EaterofWorldsHead,

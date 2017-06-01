@@ -72,20 +72,20 @@ namespace FKBossHealthBar
         public static void Initialise(Mod mod)
         {
             // Back texture
-            defaultFill = mod.GetTexture("HealthBarFill");
-            defaultFillSM = mod.GetTexture("SmBarFill");
+            defaultFill = mod.GetTexture("UI/HealthBarFill");
+            defaultFillSM = mod.GetTexture("UI/SmBarFill");
             // Standard health bars
-            defaultSta = mod.GetTexture("HealthBarStart");
-            defaultMid = mod.GetTexture("HealthBarMiddle");
-            defaultEnd = mod.GetTexture("HealthBarEnd");
+            defaultSta = mod.GetTexture("UI/HealthBarStart");
+            defaultMid = mod.GetTexture("UI/HealthBarMiddle");
+            defaultEnd = mod.GetTexture("UI/HealthBarEnd");
             // Expert Mode health bars
-            defaultStaEXP = mod.GetTexture("HealthBarStart_Exp");
-            defaultMidEXP = mod.GetTexture("HealthBarMiddle_Exp");
-            defaultEndEXP = mod.GetTexture("HealthBarEnd_Exp");
+            defaultStaEXP = mod.GetTexture("UI/HealthBarStart_Exp");
+            defaultMidEXP = mod.GetTexture("UI/HealthBarMiddle_Exp");
+            defaultEndEXP = mod.GetTexture("UI/HealthBarEnd_Exp");
             // Small health bars
-            defaultStaSM = mod.GetTexture("SmBarStart");
-            defaultMidSM = mod.GetTexture("SmBarMiddle");
-            defaultEndSM = mod.GetTexture("SmBarEnd");
+            defaultStaSM = mod.GetTexture("UI/SmBarStart");
+            defaultMidSM = mod.GetTexture("UI/SmBarMiddle");
+            defaultEndSM = mod.GetTexture("UI/SmBarEnd");
         }
         #endregion
         
