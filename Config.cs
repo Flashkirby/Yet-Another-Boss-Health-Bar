@@ -45,6 +45,7 @@ namespace FKBossHealthBar
                 config.Get("HealthBarFXChip", ref HealthBarFXChip);
                 config.Get("HealthBarFXChipWaitTime", ref HealthBarFXChipWaitTime);
                 config.Get("HealthBarFXChipSpeed", ref HealthBarFXChipSpeed);
+                config.Get("HealthBarFXChipNumbers", ref HealthBarFXChipNumbers);
             }
             else
             {
@@ -65,6 +66,7 @@ namespace FKBossHealthBar
                 config.Put("HealthBarFXChip", HealthBarFXChip);
                 config.Put("HealthBarFXChipWaitTime", HealthBarFXChipWaitTime);
                 config.Put("HealthBarFXChipSpeed", HealthBarFXChipSpeed);
+                config.Put("HealthBarFXChipNumbers", HealthBarFXChipNumbers);
                 config.Save();
             }
         }
@@ -109,5 +111,7 @@ namespace FKBossHealthBar
         public static int HealthBarFXChipWaitTime = 60;
         /// <summary>Percent speed for chip draining speed</summary>
         public static float HealthBarFXChipSpeed = 0.2f;
+        /// <summary>Should health bar chipping also display damage numbers A BIT LIKE DARK SOULS</summary>
+        public static bool HealthBarFXChipNumbers = false;
     }
 }

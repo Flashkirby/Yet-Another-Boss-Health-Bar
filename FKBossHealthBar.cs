@@ -47,6 +47,7 @@ namespace FKBossHealthBar
                 setting.AddBool("HealthBarFXShake", "Shake bar with damage", false);
                 setting.AddInt("HealthBarFXShakeIntensity", "Shake intensity", 1, 10, false);
                 setting.AddBool("HealthBarFXChip", "Show damage chipped away", false);
+                setting.AddBool("HealthBarFXChipNumbers", "Show damage chip numbers", false);
                 setting.AddInt("HealthBarFXChipWaitTime", "Chip drain wait time", 0, 180, false);
                 setting.AddFloat("HealthBarFXChipSpeed", "Chip drain speed%", 0.001f, 1f, false);
 
@@ -184,6 +185,7 @@ namespace FKBossHealthBar
                     setting.Get("HealthBarFXChip", ref Config.HealthBarFXChip);
                     setting.Get("HealthBarFXChipWaitTime", ref Config.HealthBarFXChipWaitTime);
                     setting.Get("HealthBarFXChipSpeed", ref Config.HealthBarFXChipSpeed);
+                    setting.Get("HealthBarFXChipNumbers", ref Config.HealthBarFXChipNumbers);
 
                 }
             }

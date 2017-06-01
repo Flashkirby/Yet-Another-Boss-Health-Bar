@@ -440,6 +440,18 @@ namespace FKBossHealthBar
                 ChatManager.GetStringSize(Main.fontMouseText, text, Vector2.One, BarLength) / 2,
                 SMALLMODE ? 0.6f : 1.1f, SpriteEffects.None, 0f);
 
+            if (Config.HealthBarFXChip && Config.HealthBarFXChipNumbers && (int)chipLife - life > 0)
+            {
+                int chipDamage = (int)chipLife - life;
+                spriteBatch.DrawString(
+                    Main.fontMouseText,
+                    "" + chipDamage,
+                    new Vector2(XLeft + BarLength - 8, yTop + midYOffset + barM.Height / 2),
+                    frameColour, 0f,
+                    ChatManager.GetStringSize(Main.fontMouseText, "" + chipDamage, Vector2.One, BarLength) * new Vector2(1f, 0.5f),
+                    SMALLMODE ? 0.6f : 0.8f, SpriteEffects.None, 0f);
+            }
+
             // Check for mouse position
             if (MouseOver < 2)
             {
