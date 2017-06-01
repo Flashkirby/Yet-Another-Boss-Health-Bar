@@ -20,6 +20,7 @@ namespace FKBossHealthBar
         //The file will be stored in "Terraria/ModLoader/Mod Configs/Example Mod.json"
         private static string ConfigPath = Path.Combine(Main.SavePath, "Mod Configs", "YetAnotherBHB.json");
         private static Preferences config;
+        private static int version = 1;
         public static void LoadConfig()
         {
             // Shamelessly 'borrowed' from WMITF, ty goldenapple
@@ -29,6 +30,7 @@ namespace FKBossHealthBar
             if (config.Load())
             {
                 // Set these values when successfully loaded
+                config.Get("version", ref version);
                 config.Get("ShowBossHealthBars", ref ShowBossHealthBars);
                 config.Get("SmallHealthBars", ref SmallHealthBars);
                 config.Get("HealthBarDrawDistance", ref HealthBarDrawDistance);
@@ -50,6 +52,7 @@ namespace FKBossHealthBar
             else
             {
                 // Put in these values if new
+                config.Put("version", version);
                 config.Put("ShowBossHealthBars", ShowBossHealthBars);
                 config.Put("SmallHealthBars", SmallHealthBars);
                 config.Put("HealthBarDrawDistance", HealthBarDrawDistance);
