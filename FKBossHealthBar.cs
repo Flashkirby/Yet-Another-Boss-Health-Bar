@@ -31,6 +31,10 @@ namespace FKBossHealthBar
             DemonHealthBar.DemonBarM = GetTexture("UI/DemonBarMiddle");
             DemonHealthBar.DemonBarR = GetTexture("UI/DemonBarEnd");
 
+            MechHealthBar.MechBarL = GetTexture("UI/MechBarStart");
+            MechHealthBar.MechBarM = GetTexture("UI/MechBarMiddle");
+            MechHealthBar.MechBarR = GetTexture("UI/MechBarEnd");
+
             Config.LoadConfig();
             try
             {
@@ -69,6 +73,15 @@ namespace FKBossHealthBar
 
             hb = new DemonHealthBar();
             BossDisplayInfo.SetCustomHealthBar(NPCID.WallofFlesh, hb);
+
+            hb = new MechHealthBar();
+            BossDisplayInfo.SetCustomHealthBar(NPCID.TheDestroyer, hb);
+            hb = new MechHealthBar();
+            BossDisplayInfo.SetCustomHealthBar(NPCID.Spazmatism, hb);
+            hb = new MechHealthBar();
+            BossDisplayInfo.SetCustomHealthBar(NPCID.Retinazer, hb);
+            hb = new MechHealthBar();
+            BossDisplayInfo.SetCustomHealthBar(NPCID.SkeletronPrime, hb);
 
 
             hb = new HealthBar();
