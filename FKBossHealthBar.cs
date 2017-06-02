@@ -68,8 +68,6 @@ namespace FKBossHealthBar
             HealthBar hb;
 
             hb = new DemonHealthBar();
-            BossDisplayInfo.SetCustomHealthBar(NPCID.EyeofCthulhu, hb);
-            hb = new DemonHealthBar();
             BossDisplayInfo.SetCustomHealthBar(NPCID.WallofFlesh, hb);
 
 
