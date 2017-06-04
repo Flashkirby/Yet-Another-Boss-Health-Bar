@@ -35,6 +35,12 @@ namespace FKBossHealthBar
             MechHealthBar.MechBarM = GetTexture("UI/MechBarMiddle");
             MechHealthBar.MechBarR = GetTexture("UI/MechBarEnd");
 
+            DD2HealthBar.BarL = GetTexture("UI/DD2BarStart");
+            DD2HealthBar.BarM = GetTexture("UI/DD2BarMiddle");
+            DD2HealthBar.BarR = GetTexture("UI/DD2BarEnd");
+            DD2HealthBar.BarF = GetTexture("UI/DD2BarFill");
+            DD2HealthBar.BarFsm = GetTexture("UI/DD2SmBarFill");
+
             Config.LoadConfig();
             try
             {
@@ -153,19 +159,19 @@ namespace FKBossHealthBar
             BossDisplayInfo.SetCustomHealthBar(NPCID.MoonLordCore, hb);
 
             #region DD2
-            hb = new HealthBar();
+            hb = new DD2HealthBar();
             BossDisplayInfo.SetCustomHealthBar(NPCID.DD2DarkMageT1, hb);
-            hb = new HealthBar();
+            hb = new DD2HealthBar();
             hb.ForceSmall = true;
             BossDisplayInfo.SetCustomHealthBar(NPCID.DD2DarkMageT3, hb);
 
-            hb = new HealthBar();
+            hb = new DD2HealthBar();
             BossDisplayInfo.SetCustomHealthBar(NPCID.DD2OgreT2, hb);
-            hb = new HealthBar();
+            hb = new DD2HealthBar();
             hb.ForceSmall = true;
             BossDisplayInfo.SetCustomHealthBar(NPCID.DD2OgreT3, hb);
 
-            hb = new HealthBar();
+            hb = new DD2HealthBar();
             BossDisplayInfo.SetCustomHealthBar(NPCID.DD2Betsy, hb);
 
             hb = new DD2CrystalHealthBar();

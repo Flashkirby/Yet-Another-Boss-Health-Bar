@@ -29,6 +29,10 @@ namespace FKBossHealthBar
         /// Always call the small bar textures when drawing. Typically reserved for minibosses
         /// </summary>
         public bool ForceSmall = false;
+        /// <summary>
+        /// Never show the chip bar graphics (numbers are still shown)
+        /// </summary>
+        public bool ForceNoChip = false;
 
         public DisplayType DisplayMode = DisplayType.Standard;
 
@@ -392,7 +396,7 @@ namespace FKBossHealthBar
             // Draw Fill
             int realLength = drawHealthBarFill(spriteBatch, life, lifeMax, barColour, fill, BarLength, XLeft, midXOffset, midYOffset, yTop, SMALLMODE);
             // Draw Chip
-            if (Config.HealthBarFXChip)
+            if (Config.HealthBarFXChip && !ForceNoChip)
             {
                 drawHealthBarFill(spriteBatch, (int)chipLife - life, lifeMax, barColour * 0.5f, fill, BarLength, XLeft + realLength, midXOffset, midYOffset, yTop, SMALLMODE);
             }
