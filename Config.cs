@@ -26,7 +26,7 @@ namespace FKBossHealthBar
             // Shamelessly 'borrowed' from WMITF, ty goldenapple
             // https://forums.terraria.org/index.php?threads/modders-guide-to-config-files-and-optional-features.48581/
             config = new Preferences(ConfigPath);
-            config.AutoSave = true;
+
             if (config.Load())
             {
                 // Set these values when successfully loaded
@@ -52,28 +52,33 @@ namespace FKBossHealthBar
             }
             else
             {
-                // Put in these values if new
-                config.Put("version", version);
-                config.Put("ShowBossHealthBars", ShowBossHealthBars);
-                config.Put("SmallHealthBars", SmallHealthBars);
-                config.Put("HealthBarDrawDistance", HealthBarDrawDistance);
-                config.Put("HealthBarUIScreenOffset", HealthBarUIScreenOffset);
-                config.Put("HealthBarUIStackOffset", HealthBarUIStackOffset);
-                config.Put("HealthBarUIDefaultAlpha", HealthBarUIDefaultAlpha);
-                config.Put("HealthBarUIMaxStackSize", HealthBarUIMaxStackSize);
-                config.Put("HealthBarUIScreenLength", HealthBarUIScreenLength);
-                config.Put("HealthBarUIFadeTime", HealthBarUIFadeTime);
-                config.Put("HealthBarUIFadeHover", HealthBarUIFadeHover);
-                config.Put("HealthBarFXFillUp", HealthBarFXFillUp);
-                config.Put("HealthBarFXShake", HealthBarFXShake);
-                config.Put("HealthBarFXShakeHorizontal", HealthBarFXShakeHorizontal);
-                config.Put("HealthBarFXShakeIntensity", HealthBarFXShakeIntensity);
-                config.Put("HealthBarFXChip", HealthBarFXChip);
-                config.Put("HealthBarFXChipWaitTime", HealthBarFXChipWaitTime);
-                config.Put("HealthBarFXChipSpeed", HealthBarFXChipSpeed);
-                config.Put("HealthBarFXChipNumbers", HealthBarFXChipNumbers);
-                config.Save();
+                SaveValues();
             }
+        }
+
+        internal static void SaveValues()
+        {
+            // Put in these values if new
+            config.Put("version", version);
+            config.Put("ShowBossHealthBars", ShowBossHealthBars);
+            config.Put("SmallHealthBars", SmallHealthBars);
+            config.Put("HealthBarDrawDistance", HealthBarDrawDistance);
+            config.Put("HealthBarUIScreenOffset", HealthBarUIScreenOffset);
+            config.Put("HealthBarUIStackOffset", HealthBarUIStackOffset);
+            config.Put("HealthBarUIDefaultAlpha", HealthBarUIDefaultAlpha);
+            config.Put("HealthBarUIMaxStackSize", HealthBarUIMaxStackSize);
+            config.Put("HealthBarUIScreenLength", HealthBarUIScreenLength);
+            config.Put("HealthBarUIFadeTime", HealthBarUIFadeTime);
+            config.Put("HealthBarUIFadeHover", HealthBarUIFadeHover);
+            config.Put("HealthBarFXFillUp", HealthBarFXFillUp);
+            config.Put("HealthBarFXShake", HealthBarFXShake);
+            config.Put("HealthBarFXShakeHorizontal", HealthBarFXShakeHorizontal);
+            config.Put("HealthBarFXShakeIntensity", HealthBarFXShakeIntensity);
+            config.Put("HealthBarFXChip", HealthBarFXChip);
+            config.Put("HealthBarFXChipWaitTime", HealthBarFXChipWaitTime);
+            config.Put("HealthBarFXChipSpeed", HealthBarFXChipSpeed);
+            config.Put("HealthBarFXChipNumbers", HealthBarFXChipNumbers);
+            config.Save();
         }
 
         /// <summary>Show health bars, in case you want to disable it...</summary>

@@ -191,6 +191,11 @@ namespace FKBossHealthBar
             setting.AddFloat("HealthBarUIMaxStackSize", "Screen height:bar threshold", 0f, 1f, false);
         }
 
+        public override void PreSaveAndQuit()
+        {
+            Config.SaveValues()
+        }
+
         public override void UpdateMusic(ref int music)
         {
             if (Main.gameMenu)
