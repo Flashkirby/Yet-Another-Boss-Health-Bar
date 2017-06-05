@@ -42,36 +42,15 @@ namespace FKBossHealthBar
             DD2HealthBar.BarFsm = GetTexture("UI/DD2SmBarFill");
 
             Config.LoadConfig();
+
+            LoadedFKTModSettings = ModLoader.GetMod("FKTModSettings") != null;
             try
             {
-                LoadedFKTModSettings = ModLoader.GetMod("FKTModSettings") != null;
-                ModSetting setting = ModSettingsAPI.CreateModSettingConfig(this);
-                setting.AddBool("ShowBossHealthBars", "Enable Health Bars", false);
-                setting.AddBool("SmallHealthBars", "Force Small Health Bars", false);
-
-                setting.AddComment("TRANSPARENCY", 1.1f);
-
-                setting.AddFloat("HealthBarUIDefaultAlpha", "Default Transparency", 0f, 1f, false);
-                setting.AddFloat("HealthBarUIFadeHover", "Mouse Over Modifier", 0, 1f, false);
-                setting.AddInt("HealthBarUIFadeTime", "Fade Time (seconds/60)", 0, 180, false);
-
-                setting.AddComment("FANCY FX", 1.1f);
-
-                setting.AddBool("HealthBarFXFillUp", "Fill bar on Entry", false);
-                setting.AddBool("HealthBarFXShake", "Shake bar with damage", false);
-                setting.AddBool("HealthBarFXShakeHorizontal", "Shake bar horizontally", false);
-                setting.AddInt("HealthBarFXShakeIntensity", "Shake bar intensity", 1, 10, false);
-                setting.AddBool("HealthBarFXChip", "Chip damage display", false);
-                setting.AddBool("HealthBarFXChipNumbers", "Chip damage numbers", false);
-                setting.AddInt("HealthBarFXChipWaitTime", "Chip drain delay", 0, 180, false);
-                setting.AddFloat("HealthBarFXChipSpeed", "Chip drain speed%", 0.001f, 1f, false);
-
-                setting.AddComment("POSITIONING", 1.1f);
-
-                setting.AddInt("HealthBarUIScreenOffset", "Distance from bottom", 0, 100, false);
-                setting.AddInt("HealthBarUIStackOffset", "Distance between bars", 0, 100, false);
-                setting.AddFloat("HealthBarUIScreenLength", "Screen width:bar scaling", 0f, 1f, false);
-                setting.AddFloat("HealthBarUIMaxStackSize", "Screen height:bar threshold", 0f, 1f, false);
+                if (LoadedFKTModSettings)
+                {
+                    // Needs to be in a method otherwise it throws a namespace error
+                    LoadModSettings();
+                }
             }
             catch { }
 
@@ -181,6 +160,37 @@ namespace FKBossHealthBar
             HealthBar.Initialise(this);
         }
 
+        private void LoadModSettings()
+        {
+            ModSetting setting = ModSettingsAPI.CreateModSettingConfig(this);
+            setting.AddBool("ShowBossHealthBars", "Enable Health Bars", false);
+            setting.AddBool("SmallHealthBars", "Force Small Health Bars", false);
+
+            setting.AddComment("TRANSPARENCY", 1.1f);
+
+            setting.AddFloat("HealthBarUIDefaultAlpha", "Default Transparency", 0f, 1f, false);
+            setting.AddFloat("HealthBarUIFadeHover", "Mouse Over Modifier", 0, 1f, false);
+            setting.AddInt("HealthBarUIFadeTime", "Fade Time (seconds/60)", 0, 180, false);
+
+            setting.AddComment("FANCY FX", 1.1f);
+
+            setting.AddBool("HealthBarFXFillUp", "Fill bar on Entry", false);
+            setting.AddBool("HealthBarFXShake", "Shake bar with damage", false);
+            setting.AddBool("HealthBarFXShakeHorizontal", "Shake bar horizontally", false);
+            setting.AddInt("HealthBarFXShakeIntensity", "Shake bar intensity", 1, 10, false);
+            setting.AddBool("HealthBarFXChip", "Chip damage display", false);
+            setting.AddBool("HealthBarFXChipNumbers", "Chip damage numbers", false);
+            setting.AddInt("HealthBarFXChipWaitTime", "Chip drain delay", 0, 180, false);
+            setting.AddFloat("HealthBarFXChipSpeed", "Chip drain speed%", 0.001f, 1f, false);
+
+            setting.AddComment("POSITIONING", 1.1f);
+
+            setting.AddInt("HealthBarUIScreenOffset", "Distance from bottom", 0, 100, false);
+            setting.AddInt("HealthBarUIStackOffset", "Distance between bars", 0, 100, false);
+            setting.AddFloat("HealthBarUIScreenLength", "Screen width:bar scaling", 0f, 1f, false);
+            setting.AddFloat("HealthBarUIMaxStackSize", "Screen height:bar threshold", 0f, 1f, false);
+        }
+
         public override void UpdateMusic(ref int music)
         {
             if (Main.gameMenu)
@@ -191,34 +201,44 @@ namespace FKBossHealthBar
 
         public override void PostUpdateInput()
         {
-            if (LoadedFKTModSettings && !Main.gameMenu)
+            try
             {
-                ModSetting setting;
-                if (ModSettingsAPI.TryGetModSetting(this, out setting))
+                if (LoadedFKTModSettings && !Main.gameMenu)
                 {
-                    setting.Get("ShowBossHealthBars", ref Config.ShowBossHealthBars);
-                    setting.Get("SmallHealthBars", ref Config.SmallHealthBars);
-
-                    setting.Get("HealthBarUIScreenOffset", ref Config.HealthBarUIScreenOffset);
-                    setting.Get("HealthBarUIScreenLength", ref Config.HealthBarUIScreenLength);
-                    setting.Get("HealthBarUIStackOffset", ref Config.HealthBarUIStackOffset);
-
-                    setting.Get("HealthBarUIDefaultAlpha", ref Config.HealthBarUIDefaultAlpha);
-                    setting.Get("HealthBarUIFadeHover", ref Config.HealthBarUIFadeHover);
-                    setting.Get("HealthBarUIFadeTime", ref Config.HealthBarUIFadeTimeINT);
-                    setting.Get("HealthBarUIMaxStackSize", ref Config.HealthBarUIMaxStackSize);
-
-                    setting.Get("HealthBarFXFillUp", ref Config.HealthBarFXFillUp);
-                    setting.Get("HealthBarFXShake", ref Config.HealthBarFXShake);
-                    setting.Get("HealthBarFXShakeIntensity", ref Config.HealthBarFXShakeIntensity);
-                    setting.Get("HealthBarFXShakeHorizontal", ref Config.HealthBarFXShakeHorizontal);
-
-                    setting.Get("HealthBarFXChip", ref Config.HealthBarFXChip);
-                    setting.Get("HealthBarFXChipWaitTime", ref Config.HealthBarFXChipWaitTime);
-                    setting.Get("HealthBarFXChipSpeed", ref Config.HealthBarFXChipSpeed);
-                    setting.Get("HealthBarFXChipNumbers", ref Config.HealthBarFXChipNumbers);
-
+                    // Needs to be in a method otherwise it throws a namespace error
+                    UpdateModSettings();
                 }
+            }
+            catch { }
+        }
+
+        private void UpdateModSettings()
+        {
+            ModSetting setting;
+            if (ModSettingsAPI.TryGetModSetting(this, out setting))
+            {
+                setting.Get("ShowBossHealthBars", ref Config.ShowBossHealthBars);
+                setting.Get("SmallHealthBars", ref Config.SmallHealthBars);
+
+                setting.Get("HealthBarUIScreenOffset", ref Config.HealthBarUIScreenOffset);
+                setting.Get("HealthBarUIScreenLength", ref Config.HealthBarUIScreenLength);
+                setting.Get("HealthBarUIStackOffset", ref Config.HealthBarUIStackOffset);
+
+                setting.Get("HealthBarUIDefaultAlpha", ref Config.HealthBarUIDefaultAlpha);
+                setting.Get("HealthBarUIFadeHover", ref Config.HealthBarUIFadeHover);
+                setting.Get("HealthBarUIFadeTime", ref Config.HealthBarUIFadeTimeINT);
+                setting.Get("HealthBarUIMaxStackSize", ref Config.HealthBarUIMaxStackSize);
+
+                setting.Get("HealthBarFXFillUp", ref Config.HealthBarFXFillUp);
+                setting.Get("HealthBarFXShake", ref Config.HealthBarFXShake);
+                setting.Get("HealthBarFXShakeIntensity", ref Config.HealthBarFXShakeIntensity);
+                setting.Get("HealthBarFXShakeHorizontal", ref Config.HealthBarFXShakeHorizontal);
+
+                setting.Get("HealthBarFXChip", ref Config.HealthBarFXChip);
+                setting.Get("HealthBarFXChipWaitTime", ref Config.HealthBarFXChipWaitTime);
+                setting.Get("HealthBarFXChipSpeed", ref Config.HealthBarFXChipSpeed);
+                setting.Get("HealthBarFXChipNumbers", ref Config.HealthBarFXChipNumbers);
+
             }
         }
 
