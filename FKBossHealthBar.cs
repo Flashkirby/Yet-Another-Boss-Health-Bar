@@ -187,7 +187,7 @@ namespace FKBossHealthBar
 
             setting.AddInt("HealthBarUIScreenOffset", "Distance from bottom", 0, 100, false);
             setting.AddInt("HealthBarUIStackOffset", "Distance between bars", 0, 100, false);
-            setting.AddFloat("HealthBarUIScreenLength", "Screen width:bar scaling", 0f, 1f, false);
+            setting.AddFloat("HealthBarUIScreenLength", "Screen width:bar scaling", 0f, 0.85f, false);
             setting.AddFloat("HealthBarUIMaxStackSize", "Screen height:bar threshold", 0f, 1f, false);
         }
 
