@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Graphics;
 using Terraria;
 using Terraria.UI.Chat;
 using Terraria.ModLoader;
@@ -166,7 +167,7 @@ namespace FKBossHealthBar
         }
         protected virtual string GetBossDisplayNameNPC(NPC npc)
         {
-            return npc.displayName;
+            return npc.GivenOrTypeName;
         }
 
         /// <summary>
@@ -437,7 +438,8 @@ namespace FKBossHealthBar
                 displayName = GetBossDisplayNameNPC(npc);
             }
             string text = string.Concat(displayName, ": ", life, "/", lifeMax);
-            spriteBatch.DrawString(
+            DynamicSpriteFontExtensionMethods.DrawString(
+                spriteBatch,
                 Main.fontMouseText,
                 text,
                 new Vector2(XLeft + BarLength / 2, yTop + midYOffset + barM.Height / 2),
@@ -448,7 +450,8 @@ namespace FKBossHealthBar
             if (Config.HealthBarFXChip && Config.HealthBarFXChipNumbers && (int)chipLife - life > 0)
             {
                 int chipDamage = (int)chipLife - life;
-                spriteBatch.DrawString(
+                DynamicSpriteFontExtensionMethods.DrawString(
+                    spriteBatch,
                     Main.fontMouseText,
                     "" + chipDamage,
                     new Vector2(XLeft + BarLength - 8, yTop + midYOffset + barM.Height / 2),

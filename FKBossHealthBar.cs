@@ -154,7 +154,7 @@ namespace FKBossHealthBar
             BossDisplayInfo.SetCustomHealthBar(NPCID.DD2Betsy, hb);
 
             hb = new DD2CrystalHealthBar();
-            BossDisplayInfo.SetCustomHealthBar(NPCID.DD2Crystal, hb);
+            BossDisplayInfo.SetCustomHealthBar(NPCID.DD2EterniaCrystal, hb);
             #endregion
 
             HealthBar.Initialise(this);
@@ -193,7 +193,7 @@ namespace FKBossHealthBar
 
         public override void PreSaveAndQuit()
         {
-            Config.SaveValues()
+            Config.SaveValues();
         }
 
         public override void UpdateMusic(ref int music)
