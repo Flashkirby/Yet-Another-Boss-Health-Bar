@@ -74,6 +74,8 @@ namespace FKBossHealthBar
         {
             // Cannot track non-active entities
             if (!npc.active) return false;
+            if (npc.timeLeft <= 0) return false;
+            if (npc.life <= 0 && npc.lifeMax > 0) return false;
 
             // Don't track NPCs which are part of a shared life chain (except the head of course)
             if (npc.realLife >= 0 && npc.realLife != npc.whoAmI) return false;
