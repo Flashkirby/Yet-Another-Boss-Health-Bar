@@ -136,20 +136,6 @@ namespace FKBossHealthBar
                     // Not in list yet?
                     if (!TrackedNPCs.ContainsKey(npc))
                     {
-                        // IF a copy of this npc exists already, just reuse that
-                        foreach(NPC any in TrackedNPCs.Keys.ToList())
-                        {
-                            if(npc.whoAmI == any.whoAmI)
-                            {
-                                int time = TrackedNPCs[any];
-                                if (time < 0) time += Config.HealthBarUIFadeTime + 1;
-                                TrackedNPCs.Add(npc, time);
-                                TrackedNPCs.Remove(any);
-                                break;
-                            }
-                        }
-
-                        // We tracking now
                         TrackedNPCs.Add(npc, (short)Config.HealthBarUIFadeTime);
                     }
                 }
@@ -214,11 +200,13 @@ namespace FKBossHealthBar
             // Sort the timers
             foreach (NPC tracked in TrackedNPCs.Keys.ToList())
             {
+                // FADE IN
                 if (TrackedNPCs[tracked] > 0)
                 {
                     // Fade to 0
                     TrackedNPCs[tracked]--;
                 }
+                // FADE OUT
                 else if (TrackedNPCs[tracked] <= -1)
                 {
                     if (TrackedNPCs[tracked] == -1)

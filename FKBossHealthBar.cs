@@ -195,11 +195,12 @@ namespace FKBossHealthBar
         {
             Config.SaveValues();
         }
-
+        
         public override void UpdateMusic(ref int music)
         {
             if (Main.gameMenu)
             {
+                // Consider moving this to PreSaveAndQuit?
                 BossBarTracker.ResetTracker();
             }
         }
@@ -249,7 +250,11 @@ namespace FKBossHealthBar
 
         public override void PostDrawInterface(SpriteBatch spriteBatch)
         {
-            if (!Main.gameInactive) BossBarTracker.UpdateNPCTracker();
+            try
+            {
+                if (!Main.gameInactive) BossBarTracker.UpdateNPCTracker();
+            }
+            catch (System.Exception e) { Main.NewTextMultiline(e.ToString()); }
 
             if (!Config.ShowBossHealthBars) return;
             BossBarTracker.DrawHealthBars(spriteBatch);
