@@ -72,6 +72,9 @@ namespace FKBossHealthBar
         internal static Texture2D defaultStaSM; // Left for small bar
         internal static Texture2D defaultMidSM; // Middle for small bar
         internal static Texture2D defaultEndSM; // Right for small bar
+        internal static Texture2D defaultStaSMEXP; // Expert mode left for small bar
+        internal static Texture2D defaultMidSMEXP; // Expert mode middle for small bar
+        internal static Texture2D defaultEndSMEXP; // Expert mode right for small bar
         public const int defaultFillEdgeX = 2; // Start X of the bar fill edge
         public const int defaultEndXOffset = 30; // texture inset of bar for ends
         public const int defaultEndYOffset = 10; // texture offset between ends and bar
@@ -92,6 +95,10 @@ namespace FKBossHealthBar
             defaultStaSM = mod.GetTexture("UI/SmBarStart");
             defaultMidSM = mod.GetTexture("UI/SmBarMiddle");
             defaultEndSM = mod.GetTexture("UI/SmBarEnd");
+            // Expert Mode small health bars
+            defaultStaSMEXP = mod.GetTexture("UI/SmBarStart_Exp");
+            defaultMidSMEXP = mod.GetTexture("UI/SmBarMiddle_Exp");
+            defaultEndSMEXP = mod.GetTexture("UI/SmBarEnd_Exp");
         }
         #endregion
         
@@ -143,15 +150,24 @@ namespace FKBossHealthBar
         }
         protected virtual Texture2D GetSmallLeftBar()
         {
-            return defaultStaSM;
+            if (!Main.expertMode)
+            { return defaultStaSM; }
+            else
+            { return defaultStaSMEXP; }
         }
         protected virtual Texture2D GetSmallMidBar()
         {
-            return defaultMidSM;
+            if (!Main.expertMode)
+            { return defaultMidSM; }
+            else
+            { return defaultMidSMEXP; }
         }
         protected virtual Texture2D GetSmallRightBar()
         {
-            return defaultEndSM;
+            if (!Main.expertMode)
+            { return defaultEndSM; }
+            else
+            { return defaultEndSMEXP; }
         }
         protected virtual int GetSmallFillDecoOffsetX() { return 4; }
         protected virtual int GetSmallBossHeadCentreOffsetX() { return 14; }
