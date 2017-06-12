@@ -160,6 +160,25 @@ namespace FKBossHealthBar
             HealthBar.Initialise(this);
         }
 
+        public override void PreSaveAndQuit()
+        {
+            Config.SaveValues();
+        }
+
+        public override void PostUpdateInput()
+        {
+            try
+            {
+                if (LoadedFKTModSettings && !Main.gameMenu)
+                {
+                    // Needs to be in a method otherwise it throws a namespace error
+                    UpdateModSettings();
+                }
+            }
+            catch { }
+        }
+
+        #region Mod Settings Integration
         private void LoadModSettings()
         {
             ModSetting setting = ModSettingsAPI.CreateModSettingConfig(this);
@@ -190,34 +209,6 @@ namespace FKBossHealthBar
             setting.AddFloat("HealthBarUIScreenLength", "Screen width:bar scaling", 0f, 0.85f, false);
             setting.AddFloat("HealthBarUIMaxStackSize", "Screen height:bar threshold", 0f, 1f, false);
         }
-
-        public override void PreSaveAndQuit()
-        {
-            Config.SaveValues();
-        }
-        
-        public override void UpdateMusic(ref int music)
-        {
-            if (Main.gameMenu)
-            {
-                // Consider moving this to PreSaveAndQuit?
-                BossBarTracker.ResetTracker();
-            }
-        }
-
-        public override void PostUpdateInput()
-        {
-            try
-            {
-                if (LoadedFKTModSettings && !Main.gameMenu)
-                {
-                    // Needs to be in a method otherwise it throws a namespace error
-                    UpdateModSettings();
-                }
-            }
-            catch { }
-        }
-
         private void UpdateModSettings()
         {
             ModSetting setting;
@@ -245,6 +236,16 @@ namespace FKBossHealthBar
                 setting.Get("HealthBarFXChipSpeed", ref Config.HealthBarFXChipSpeed);
                 setting.Get("HealthBarFXChipNumbers", ref Config.HealthBarFXChipNumbers);
 
+            }
+        }
+        #endregion
+
+        public override void UpdateMusic(ref int music)
+        {
+            if (Main.gameMenu)
+            {
+                // Consider moving this to PreSaveAndQuit?
+                BossBarTracker.ResetTracker();
             }
         }
 
