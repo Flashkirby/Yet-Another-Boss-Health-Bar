@@ -26,14 +26,14 @@ namespace FKBossHealthBar
         /// </summary>
         public static int MouseOver = 0;
 
-        /// <summary>
-        /// Always call the small bar textures when drawing. Typically reserved for minibosses
-        /// </summary>
+        /// <summary> Always call the small bar textures when drawing. Typically reserved for minibosses </summary>
         public bool ForceSmall = false;
-        /// <summary>
-        /// Never show the chip bar graphics (numbers are still shown)
-        /// </summary>
+        /// <summary> Never show the chip bar graphics (numbers are still shown) </summary>
         public bool ForceNoChip = false;
+        /*
+        /// <summary> Only allow one of these bars to show regardless of how many are active </summary>
+        public bool ForceUnique = false;
+        */
 
         public DisplayType DisplayMode = DisplayType.Standard;
 
@@ -55,6 +55,7 @@ namespace FKBossHealthBar
             foreach(KeyValuePair<int, HealthBar> kvp in BossDisplayInfo.NPCHealthBars)
             {
                 kvp.Value.multiShowCount = 0;
+                //kvp.Value.drawnUnique = false;
             }
             
         }
@@ -299,6 +300,12 @@ namespace FKBossHealthBar
                 multiShowCount++;
                 return yTop; // We don't show multiple NPC healthbars for a collective boss. ever.
             }
+
+            // Don't draw more than 1 unique per frame
+            /*
+            if (drawnUnique && ForceUnique) return yTop;
+            if (!drawnUnique) drawnUnique = true;
+            */
 
             bool SMALLMODE = Config.SmallHealthBars || ForceSmall;
             string displayName = "";

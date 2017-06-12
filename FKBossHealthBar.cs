@@ -137,6 +137,12 @@ namespace FKBossHealthBar
             hb = new MoonLordPhase2HealthBar();
             BossDisplayInfo.SetCustomHealthBar(NPCID.MoonLordCore, hb);
 
+            // Slime Rain jank
+            /*
+            hb = new SlimeRainHealthBar();
+            BossDisplayInfo.SetCustomHealthBar(NPCID.BlueSlime, hb);
+            */
+
             #region DD2
             hb = new DD2HealthBar();
             BossDisplayInfo.SetCustomHealthBar(NPCID.DD2DarkMageT1, hb);
