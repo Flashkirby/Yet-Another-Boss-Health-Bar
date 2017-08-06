@@ -14,6 +14,8 @@ namespace FKBossHealthBar
     /// </summary>
     public static class BossBarTracker
     {
+        private const bool DEBUG_TRACKER = false;
+
         // Tracks all NPCs that should be drawing healthbars
         private static Dictionary<NPC, int> trackedNpcs;
         internal static Dictionary<NPC, int> TrackedNPCs
@@ -127,6 +129,17 @@ namespace FKBossHealthBar
 
         public static void UpdateNPCTracker()
         {
+            if (DEBUG_TRACKER && Main.time % 60 == 0)
+            {
+                string tracked = "list: ";
+                foreach (NPC npc in TrackedNPCs.Keys)
+                {
+                    tracked += string.Concat("[", npc.whoAmI, "]");//(char)(65 + npc.whoAmI);
+                    Main.NewText(string.Concat(npc.GivenOrTypeName + ":", npc.active, "|", npc.timeLeft, "|", npc.life, "|", npc.lifeMax, "|trackable?", CanTrackNPCHealth(npc)));
+                }
+                Main.NewTextMultiline(tracked);
+            }
+
             // Add and remove NPCs on the list
             foreach (NPC npc in Main.npc)
             {
@@ -136,33 +149,31 @@ namespace FKBossHealthBar
                     // Not in list yet?
                     if (!TrackedNPCs.ContainsKey(npc))
                     {
+                        if (DEBUG_TRACKER) Main.NewText(npc.GivenOrTypeName + " [" + npc.whoAmI + "] added");
                         TrackedNPCs.Add(npc, (short)Config.HealthBarUIFadeTime);
                     }
                 }
                 else
                 {
                     // But in was in the list before?
-                    if (TrackedNPCs.ContainsKey(npc))
+                    //if (TrackedNPCs.ContainsKey(npc))
+                    foreach (NPC tracked in TrackedNPCs.Keys)
                     {
-                        // First check if it's a multi-bar NPC
-                        HealthBar hb = BossDisplayInfo.GetHealthBarForNPCOrNull(npc.type);
-                        if (hb != null)
+                        if (npc == tracked)
                         {
-                            if(hb.DisplayMode == HealthBar.DisplayType.Multiple && hb.multiShowCount > 1)
-                            {
-                                // Just remove it if there's more than 1 left
-                                TrackedNPCs.Remove(npc);
-                                break;
-                            }
-                        }
+                            if (DEBUG_TRACKER) Main.NewText(npc.GivenOrTypeName + " [" + npc.whoAmI + "] flagged for removal");
 
-                        // Make a temp copy that won't be changing
-                        // Do this to keep info of dead NPCs fpr a while
-                        NPC temp = new NPC();
-                        temp = (NPC)npc.Clone();
-                        if(temp.life < 0) temp.life = 0;
-                        TrackedNPCs.Add(temp, -Config.HealthBarUIFadeTime - 1);
-                        TrackedNPCs.Remove(npc);
+                            RemoveTrackedNPC(npc);
+                            break;
+                        }
+                        // Look for clashing npcs caused by npc spawning on same slot as defeated npc
+                        else if (npc.whoAmI == tracked.whoAmI)
+                        {
+                            if (DEBUG_TRACKER) Main.NewText("Clash! [" + npc.whoAmI + "] " + npc.GivenOrTypeName + " over " + tracked.GivenOrTypeName);
+                            
+                            RemoveTrackedNPC(tracked);
+                            break;
+                        }
                     }
                 }
 
@@ -221,6 +232,32 @@ namespace FKBossHealthBar
                     }
                 }
             }
+        }
+
+        private static void RemoveTrackedNPC(NPC npc)
+        {
+            // First check if it's a multi-bar NPC
+            HealthBar hb = BossDisplayInfo.GetHealthBarForNPCOrNull(npc.type);
+            if (hb != null)
+            {
+                if (hb.DisplayMode == HealthBar.DisplayType.Multiple && hb.multiShowCount > 1)
+                {
+                    // Just remove it if there's more than 1 left
+                    TrackedNPCs.Remove(npc);
+                    return;
+                }
+            }
+
+            // Make a temp copy that won't be changing
+            // Do this to keep info of dead NPCs for a while
+            NPC temp = new NPC();
+            temp = (NPC)npc.Clone();
+            temp.whoAmI = -1 - npc.whoAmI;
+            if (temp.life < 0) temp.life = 0;
+            TrackedNPCs.Add(temp, -Config.HealthBarUIFadeTime - 1);
+            TrackedNPCs.Remove(npc);
+
+            if (DEBUG_TRACKER) Main.NewText(npc.GivenOrTypeName + " [" + npc.whoAmI + "] removed");
         }
 
         private static float GetAlpha(NPC npc)
