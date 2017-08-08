@@ -27,6 +27,10 @@ namespace FKBossHealthBar
                 return npchb;
             }
         }
+        internal static void ResetNPCHealthBars()
+        {
+            npchb = null;
+        }
 
         /// <summary>
         /// Register this health bar to this NPC for use in-game

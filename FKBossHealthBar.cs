@@ -377,6 +377,11 @@ namespace FKBossHealthBar
             HealthBar.Initialise(this);
         }
 
+        public override void Unload()
+        {
+            BossDisplayInfo.ResetNPCHealthBars();
+        }
+
         public override void PreSaveAndQuit()
         {
             Config.SaveValues();
