@@ -1,17 +1,14 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 
 namespace FKBossHealthBar
 {
-    internal class DD2CrystalHealthBar : HealthBar
+    internal static class DD2CrystalHealthBar
     {
-        public DD2CrystalHealthBar()
-        {
-            ForceSmall = true;
-        }
-
-        protected override Color GetHealthColour(NPC npc, int life, int lifeMax)
+        public static Func<NPC, int, int, Color> GetHealthColour = getHealthColour;
+        private static Color getHealthColour(NPC npc, int life, int lifeMax)
         {
             float percent = (float)life / lifeMax;
             float R = 1f, G = 1f;
