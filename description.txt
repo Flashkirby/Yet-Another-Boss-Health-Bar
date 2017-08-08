@@ -5,7 +5,7 @@ Based on the Boss Health Bars mod, but with my own twist on it because why not.
 * Kinda supports non-standard bosses.
 * Customised health bar graphics for some bosses.
 * Has vague mod support.
-* Has extra settings stored in Mod Config
+* Has extra settings stored in Mod Configs/
 
 Credits: 
 Flashkirby99 - I am making this mod.

@@ -1,4 +1,1 @@
-Bar is stretching due to presumable bilinear. Just add a gap between bar and bar ending or something.
-
-Maybe implement some suggestions... or not.
-
+i dunno, it's fine right now I guess.
