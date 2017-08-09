@@ -202,19 +202,19 @@ namespace FKBossHealthBar
                         if (args[7] != null) mhb.getRightBar = args[7] as Func<Texture2D>;
 
                         if (args[8] != null) mhb.midBarOffsetX = (int)args[8];
-                        if (args[8] != null) mhb.midBarOffsetY = (int)args[9];
-                        if (args[9] != null) mhb.fillDecoOffsetX = (int)args[10];
-                        if (args[10] != null) mhb.bossHeadCentreOffsetX = (int)args[11];
-                        if (args[11] != null) mhb.bossHeadCentreOffsetY = (int)args[12];
+                        if (args[9] != null) mhb.midBarOffsetY = (int)args[9];
+                        if (args[10] != null) mhb.fillDecoOffsetX = (int)args[10];
+                        if (args[11] != null) mhb.bossHeadCentreOffsetX = (int)args[11];
+                        if (args[12] != null) mhb.bossHeadCentreOffsetY = (int)args[12];
 
-                        if (args[12] != null) mhb.getSmallFillTexture = args[13] as Func<Texture2D>;
-                        if (args[13] != null) mhb.getSmallLeftBar = args[14] as Func<Texture2D>;
-                        if (args[14] != null) mhb.getSmallMidBar = args[15] as Func<Texture2D>;
-                        if (args[15] != null) mhb.getSmallRightBar = args[16] as Func<Texture2D>;
+                        if (args[13] != null) mhb.getSmallFillTexture = args[13] as Func<Texture2D>;
+                        if (args[14] != null) mhb.getSmallLeftBar = args[14] as Func<Texture2D>;
+                        if (args[15] != null) mhb.getSmallMidBar = args[15] as Func<Texture2D>;
+                        if (args[16] != null) mhb.getSmallRightBar = args[16] as Func<Texture2D>;
 
-                        if (args[16] != null) mhb.fillDecoOffsetXSM = (int)args[17];
-                        if (args[17] != null) mhb.bossHeadCentreOffsetXSM = (int)args[18];
-                        if (args[18] != null) mhb.bossHeadCentreOffsetYSM = (int)args[19];
+                        if (args[17] != null) mhb.fillDecoOffsetXSM = (int)args[17];
+                        if (args[18] != null) mhb.bossHeadCentreOffsetXSM = (int)args[18];
+                        if (args[19] != null) mhb.bossHeadCentreOffsetYSM = (int)args[19];
 
                         if (args[20] != null) mhb.getHealthColour = args[20] as Func<NPC, int, int, Color>;
                         BossDisplayInfo.SetCustomHealthBar(Convert.ToInt32(args[1]), mhb);
@@ -231,19 +231,19 @@ namespace FKBossHealthBar
                         if (args[7] != null) mhbm.getRightBar = args[7] as Func<Texture2D>;
 
                         if (args[8] != null) mhbm.midBarOffsetX = (int)args[8];
-                        if (args[8] != null) mhbm.midBarOffsetY = (int)args[9];
-                        if (args[9] != null) mhbm.fillDecoOffsetX = (int)args[10];
-                        if (args[10] != null) mhbm.bossHeadCentreOffsetX = (int)args[11];
-                        if (args[11] != null) mhbm.bossHeadCentreOffsetY = (int)args[12];
+                        if (args[9] != null) mhbm.midBarOffsetY = (int)args[9];
+                        if (args[10] != null) mhbm.fillDecoOffsetX = (int)args[10];
+                        if (args[11] != null) mhbm.bossHeadCentreOffsetX = (int)args[11];
+                        if (args[12] != null) mhbm.bossHeadCentreOffsetY = (int)args[12];
 
-                        if (args[12] != null) mhbm.getSmallFillTexture = args[13] as Func<Texture2D>;
-                        if (args[13] != null) mhbm.getSmallLeftBar = args[14] as Func<Texture2D>;
-                        if (args[14] != null) mhbm.getSmallMidBar = args[15] as Func<Texture2D>;
-                        if (args[15] != null) mhbm.getSmallRightBar = args[16] as Func<Texture2D>;
+                        if (args[13] != null) mhbm.getSmallFillTexture = args[13] as Func<Texture2D>;
+                        if (args[14] != null) mhbm.getSmallLeftBar = args[14] as Func<Texture2D>;
+                        if (args[15] != null) mhbm.getSmallMidBar = args[15] as Func<Texture2D>;
+                        if (args[16] != null) mhbm.getSmallRightBar = args[16] as Func<Texture2D>;
 
-                        if (args[16] != null) mhbm.fillDecoOffsetXSM = (int)args[17];
-                        if (args[17] != null) mhbm.bossHeadCentreOffsetXSM = (int)args[18];
-                        if (args[18] != null) mhbm.bossHeadCentreOffsetYSM = (int)args[19];
+                        if (args[17] != null) mhbm.fillDecoOffsetXSM = (int)args[17];
+                        if (args[18] != null) mhbm.bossHeadCentreOffsetXSM = (int)args[18];
+                        if (args[19] != null) mhbm.bossHeadCentreOffsetYSM = (int)args[19];
 
                         if (args[20] != null) mhbm.getHealthColour = args[20] as Func<NPC, int, int, Color>;
                         BossDisplayInfo.SetCustomHealthBarMultiple(mhbm, args[1] as int[]);
@@ -371,7 +371,6 @@ namespace FKBossHealthBar
                 null, null, null,
                 DD2CrystalHealthBar.GetHealthColour
                 );
-            BossDisplayInfo.SetCustomHealthBar(NPCID.DD2EterniaCrystal, hb);
             #endregion
 
             HealthBar.Initialise(this);
