@@ -24,6 +24,9 @@ namespace FKBossHealthBar
         
         public override object Call(params object[] args)
         {
+            // Servers don't bother
+            if (Main.dedServ) return null;
+
             string name = args[0] as string; // cast to a string or null
             HealthBar hb;
             try
