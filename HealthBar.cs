@@ -34,6 +34,58 @@ namespace FKBossHealthBar
         /// <summary> Only allow one of these bars to show regardless of how many are active </summary>
         public bool ForceUnique = false;
         */
+        
+        /// <summary> Check if the provided bar fill texture has some kind of transparency 
+        /// on its right edge, this determines how the damage display bar is drawn. </summary>
+        protected bool IsSlanted
+        {
+            get
+            {
+                try
+                {
+                    Texture2D barFill = GetFillTexture();
+                    Color[] barColour1D = new Color[barFill.Width * barFill.Height];
+                    barFill.GetData(barColour1D);
+
+                    int x = 0;
+                    int yStart = -1;
+                    int yEnd = barFill.Height - 1;
+                    Color c;
+                    // Check along left side of texture to see where the bar is
+                    for (int y = 0; y < barFill.Height; y++)
+                    {
+                        c = barColour1D[x + y * barFill.Width];
+                        // Look for first left side pixel
+                        if (yStart == -1)
+                        {
+                            if (c.A > 0) // Has a colour, this is the start
+                            {
+                                yStart = y;
+                            }
+                        }
+                        // Look for last bottom left pixel
+                        else
+                        {
+                            if (c.A == 0) // Has no colour, go back 1 row
+                            {
+                                yEnd = y - 1;
+                                break;
+                            }
+                        }
+                    }
+
+                    x = barFill.Width - 1;
+                    // Check endpoints on right side of texture for any transparency
+                    c = barColour1D[x + yStart * barFill.Width];
+                    if (c.A < 255) { return true; }
+                    c = barColour1D[x + yEnd * barFill.Width];
+                    if (c.A < 255) { return true; }
+                }
+                catch // Something went wrong? go to default (false)
+                { }
+                return false;
+            }
+        }
 
         public DisplayType DisplayMode = DisplayType.Standard;
 
@@ -422,7 +474,13 @@ namespace FKBossHealthBar
             // Draw Chip
             if (Config.HealthBarFXChip && !ForceNoChip)
             {
-                drawHealthBarFill(spriteBatch, (int)chipLife - life, lifeMax, barColour * 0.5f, fill, BarLength, XLeft + realLength, midXOffset, midYOffset, yTop, SMALLMODE);
+                int slantOffsetFill = 0;
+                if (IsSlanted)
+                {
+                    slantOffsetFill = midXOffset;
+                }
+                drawHealthBarFill(spriteBatch, (int)(chipLife) - life, lifeMax, barColour * 0.5f, fill, 
+                    BarLength, XLeft + realLength, midXOffset, midYOffset, yTop, SMALLMODE, slantOffsetFill);
             }
 
             // Draw Frame
@@ -546,7 +604,7 @@ namespace FKBossHealthBar
             }
         }
 
-        private int drawHealthBarFill(SpriteBatch spriteBatch, int life, int lifeMax, Color barColour, Texture2D fill, int barLength, int XLeft, int fillXOffset, int fillYOffset, int yTop, bool SMALLMODE)
+        private int drawHealthBarFill(SpriteBatch spriteBatch, int life, int lifeMax, Color barColour, Texture2D fill, int barLength, int XLeft, int fillXOffset, int fillYOffset, int yTop, bool SMALLMODE, int insetX = 0)
         {
             int decoOffset;
             if (SMALLMODE)
@@ -559,10 +617,11 @@ namespace FKBossHealthBar
             int decoWidth = fill.Width - decoOffset;
             // real length is the screen size for bars, plus any extra inset by side frame graphics
             // friendly reminder fillXOffset is usually negative
-            int realLength = 1 + (int)((barLength - fillXOffset * 2 - 1) * ((float)life / lifeMax));
+            int realLength = 1 + (int)((barLength - fillXOffset * 2 - 1) * ((float)life / lifeMax)) - insetX;
             if (life <= 0) realLength = 0;
             if (realLength > 0)
             {
+                fillXOffset += insetX; // Move bar origin further left by inset
                 // Calculate the scale factor to stretch the featureless side of the bar
                 int fillBarLength = realLength - decoWidth;
                 if (fillBarLength > 0)
