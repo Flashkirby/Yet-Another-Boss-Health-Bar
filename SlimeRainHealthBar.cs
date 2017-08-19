@@ -6,16 +6,15 @@ namespace FKBossHealthBar
 {
     internal class SlimeRainHealthBar : HealthBar
     {
-        public override bool ShowHealthBarOverride(NPC npc, bool TooFarAway)
+        
+        public override bool HideHealthBarOverride(NPC npc, bool TooFarAway)
         {
             ForceSmall = true;
-            // ForceUnique = true;
 
-            // Only show during the slime rain at the overworld +, when no Slime King is around
-            if (Main.slimeRainKillCount > 0 &&
-                (Main.LocalPlayer.ZoneOverworldHeight ||
-                Main.LocalPlayer.ZoneSkyHeight) &&
-                !NPC.AnyNPCs(NPCID.KingSlime)) return true;
+            // Do not show when slimerain is done, no slime king, or underground
+            if (Main.slimeRainKillCount <= 0 ||
+                !(Main.LocalPlayer.ZoneOverworldHeight || Main.LocalPlayer.ZoneSkyHeight) ||
+                NPC.AnyNPCs(NPCID.KingSlime)) return true;
 
             return false;
         }

@@ -376,6 +376,9 @@ namespace FKBossHealthBar
                 );
             #endregion
 
+            hb = new SlimeRainHealthBar();
+            BossDisplayInfo.SetCustomHealthBarMultiple(hb, NPCID.BlueSlime);
+
             HealthBar.Initialise(this);
         }
 

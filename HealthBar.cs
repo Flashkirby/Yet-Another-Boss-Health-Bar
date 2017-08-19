@@ -264,8 +264,20 @@ namespace FKBossHealthBar
         /// Just in case you REALLY want to override standard behaviour and draw this health bar.
         /// </summary>
         /// <param name="npc"></param>
-        /// <returns></returns>
+        /// <param name="TooFarAway"></param>
+        /// <returns>true to show when normally it might not</returns>
         public virtual bool ShowHealthBarOverride(NPC npc, bool TooFarAway)
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Just in case you REALLY want to hide the health bar no matter what. This overrides EVERYTHING else.
+        /// </summary>
+        /// <param name="npc"></param>
+        /// <param name="TooFarAway"></param>
+        /// <returns>true to hide always</returns>
+        public virtual bool HideHealthBarOverride(NPC npc, bool TooFarAway)
         {
             return false;
         }

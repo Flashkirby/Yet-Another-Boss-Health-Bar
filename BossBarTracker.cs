@@ -91,7 +91,8 @@ namespace FKBossHealthBar
             HealthBar hb = BossDisplayInfo.GetHealthBarForNPCOrNull(npc.type);
             if (hb != null)
             {
-                if (hb.DisplayMode == HealthBar.DisplayType.Disabled) return false;
+                if (hb.DisplayMode == HealthBar.DisplayType.Disabled || 
+                    hb.HideHealthBarOverride(npc, tooFar)) return false;
                 if (hb.ShowHealthBarOverride(npc, tooFar)) return true;
             }
 
