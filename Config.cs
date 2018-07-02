@@ -20,7 +20,8 @@ namespace FKBossHealthBar
         //The file will be stored in "Terraria/ModLoader/Mod Configs/Example Mod.json"
         private static string ConfigPath = Path.Combine(Main.SavePath, "Mod Configs", "YetAnotherBHB.json");
         private static Preferences config;
-        private static int version = 1;
+        private static readonly int currentVersion = 2;
+        private static int version = 2;
         public static void LoadConfig()
         {
             // Shamelessly 'borrowed' from WMITF, ty goldenapple
@@ -49,6 +50,14 @@ namespace FKBossHealthBar
                 config.Get("HealthBarFXChipWaitTime", ref HealthBarFXChipWaitTime);
                 config.Get("HealthBarFXChipSpeed", ref HealthBarFXChipSpeed);
                 config.Get("HealthBarFXChipNumbers", ref HealthBarFXChipNumbers);
+                if (version >= 2)
+                {
+                    config.Get("SlimeRainBar", ref SlimeRainBar);
+                }
+                else
+                {
+                    config.Put("SlimeRainBar", SlimeRainBar);
+                }
             }
             else
             {
@@ -59,7 +68,7 @@ namespace FKBossHealthBar
         internal static void SaveValues()
         {
             // Put in these values if new
-            config.Put("version", version);
+            config.Put("version", currentVersion);
             config.Put("ShowBossHealthBars", ShowBossHealthBars);
             config.Put("SmallHealthBars", SmallHealthBars);
             config.Put("HealthBarDrawDistance", HealthBarDrawDistance);
@@ -78,6 +87,7 @@ namespace FKBossHealthBar
             config.Put("HealthBarFXChipWaitTime", HealthBarFXChipWaitTime);
             config.Put("HealthBarFXChipSpeed", HealthBarFXChipSpeed);
             config.Put("HealthBarFXChipNumbers", HealthBarFXChipNumbers);
+            config.Put("SlimeRainBar", SlimeRainBar);
             config.Save();
         }
 
@@ -125,5 +135,7 @@ namespace FKBossHealthBar
         public static float HealthBarFXChipSpeed = 0.5f;
         /// <summary>Should health bar chipping also display damage numbers A BIT LIKE DARK SOULS</summary>
         public static bool HealthBarFXChipNumbers = false;
+
+        internal static bool SlimeRainBar = false;
     }
 }

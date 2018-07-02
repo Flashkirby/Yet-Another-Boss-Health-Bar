@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using Terraria.DataStructures;
 
-using FKTModSettings;
+//using FKTModSettings;
 
 namespace FKBossHealthBar
 {
@@ -376,8 +376,11 @@ namespace FKBossHealthBar
                 );
             #endregion
 
-            hb = new SlimeRainHealthBar();
-            BossDisplayInfo.SetCustomHealthBarMultiple(hb, NPCID.BlueSlime);
+            if (Config.SlimeRainBar)
+            {
+                hb = new SlimeRainHealthBar();
+                BossDisplayInfo.SetCustomHealthBarMultiple(hb, NPCID.BlueSlime);
+            }
 
             HealthBar.Initialise(this);
         }
@@ -408,6 +411,7 @@ namespace FKBossHealthBar
         #region Mod Settings Integration
         private void LoadModSettings()
         {
+            /*
             ModSetting setting = ModSettingsAPI.CreateModSettingConfig(this);
             setting.AddBool("ShowBossHealthBars", "Enable Health Bars", false);
             setting.AddBool("SmallHealthBars", "Force Small Health Bars", false);
@@ -435,9 +439,11 @@ namespace FKBossHealthBar
             setting.AddInt("HealthBarUIStackOffset", "Distance between bars", 0, 100, false);
             setting.AddFloat("HealthBarUIScreenLength", "Screen width:bar scaling", 0f, 0.85f, false);
             setting.AddFloat("HealthBarUIMaxStackSize", "Screen height:bar threshold", 0f, 1f, false);
+            */
         }
         private void UpdateModSettings()
         {
+            /*
             ModSetting setting;
             if (ModSettingsAPI.TryGetModSetting(this, out setting))
             {
@@ -464,6 +470,7 @@ namespace FKBossHealthBar
                 setting.Get("HealthBarFXChipNumbers", ref Config.HealthBarFXChipNumbers);
 
             }
+            */
         }
         #endregion
 
