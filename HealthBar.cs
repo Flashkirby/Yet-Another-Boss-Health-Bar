@@ -448,8 +448,10 @@ namespace FKBossHealthBar
 
             // Get variables
             Color frameColour = new Color(1f, 1f, 1f);
+            Color blackColour = new Color(0f, 0f, 0f);
             Color barColour = GetHealthColour(npc, life, lifeMax);
             frameColour *= Alpha;
+            blackColour *= Alpha * Alpha;
             barColour *= Alpha;
             Texture2D bossHead = GetBossHeadTextureOrNull(npc);
             Texture2D fill, barL, barM, barR;
@@ -532,15 +534,39 @@ namespace FKBossHealthBar
             {
                 displayName = GetBossDisplayNameNPC(npc);
             }
+
+            #region Draw text
             string text = string.Concat(displayName, ": ", life, "/", lifeMax);
+            Vector2 position = new Vector2(XLeft + BarLength / 2, 4 + yTop + midYOffset + barM.Height / 2);
+            Vector2 origin = ChatManager.GetStringSize(Main.fontMouseText, text, Vector2.One, BarLength) / 2;
+            float scale = SMALLMODE ? 0.6f : 1.1f;
+
+            // Draw border
+            for (int y = -1; y <= 1; y++)
+            {
+                for (int x = -1; x <= 1; x++)
+                {
+                    DynamicSpriteFontExtensionMethods.DrawString(
+                        spriteBatch,
+                        Main.fontMouseText,
+                        text,
+                        position + new Vector2(x, y),
+                        blackColour, 0f,
+                        origin,
+                        scale, SpriteEffects.None, 0f);
+                }
+            }
+
+            // Main text
             DynamicSpriteFontExtensionMethods.DrawString(
                 spriteBatch,
                 Main.fontMouseText,
                 text,
-                new Vector2(XLeft + BarLength / 2, 2 + yTop + midYOffset + barM.Height / 2),
+                position,
                 frameColour, 0f,
-                ChatManager.GetStringSize(Main.fontMouseText, text, Vector2.One, BarLength) / 2,
-                SMALLMODE ? 0.6f : 1.1f, SpriteEffects.None, 0f);
+                origin,
+                scale, SpriteEffects.None, 0f);
+            #endregion
 
             // Display chip damage number
             if (Config.HealthBarFXChip && Config.HealthBarFXChipNumbers && (int)chipLife - life > 0)
