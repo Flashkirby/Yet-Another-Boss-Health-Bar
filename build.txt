@@ -4,7 +4,6 @@ displayName = Yet Another Boss Health Bar
 homepage = https://forums.terraria.org/index.php?threads/yet-another-boss-health-bar.55250/
 
 side = Client
-weakReferences = FKTModSettings
 
 hideCode = false
 hideResources = false
