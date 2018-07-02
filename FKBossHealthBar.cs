@@ -162,6 +162,9 @@ namespace FKBossHealthBar
                         if (args[17] != null) thb.fillDecoOffsetXSM = (int)args[17];
                         if (args[18] != null) thb.bossHeadCentreOffsetXSM = (int)args[18];
                         if (args[19] != null) thb.bossHeadCentreOffsetYSM = (int)args[19];
+
+                        if (args[20] != null) thb.LoopMidBar = (bool)args[20];
+
                         BossDisplayInfo.SetCustomHealthBar(Convert.ToInt32(args[1]), thb);
                         break;
                     #endregion
@@ -189,6 +192,8 @@ namespace FKBossHealthBar
                         if (args[17] != null) thbm.fillDecoOffsetXSM = (int)args[17];
                         if (args[18] != null) thbm.bossHeadCentreOffsetXSM = (int)args[18];
                         if (args[19] != null) thbm.bossHeadCentreOffsetYSM = (int)args[19];
+
+                        if (args[20] != null) thbm.LoopMidBar = (bool)args[20];
 
                         BossDisplayInfo.SetCustomHealthBarMultiple(thbm, args[1] as int[]);
                         break;
@@ -322,6 +327,29 @@ namespace FKBossHealthBar
 
             Call("RegisterHealthBarMulti",
                 NPCID.MartianSaucerCore, NPCID.MartianSaucerCannon, NPCID.MartianSaucerTurret);
+
+            Call("RegisterCustomHealthBar",
+                NPCID.Plantera,
+                null, //ForceSmall
+                null, //displayName
+                GetTexture("UI/PlantBarFill"), //fillTexture
+                GetTexture("UI/PlantBarStart"), //leftBar
+                GetTexture("UI/PlantBarMiddle"), //midBar
+                GetTexture("UI/PlantBarEnd"), //rightBar
+                null, //midBarOffsetX
+                0, //midBarOffsetY
+                null, //fillDecoOffsetX
+                34, //bossHeadCentreOffsetX
+                null, //bossHeadCentreOffsetY
+                null, //fillTextureSM
+                null, //leftBarSM
+                null, //midBarSM
+                null, //rightBarSM
+                null, //fillDecoOffsetXSM
+                null, //bossHeadCentreOffsetXSM
+                null, //bossHeadCentreOffsetYSM
+                true); //LoopMidBar
+
 
             #region Invasions
             // Minibosses use small bars

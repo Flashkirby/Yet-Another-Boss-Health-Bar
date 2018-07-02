@@ -30,11 +30,12 @@ namespace FKBossHealthBar
         public bool ForceSmall = false;
         /// <summary> Never show the chip bar graphics (numbers are still shown) </summary>
         public bool ForceNoChip = false;
+        public bool LoopMidBar = false;
         /*
         /// <summary> Only allow one of these bars to show regardless of how many are active </summary>
         public bool ForceUnique = false;
         */
-        
+
         /// <summary> Check if the provided bar fill texture has some kind of transparency 
         /// on its right edge, this determines how the damage display bar is drawn. </summary>
         protected bool IsSlanted
@@ -394,7 +395,7 @@ namespace FKBossHealthBar
             // Fill up FX
             life = (int)(life * BossBarTracker.GetLifeFillNormal(npc));
 
-            #region shake
+            #region calculate shake
             int shakeIntensity = 0;
             if (Config.HealthBarFXShake)
             {
@@ -414,7 +415,7 @@ namespace FKBossHealthBar
             yTop += shakeIntensity;
             #endregion
 
-            #region chip
+            #region calculate chip
             float chipLife = 0f;
             if (Config.HealthBarFXChip)
             {
@@ -483,6 +484,7 @@ namespace FKBossHealthBar
 
             // Draw Fill
             int realLength = drawHealthBarFill(spriteBatch, life, lifeMax, barColour, fill, BarLength, XLeft, midXOffset, midYOffset, yTop, SMALLMODE);
+            
             // Draw Chip
             if (Config.HealthBarFXChip && !ForceNoChip)
             {
@@ -496,7 +498,7 @@ namespace FKBossHealthBar
             }
 
             // Draw Frame
-            drawHealthBarFrame(spriteBatch, frameColour, barL, barM, barR, BarLength, XLeft, midYOffset, yTop, FrameTopLeft);
+            drawHealthBarFrame(spriteBatch, frameColour, barL, barM, barR, BarLength, XLeft, midYOffset, yTop, FrameTopLeft, LoopMidBar);
 
             //Draw NPC Icon
             if (bossHead != null)
@@ -535,11 +537,12 @@ namespace FKBossHealthBar
                 spriteBatch,
                 Main.fontMouseText,
                 text,
-                new Vector2(XLeft + BarLength / 2, yTop + midYOffset + barM.Height / 2),
+                new Vector2(XLeft + BarLength / 2, 2 + yTop + midYOffset + barM.Height / 2),
                 frameColour, 0f,
                 ChatManager.GetStringSize(Main.fontMouseText, text, Vector2.One, BarLength) / 2,
                 SMALLMODE ? 0.6f : 1.1f, SpriteEffects.None, 0f);
 
+            // Display chip damage number
             if (Config.HealthBarFXChip && Config.HealthBarFXChipNumbers && (int)chipLife - life > 0)
             {
                 int chipDamage = (int)chipLife - life;
@@ -676,18 +679,40 @@ namespace FKBossHealthBar
             return realLength;
         }
 
-        private static void drawHealthBarFrame(SpriteBatch spriteBatch, Color frameColour, Texture2D barL, Texture2D barM, Texture2D barR, int barLength, int XLeft, int midYOffset, int yTop, Vector2 FrameTopLeft)
+        private static void drawHealthBarFrame(SpriteBatch spriteBatch, Color frameColour, Texture2D barL, Texture2D barM, Texture2D barR, int barLength, int XLeft, int midYOffset, int yTop, Vector2 FrameTopLeft, bool midLoop)
         {
-            spriteBatch.Draw(
-                barM,
-                new Vector2(XLeft, yTop + midYOffset),
-                null,
-                frameColour,
-                0f,
-                Vector2.Zero,
-                new Vector2(1f / barM.Width * barLength, 1f),
-                SpriteEffects.None,
-                0f);
+            if (midLoop)
+            {
+                int XRight = XLeft + barLength;
+                // loop draws from the right bar, to the left
+                for (int i = 1; i <= (barLength + barM.Width) / barM.Width; i++)
+                {
+                    spriteBatch.Draw(
+                        barM,
+                        new Vector2(XRight - barM.Width * i, yTop + midYOffset),
+                        null,
+                        frameColour,
+                        0f,
+                        Vector2.Zero,
+                        1f,
+                        SpriteEffects.None,
+                        0f);
+                }
+            }
+            else
+            {
+                spriteBatch.Draw(
+                    barM,
+                    new Vector2(XLeft, yTop + midYOffset),
+                    null,
+                    frameColour,
+                    0f,
+                    Vector2.Zero,
+                    new Vector2(1f / barM.Width * barLength, 1f),
+                    SpriteEffects.None,
+                    0f);
+            }
+
             //Draw side frames
             spriteBatch.Draw(
                 barL,
