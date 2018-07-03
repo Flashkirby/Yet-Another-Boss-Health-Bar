@@ -614,6 +614,17 @@ namespace FKBossHealthBar
         }
         #endregion
 
+        #region hamstar's Mod Helpers
+        public static string ConfigFileRelativePath
+        {
+            get { return "Mod Configs/YetAnotherBHB.json"; }
+        }
+        public static void ReloadConfigFromFile()
+        {
+            Config.LoadConfig();
+        }
+        #endregion
+
         public override void UpdateMusic(ref int music)
         {
             if (Main.gameMenu)

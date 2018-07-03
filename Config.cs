@@ -18,7 +18,7 @@ namespace FKBossHealthBar
     public static class Config
     {
         //The file will be stored in "Terraria/ModLoader/Mod Configs/Example Mod.json"
-        private static string ConfigPath = Path.Combine(Main.SavePath, "Mod Configs", "YetAnotherBHB.json");
+        internal static readonly string ConfigPath = Path.Combine(Main.SavePath, "Mod Configs", "YetAnotherBHB.json");
         private static Preferences config;
         private static readonly int currentVersion = 2;
         private static int version = 2;
