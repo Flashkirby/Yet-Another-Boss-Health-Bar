@@ -212,9 +212,13 @@ namespace FKBossHealthBar
             // Sort the timers
             foreach (NPC tracked in TrackedNPCs.Keys.ToList())
             {
-                var hb = BossDisplayInfo.NPCHealthBars[tracked.type];
-                bool disableFadeIn = hb.DisableFadeInFor(tracked.type);
-                bool disableFadeOut = hb.DisableFadeOutFor(tracked.type);
+                bool disableFadeIn = false, disableFadeOut = false;
+                HealthBar hb;
+                if (BossDisplayInfo.NPCHealthBars.TryGetValue(tracked.type, out hb))
+                {
+                    disableFadeIn = hb.DisableFadeInFor(tracked.type);
+                    disableFadeOut = hb.DisableFadeOutFor(tracked.type);
+                }
                 // FADE IN
                 if (TrackedNPCs[tracked] > 0)
                 {
