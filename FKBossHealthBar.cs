@@ -460,12 +460,13 @@ namespace FKBossHealthBar
             Call("hbStart");
             Call("hbForceSmall", true);
             Call("hbSetColours", new Color(0f, 0f, 1f), new Color(0f, 1f, 1f), new Color(0f, 1f, 0f));
-            Call("hbSetBossHeadTexture", GetTexture("UI/test"));
+            Call("hbSetBossHeadTexture", GetTexture("BossHeads/8_1"));
             Call("hbFinishSingle", NPCID.MoonLordHand);
 
             Call("hbStart");
-            Call("hbSetColours", new Color(0f, 0f, 1f), new Color(1f, 0f, 1f), new Color(1f, 0f, 0f));
-            Call("hbSetBossHeadTexture", Main.npcHeadBossTexture[8]);
+            Call("hbSetColours", new Color(0f, 1f, 0.6f), new Color(0.8f, 1f, 0f), new Color(1f, 0f, 0f));
+            //Call("hbSetBossHeadTexture", Main.npcHeadBossTexture[8]);
+            Call("hbSetBossHeadTexture", GetTexture("BossHeads/8_2"));
             Call("hbFinishSingle", NPCID.MoonLordCore);
             #endregion
 
