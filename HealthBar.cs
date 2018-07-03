@@ -18,6 +18,7 @@ namespace FKBossHealthBar
         {
             Standard, // Uses npc.life and npc.realLife
             Multiple, // Counts all NPCs of a typelist and uses collective life vs lifeMax
+            Phase, // Checks for NPCs in the typelist in descending order, using lifeMax as a total.
             Disabled, // Just don't show
         }
 
@@ -290,6 +291,12 @@ namespace FKBossHealthBar
         /// <param name="life"></param>
         /// <param name="lifeMax"></param>
         protected virtual void ShowHealthBarLifeOverride(NPC npc, ref int life, ref int lifeMax) { }
+
+        public virtual bool DisableFadeInFor(int type) { return false; }
+        public virtual bool DisableFadeOutFor(int type) { return false; }
+
+        /// <summary> Called after a healthbar has been registered, in case you need to initialise some final things. </summary>
+        public virtual void OnRegister() { }
         #endregion
 
         public virtual Texture2D GetBossHeadTextureOrNull(NPC npc)
@@ -376,7 +383,8 @@ namespace FKBossHealthBar
         /// <param name="npc">npc itself for handling certain internal methods</param>
         public int DrawHealthBar(SpriteBatch spriteBatch, int XLeft, int yTop, int BarLength, float Alpha, int life, int lifeMax, NPC npc)
         {
-            if (multiShowCount > 0 && DisplayMode == DisplayType.Multiple)
+            if (multiShowCount > 0 && 
+                (DisplayMode == DisplayType.Multiple || DisplayMode == DisplayType.Phase))
             {
                 multiShowCount++;
                 return yTop; // We don't show multiple NPC healthbars for a collective boss. ever.

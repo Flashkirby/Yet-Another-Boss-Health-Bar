@@ -42,22 +42,39 @@ namespace FKBossHealthBar
             //Set up value for out
             NPCHealthBars[npcType] = healthBar;
             healthBar.DisplayMode = HealthBar.DisplayType.Standard;
+            healthBar.OnRegister();
         }
 
         /// <summary>
         /// Register this health bar as a multiple npc bar, meaning it is shared between all npcs of the types
         /// </summary>
         /// <param name="healthBar">Same as usual</param>
-        /// <param name="expectedMax">How many npcs are expected per healthbar?</param>
         /// <param name="npcTypes"></param>
         public static void SetCustomHealthBarMultiple(HealthBar healthBar, params int[] npcTypes)
         {
-            foreach(int npcType in npcTypes)
+            foreach (int npcType in npcTypes)
             {
                 SetCustomHealthBar(npcType, healthBar);
             }
             healthBar.DisplayMode = HealthBar.DisplayType.Multiple;
             healthBar.multiNPCType = npcTypes;
+            healthBar.OnRegister();
+        }
+
+        /// <summary>
+        /// Register this health bar as a multiple npc bar, meaning it is shared between all npcs of the types
+        /// </summary>
+        /// <param name="healthBar">Same as usual</param>
+        /// <param name="npcTypes">NPCs in order of phase (singles only)</param>
+        public static void SetCustomHealthBarPhase(HealthBar healthBar, params int[] npcTypes)
+        {
+            foreach (int npcType in npcTypes)
+            {
+                SetCustomHealthBar(npcType, healthBar);
+            }
+            healthBar.DisplayMode = HealthBar.DisplayType.Phase;
+            healthBar.multiNPCType = npcTypes;
+            healthBar.OnRegister();
         }
 
         public static HealthBar GetHealthBarForNPCOrNull(int npcType)

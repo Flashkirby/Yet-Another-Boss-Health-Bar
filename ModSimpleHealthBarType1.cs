@@ -8,6 +8,8 @@ namespace FKBossHealthBar
 {
     public class ModSimpleHealthBarType1 : ModTextureHealthBar
     {
+        public int[] npcTypeLifeMax;
+
         public Color barColourFull = new Color(0f, 1f, 0f);
         public Color barColourMid = new Color(1f, 1f, 0f);
         public Color barColourEmpty = new Color(1f, 0f, 0f);
@@ -37,6 +39,50 @@ namespace FKBossHealthBar
         public override Texture2D GetBossHeadTextureOrNull(NPC npc)
         {
             return customBossHeadIcon != null ? customBossHeadIcon : base.GetBossHeadTextureOrNull(npc);
+        }
+
+        public override void OnRegister()
+        {
+            if (DisplayMode == DisplayType.Phase)
+            {
+                npcTypeLifeMax = new int[multiNPCType.Length];
+                NPC n;
+                for (int i = 0; i < npcTypeLifeMax.Length; i++)
+                {
+                    n = new NPC();
+                    n.SetDefaults(multiNPCType[i]);
+                    npcTypeLifeMax[i] = n.lifeMax;
+                }
+            }
+        }
+
+        public override bool DisableFadeInFor(int type)
+        {
+            if (DisplayMode != DisplayType.Phase) return false;
+            return type != multiNPCType[0];
+        }
+        public override bool DisableFadeOutFor(int type)
+        {
+            if (DisplayMode != DisplayType.Phase) return false;
+            return type != multiNPCType[multiNPCType.Length - 1];
+        }
+
+        protected override void ShowHealthBarLifeOverride(NPC npc, ref int life, ref int lifeMax)
+        {
+            if (DisplayMode == DisplayType.Phase)
+            {
+                // Navigate to the NPC in the array
+                bool foundSelf = false;
+                for (int i = 0; i < npcTypeLifeMax.Length; i++)
+                {
+                    if (multiNPCType[i] == npc.type)
+                    { foundSelf = true; continue; }
+
+                    lifeMax += npcTypeLifeMax[i];
+                    if (foundSelf)
+                    { life += npcTypeLifeMax[i]; }
+                }
+            }
         }
     }
 }

@@ -124,6 +124,16 @@ namespace FKBossHealthBar
                         BossDisplayInfo.SetCustomHealthBarMultiple(cacheHealthBarType1, npcTypes1);
                         cacheHealthBarType1 = null;
                         break;
+                    case "hbFinishPhases":
+                        if (cacheHealthBarType1 == null) { ErrorLogger.Log("FKBossHealthBar: A mod attempted to call 'hbFinishMultiple' before calling 'hbStart'. \n" + new System.Diagnostics.StackTrace()); break; }
+                        int[] npcTypes3 = new int[args.Length - 1];
+                        for (int i = 1; i < args.Length; i++)
+                        {
+                            npcTypes3[i - 1] = Convert.ToInt32(args[i]);
+                        }
+                        BossDisplayInfo.SetCustomHealthBarPhase(cacheHealthBarType1, npcTypes3);
+                        cacheHealthBarType1 = null;
+                        break;
                     #endregion
 
                     #region RegisterHealthBar
@@ -405,9 +415,10 @@ namespace FKBossHealthBar
 
             Call("RegisterHealthBarMulti", 
                 NPCID.BrainofCthulhu, NPCID.Creeper);
-
-            Call("RegisterHealthBarMulti", 
-                NPCID.Golem, NPCID.GolemHead, NPCID.GolemFistLeft, NPCID.GolemFistRight);
+            
+            Call("hbStart");
+            Call("hbSetBossHeadTexture", Main.npcHeadBossTexture[5]);
+            Call("hbFinishPhases", NPCID.GolemHead, NPCID.Golem);
 
             Call("RegisterHealthBarMulti",
                 NPCID.MartianSaucerCore, NPCID.MartianSaucerCannon, NPCID.MartianSaucerTurret);
@@ -477,7 +488,6 @@ namespace FKBossHealthBar
 
             Call("hbStart");
             Call("hbSetColours", new Color(0f, 1f, 0.6f), new Color(0.8f, 1f, 0f), new Color(1f, 0f, 0f));
-            //Call("hbSetBossHeadTexture", Main.npcHeadBossTexture[8]);
             Call("hbSetBossHeadTexture", GetTexture("BossHeads/8_2"));
             Call("hbSetTexture", 
                 GetTexture("UI/MoonLordBarStart"), null, 
