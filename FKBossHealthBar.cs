@@ -100,6 +100,14 @@ namespace FKBossHealthBar
                         if (args[1] != null) cacheHealthBarType1.bossHeadCentreOffsetXSM = (int)args[1];
                         if (args[2] != null) cacheHealthBarType1.bossHeadCentreOffsetYSM = (int)args[2];
                         break;
+                    case "hbSetFillDecoOffset":
+                        if (cacheHealthBarType1 == null) { ErrorLogger.Log("FKBossHealthBar: A mod attempted to modify a healthbar before calling 'hbStart'. \n" + new System.Diagnostics.StackTrace()); break; }
+                        if (args[1] != null) cacheHealthBarType1.fillDecoOffsetX = (int)args[1];
+                        break;
+                    case "hbSetFillDecoOffsetSmall":
+                        if (cacheHealthBarType1 == null) { ErrorLogger.Log("FKBossHealthBar: A mod attempted to modify a healthbar before calling 'hbStart'. \n" + new System.Diagnostics.StackTrace()); break; }
+                        if (args[1] != null) cacheHealthBarType1.fillDecoOffsetXSM = (int)args[1];
+                        break;
                     case "hbSetColours":
                         if (cacheHealthBarType1 == null) { ErrorLogger.Log("FKBossHealthBar: A mod attempted to modify a healthbar before calling 'hbStart'. \n" + new System.Diagnostics.StackTrace()); break; }
                         if (args[1] != null) cacheHealthBarType1.barColourFull = (Color)args[1];
@@ -645,5 +653,6 @@ namespace FKBossHealthBar
             if (!Config.ShowBossHealthBars) return;
             BossBarTracker.DrawHealthBars(spriteBatch);
         }
+
     }
 }
