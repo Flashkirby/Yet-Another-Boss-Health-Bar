@@ -292,7 +292,7 @@ namespace FKBossHealthBar
         protected virtual void ShowHealthBarLifeOverride(NPC npc, ref int life, ref int lifeMax) { }
         #endregion
 
-        public Texture2D GetBossHeadTextureOrNull(NPC npc)
+        public virtual Texture2D GetBossHeadTextureOrNull(NPC npc)
         {
             int headSlot = GetBossHeadSource(npc).GetBossHeadTextureIndex();
 
