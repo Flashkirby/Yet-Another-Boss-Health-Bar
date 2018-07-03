@@ -10,7 +10,7 @@ using Terraria.ModLoader;
 namespace FKBossHealthBar
 {
     /// <summary>
-    /// Manage NPCs tracked
+    /// Manage NPCs tracked, called by FKBossHealthBar through UpdateNPCTracker and ResetTracker
     /// </summary>
     public static class BossBarTracker
     {
@@ -77,7 +77,7 @@ namespace FKBossHealthBar
             // Cannot track non-active entities
             if (!npc.active) return false;
             if (npc.timeLeft <= 0) return false;
-            if (npc.life <= 0 && npc.lifeMax > 0) return false;
+            if (npc.life <= 0) return false;
 
             // Don't track NPCs which are part of a shared life chain (except the head of course)
             if (npc.realLife >= 0 && npc.realLife != npc.whoAmI) return false;
@@ -254,7 +254,7 @@ namespace FKBossHealthBar
             NPC temp = new NPC();
             temp = (NPC)npc.Clone();
             temp.whoAmI = -1 - npc.whoAmI;
-            if (temp.life < 0) temp.life = 0;
+            if (temp.life <= 0 || (temp.dontTakeDamage && npc.life == npc.lifeMax)) temp.life = 0;
             TrackedNPCs.Add(temp, -Config.HealthBarUIFadeTime - 1);
             TrackedNPCs.Remove(npc);
 
@@ -327,7 +327,7 @@ namespace FKBossHealthBar
                 // Get the healthbar for this tracked NPC
                 HealthBar hb = BossDisplayInfo.GetHealthBarForNPCOrNull(npc.type);
                 if (hb == null) hb = new HealthBar();
-
+                
                 stackY = hb.DrawHealthBarDefault(
                     spriteBatch, GetAlpha(npc), stackY, maxYStack,
                     npc.life, npc.lifeMax, npc);
