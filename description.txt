@@ -1,11 +1,35 @@
 What's the difference between this and Boss Health Bars? Preference mostly. Barack Obama Ross' one has more customisation, whereas this one is more silly effects.
-
+ 
+[g:5] [c/FFFF00:Summary] [g:4] 
 Based on the Boss Health Bars mod, but with my own twist on it because why not.
-* Show the boss' head icon.
-* Kinda supports non-standard bosses.
-* Customised health bar graphics for some bosses.
-* Has vague mod support.
-* Has extra settings stored in Mod Configs/
-
-Credits: 
+[i/s1:184] Show the boss' head icon.
+[i/s1:184] Kinda supports non-standard bosses.
+[i/s1:184] Customised health bar graphics for some bosses.
+[i/s1:184] Has extra settings stored in Mod Configs/YetAnotherBHB.json
+[i/s1:184] Easily extensible for modders.
+[i/s1:184] Support for hamstar's [c/AADDFF:Mod Helpers] mod.
+ 
+[i/s1:58] [c/FFFF00:Credits] [i/s1:58]
 Flashkirby99 - I am making this mod.
+ 
+[g:13] [c/FFFF00:Config Settings v2] [g:14]
+[c/AADDFF:ShowBossHealthBars] (true) enable health bars. 
+[c/AADDFF:HealthBarDrawDistance] (5000) maximum distance away from a boss health bars will be drawn for. 
+[c/AADDFF:HealthBarUIScreenOffset] (16) pixel distance from the bottom of the screen to draw from. 
+[c/AADDFF:HealthBarUIStackOffset] (6) pixel distance between each bar when multiple bosses are present. 
+[c/AADDFF:HealthBarUIDefaultAlpha] (1.0) default transparency of drawn bars from 0 (fully transparent) to 1 (opaque). 
+[c/AADDFF:HealthBarUIMaxStackSize] (0.15) amount of the screen that is allowed to be taken by boss health bars. 
+[c/AADDFF:HealthBarUIScreenLength] (0.5)  width of the health bar relative to the screen size. 
+[c/AADDFF:HealthBarUIFadeTime] (30) number of frames to fade in/out. 60 frames is 1 second. 
+[c/AADDFF:HealthBarUIFadeHover] (0.5) transparency of health bars when moused over. 
+ 
+[c/AADDFF:HealthBarFXShake] (false) enable shaking when a boss takes damage. 
+[c/AADDFF:HealthBarFXShakeHorizontal] (0.5) allow shaking horizontally, which may look messy. 
+[c/AADDFF:HealthBarFXShakeIntensity] (2) how much to shake the bar by. 
+ 
+[c/AADDFF:HealthBarFXChip] (true) show the amount of damage dealt over a period of time as a separate bar. 
+[c/AADDFF:HealthBarFXChipWaitTime] (60) length of time before draining the chip bar. 
+[c/AADDFF:HealthBarFXChipSpeed] (0.5) speed that chip damage visual drains. 
+[c/AADDFF:HealthBarFXChipNumbers] (false) display damage dealt on the bar. 
+ 
+[c/AADDFF:SlimeRainBar] (false) show progress bar during a slime rain (experimental feature). 
