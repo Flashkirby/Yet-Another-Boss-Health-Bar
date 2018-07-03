@@ -62,12 +62,24 @@ namespace FKBossHealthBar
                         if (args[3] != null) cacheHealthBarType1.rightBar = args[3] as Texture2D;
                         if (args[4] != null) cacheHealthBarType1.fillTexture = args[4] as Texture2D;
                         break;
+                    case "hbSetTextureExpert":
+                        if (cacheHealthBarType1 == null) { ErrorLogger.Log("FKBossHealthBar: A mod attempted to modify a healthbar before calling 'hbStart'. \n" + new System.Diagnostics.StackTrace()); break; }
+                        if (args[1] != null) cacheHealthBarType1.leftBarEXP = args[1] as Texture2D;
+                        if (args[2] != null) cacheHealthBarType1.midBarEXP = args[2] as Texture2D;
+                        if (args[3] != null) cacheHealthBarType1.rightBarEXP = args[3] as Texture2D;
+                        break;
                     case "hbSetTextureSmall":
                         if (cacheHealthBarType1 == null) { ErrorLogger.Log("FKBossHealthBar: A mod attempted to modify a healthbar before calling 'hbStart'. \n" + new System.Diagnostics.StackTrace()); break; }
                         if (args[1] != null) cacheHealthBarType1.leftBarSM = args[1] as Texture2D;
                         if (args[2] != null) cacheHealthBarType1.midBarSM = args[2] as Texture2D;
                         if (args[3] != null) cacheHealthBarType1.rightBarSM = args[3] as Texture2D;
                         if (args[4] != null) cacheHealthBarType1.fillTextureSM = args[4] as Texture2D;
+                        break;
+                    case "hbSetTextureSmallExpert":
+                        if (cacheHealthBarType1 == null) { ErrorLogger.Log("FKBossHealthBar: A mod attempted to modify a healthbar before calling 'hbStart'. \n" + new System.Diagnostics.StackTrace()); break; }
+                        if (args[1] != null) cacheHealthBarType1.leftBarSMEXP = args[1] as Texture2D;
+                        if (args[2] != null) cacheHealthBarType1.midBarSMEXP = args[2] as Texture2D;
+                        if (args[3] != null) cacheHealthBarType1.rightBarSMEXP = args[3] as Texture2D;
                         break;
                     case "hbSetMidBarOffsetY":
                         if (cacheHealthBarType1 == null) { ErrorLogger.Log("FKBossHealthBar: A mod attempted to modify a healthbar before calling 'hbStart'. \n" + new System.Diagnostics.StackTrace()); break; }
@@ -450,8 +462,8 @@ namespace FKBossHealthBar
             hb = new CelestialTowerHealthBar();
             BossDisplayInfo.SetCustomHealthBar(NPCID.LunarTowerStardust, hb);
 
-            // Moon Lord custom example
             #region Moon Lord
+            // Moon Lord custom example
             Call("hbStart");
             Call("hbForceSmall", true);
             Call("hbSetColours", new Color(0f, 0f, 1f), new Color(0f, 1f, 1f), new Color(0f, 1f, 0f));
@@ -467,6 +479,12 @@ namespace FKBossHealthBar
             Call("hbSetColours", new Color(0f, 1f, 0.6f), new Color(0.8f, 1f, 0f), new Color(1f, 0f, 0f));
             //Call("hbSetBossHeadTexture", Main.npcHeadBossTexture[8]);
             Call("hbSetBossHeadTexture", GetTexture("BossHeads/8_2"));
+            Call("hbSetTexture", 
+                GetTexture("UI/MoonLordBarStart"), null, 
+                GetTexture("UI/MoonLordBarEnd"));
+            Call("hbSetTextureExpert", 
+                GetTexture("UI/MoonLordBarStart_Exp"), null, 
+                GetTexture("UI/MoonLordBarEnd_Exp"));
             Call("hbFinishSingle", NPCID.MoonLordCore);
             #endregion
 

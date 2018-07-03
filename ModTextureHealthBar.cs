@@ -15,6 +15,9 @@ namespace FKBossHealthBar
         public Texture2D leftBar = null;
         public Texture2D midBar = null;
         public Texture2D rightBar = null;
+        public Texture2D leftBarEXP = null;
+        public Texture2D midBarEXP = null;
+        public Texture2D rightBarEXP = null;
 
         public int midBarOffsetX = -30;
         public int midBarOffsetY = 10;
@@ -28,15 +31,20 @@ namespace FKBossHealthBar
         }
         protected override Texture2D GetLeftBar()
         {
+            if (Main.expertMode)
+            { return leftBarEXP == null ? defaultStaEXP : leftBarEXP; }
             return leftBar == null ? defaultSta : leftBar;
         }
         protected override Texture2D GetMidBar()
         {
+            if (Main.expertMode)
+            { return midBarEXP == null ? defaultMidEXP : midBarEXP; }
             return midBar == null ? defaultMid : midBar;
-
         }
         protected override Texture2D GetRightBar()
         {
+            if (Main.expertMode)
+            { return rightBarEXP == null ? defaultEndEXP : rightBarEXP; }
             return rightBar == null ? defaultEnd : rightBar;
         }
         protected override int GetMidBarOffsetX() { return midBarOffsetX; }
@@ -52,7 +60,10 @@ namespace FKBossHealthBar
         public Texture2D leftBarSM = null;
         public Texture2D midBarSM = null;
         public Texture2D rightBarSM = null;
-        
+        public Texture2D leftBarSMEXP = null;
+        public Texture2D midBarSMEXP = null;
+        public Texture2D rightBarSMEXP = null;
+
         public int fillDecoOffsetXSM = 4;
         public int bossHeadCentreOffsetXSM = 14;
         public int bossHeadCentreOffsetYSM = 14;
@@ -63,14 +74,20 @@ namespace FKBossHealthBar
         }
         protected override Texture2D GetSmallLeftBar()
         {
+            if (Main.expertMode)
+            { return leftBarSMEXP == null ? defaultStaSMEXP : leftBarSMEXP; }
             return leftBarSM == null ? defaultStaSM : leftBarSM;
         }
         protected override Texture2D GetSmallMidBar()
         {
-            return midBar == null ? defaultMidSM : midBar;
+            if (Main.expertMode)
+            { return midBarSMEXP == null ? defaultMidSMEXP : midBarSM; }
+            return midBarSM == null ? defaultMidSM : midBarSM;
         }
         protected override Texture2D GetSmallRightBar()
         {
+            if (Main.expertMode)
+            { return rightBarSMEXP == null ? defaultEndSMEXP : rightBarSMEXP; }
             return rightBarSM == null ? defaultEndSM : rightBarSM;
         }
         protected override int GetSmallFillDecoOffsetX() { return fillDecoOffsetXSM; }
