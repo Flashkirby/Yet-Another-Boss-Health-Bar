@@ -14,6 +14,7 @@ Flashkirby99 - I am making this mod.
  
 [g:13] [c/FFFF00:Config Settings v2] [g:14]
 [c/AADDFF:ShowBossHealthBars] (true) enable health bars. 
+[c/AADDFF:SmallHealthBars] (false) force all health bars to use the small frame. 
 [c/AADDFF:HealthBarDrawDistance] (5000) maximum distance away from a boss health bars will be drawn for. 
 [c/AADDFF:HealthBarUIScreenOffset] (16) pixel distance from the bottom of the screen to draw from. 
 [c/AADDFF:HealthBarUIStackOffset] (6) pixel distance between each bar when multiple bosses are present. 
