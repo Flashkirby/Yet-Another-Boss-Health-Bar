@@ -158,6 +158,13 @@ namespace FKBossHealthBar
                         break;
                     #endregion
 
+                    #region RegisterIgnore
+                    case "RegisterIgnore":
+                        hb = new HideHealthBar();
+                        BossDisplayInfo.SetCustomHealthBar(Convert.ToInt32(args[1]), hb);
+                        break;
+                    #endregion
+
                     #region RegisterHealthBar
                     case "RegisterHealthBar":
                         hb = new HealthBar();
@@ -422,7 +429,7 @@ namespace FKBossHealthBar
             catch (Exception e) { throw e; }
 
             HealthBar hb;
-            
+
             Call("RegisterDemonHealthBar", NPCID.WallofFlesh);
 
             Call("RegisterMechHealthBar", NPCID.TheDestroyer);
@@ -648,6 +655,7 @@ namespace FKBossHealthBar
         }
         #endregion
 
+        // TODO: use the not-obsolete version
         public override void UpdateMusic(ref int music)
         {
             if (Main.gameMenu)
