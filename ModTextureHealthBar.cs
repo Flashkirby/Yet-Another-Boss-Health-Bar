@@ -42,14 +42,14 @@ namespace FKBossHealthBar
         {
             Texture2D fallback = defaultSta, mainTex = midBar;
             if (Main.expertMode)
-            { fallback = midBar; mainTex = midBarEXP; if (fallback == null) fallback = defaultStaEXP; }
+            { fallback = midBar; mainTex = midBarEXP; if (fallback == null) fallback = defaultMidEXP; }
             return mainTex == null ? fallback : mainTex;
         }
         protected override Texture2D GetRightBar()
         {
             Texture2D fallback = defaultSta, mainTex = rightBar;
             if (Main.expertMode)
-            { fallback = rightBar; mainTex = rightBarEXP; if (fallback == null) fallback = defaultStaEXP; }
+            { fallback = rightBar; mainTex = rightBarEXP; if (fallback == null) fallback = defaultEndEXP; }
             return mainTex == null ? fallback : mainTex;
         }
         protected override int GetMidBarOffsetX() { return midBarOffsetX; }
@@ -88,14 +88,14 @@ namespace FKBossHealthBar
         {
             Texture2D fallback = defaultStaSM, mainTex = midBarSM;
             if (Main.expertMode)
-            { fallback = midBarSM; mainTex = midBarSMEXP; if (fallback == null) fallback = defaultStaSMEXP; }
+            { fallback = midBarSM; mainTex = midBarSMEXP; if (fallback == null) fallback = defaultMidSMEXP; }
             return mainTex == null ? fallback : mainTex;
         }
         protected override Texture2D GetSmallRightBar()
         {
             Texture2D fallback = defaultStaSM, mainTex = rightBarSM;
             if (Main.expertMode)
-            { fallback = rightBarSM; mainTex = rightBarSMEXP; if (fallback == null) fallback = defaultStaSMEXP; }
+            { fallback = rightBarSM; mainTex = rightBarSMEXP; if (fallback == null) fallback = defaultEndSMEXP; }
             return mainTex == null ? fallback : mainTex;
         }
         protected override int GetSmallFillDecoOffsetX() { return fillDecoOffsetXSM; }
