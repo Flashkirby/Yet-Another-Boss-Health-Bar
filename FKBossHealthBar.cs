@@ -23,6 +23,7 @@ namespace FKBossHealthBar
             {
                 Autoload = true
             };
+            cacheHealthBarType1 = null;
         }
         
         public override object Call(params object[] args)
@@ -39,7 +40,10 @@ namespace FKBossHealthBar
                     #region HB methods
                     // Method to generate a healthbar
                     case "hbStart":
-                        if(cacheHealthBarType1 != null)
+                        //
+                        //  LOAD THE CACHE TO ALLOW ADDING PROPERTIES
+                        //
+                        if (cacheHealthBarType1 != null)
                         { ErrorLogger.Log("FKBossHealthBar: A mod attempted to call 'hbStart' before calling 'hbFinishSingle' or 'hbFinishMultiple'. ");  }
                         cacheHealthBarType1 = new ModSimpleHealthBarType1();
                         break;
@@ -121,6 +125,10 @@ namespace FKBossHealthBar
                     case "hbFinishSingle":
                         if (cacheHealthBarType1 == null) { ErrorLogger.Log("FKBossHealthBar: A mod attempted to call 'hbFinishSingle' before calling 'hbStart'. \n" + new System.Diagnostics.StackTrace()); break; }
                         BossDisplayInfo.SetCustomHealthBar(Convert.ToInt32(args[1]), cacheHealthBarType1);
+                        //
+                        //  CLEAR THE CACHE TO ALLOW FOR NEW BARS TO BE SET
+                        //
+                        cacheHealthBarType1 = null;
                         break;
                     case "hbFinishMultiple":
                         if (cacheHealthBarType1 == null) { ErrorLogger.Log("FKBossHealthBar: A mod attempted to call 'hbFinishMultiple' before calling 'hbStart'. \n" + new System.Diagnostics.StackTrace()); break; }
@@ -130,6 +138,9 @@ namespace FKBossHealthBar
                             npcTypes1[i - 1] = Convert.ToInt32(args[i]);
                         }
                         BossDisplayInfo.SetCustomHealthBarMultiple(cacheHealthBarType1, npcTypes1);
+                        //
+                        //  CLEAR THE CACHE TO ALLOW FOR NEW BARS TO BE SET
+                        //
                         cacheHealthBarType1 = null;
                         break;
                     case "hbFinishPhases":
@@ -140,6 +151,9 @@ namespace FKBossHealthBar
                             npcTypes3[i - 1] = Convert.ToInt32(args[i]);
                         }
                         BossDisplayInfo.SetCustomHealthBarPhase(cacheHealthBarType1, npcTypes3);
+                        //
+                        //  CLEAR THE CACHE TO ALLOW FOR NEW BARS TO BE SET
+                        //
                         cacheHealthBarType1 = null;
                         break;
                     #endregion
@@ -483,11 +497,12 @@ namespace FKBossHealthBar
 
             #region Moon Lord
             // Moon Lord custom example
+
             Call("hbStart");
             Call("hbForceSmall", true);
             Call("hbSetColours", new Color(0f, 0f, 1f), new Color(0f, 1f, 1f), new Color(0f, 1f, 0f));
-            Call("hbFinishSingle", NPCID.MoonLordHead);
 
+            Call("hbFinishSingle", NPCID.MoonLordHead);
             Call("hbStart");
             Call("hbForceSmall", true);
             Call("hbSetColours", new Color(0f, 0f, 1f), new Color(0f, 1f, 1f), new Color(0f, 1f, 0f));
