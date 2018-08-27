@@ -40,14 +40,14 @@ namespace FKBossHealthBar
         }
         protected override Texture2D GetMidBar()
         {
-            Texture2D fallback = defaultSta, mainTex = midBar;
+            Texture2D fallback = defaultMid, mainTex = midBar;
             if (Main.expertMode)
             { fallback = midBar; mainTex = midBarEXP; if (fallback == null) fallback = defaultMidEXP; }
             return mainTex == null ? fallback : mainTex;
         }
         protected override Texture2D GetRightBar()
         {
-            Texture2D fallback = defaultSta, mainTex = rightBar;
+            Texture2D fallback = defaultEnd, mainTex = rightBar;
             if (Main.expertMode)
             { fallback = rightBar; mainTex = rightBarEXP; if (fallback == null) fallback = defaultEndEXP; }
             return mainTex == null ? fallback : mainTex;
@@ -86,14 +86,14 @@ namespace FKBossHealthBar
         }
         protected override Texture2D GetSmallMidBar()
         {
-            Texture2D fallback = defaultStaSM, mainTex = midBarSM;
+            Texture2D fallback = defaultMidSM, mainTex = midBarSM;
             if (Main.expertMode)
             { fallback = midBarSM; mainTex = midBarSMEXP; if (fallback == null) fallback = defaultMidSMEXP; }
             return mainTex == null ? fallback : mainTex;
         }
         protected override Texture2D GetSmallRightBar()
         {
-            Texture2D fallback = defaultStaSM, mainTex = rightBarSM;
+            Texture2D fallback = defaultEndSM, mainTex = rightBarSM;
             if (Main.expertMode)
             { fallback = rightBarSM; mainTex = rightBarSMEXP; if (fallback == null) fallback = defaultEndSMEXP; }
             return mainTex == null ? fallback : mainTex;
