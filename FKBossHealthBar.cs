@@ -12,7 +12,7 @@ namespace FKBossHealthBar
 {
     class FKBossHealthBar : Mod
     {
-
+        internal const bool DEBUG_LOGGER = false;
         public bool LoadedFKTModSettings = false;
 
         internal ModSimpleHealthBarType1 cacheHealthBarType1 = null;
@@ -25,7 +25,7 @@ namespace FKBossHealthBar
             };
             cacheHealthBarType1 = null;
         }
-        
+
         public override object Call(params object[] args)
         {
             // Servers don't bother
@@ -40,26 +40,32 @@ namespace FKBossHealthBar
                     #region HB methods
                     // Method to generate a healthbar
                     case "hbStart":
+                        if (DEBUG_LOGGER) { ErrorLogger.Log("> hbStart"); }
                         //
                         //  LOAD THE CACHE TO ALLOW ADDING PROPERTIES
                         //
                         if (cacheHealthBarType1 != null)
-                        { ErrorLogger.Log("FKBossHealthBar: A mod attempted to call 'hbStart' before calling 'hbFinishSingle' or 'hbFinishMultiple'. ");  }
+                        { ErrorLogger.Log("FKBossHealthBar: A mod attempted to call 'hbStart' before calling 'hbFinishSingle' or 'hbFinishMultiple'. "); }
                         cacheHealthBarType1 = new ModSimpleHealthBarType1();
                         break;
                     case "hbForceSmall":
+                        if (DEBUG_LOGGER) { ErrorLogger.Log("hbForceSmall"); }
                         if (cacheHealthBarType1 == null) { ErrorLogger.Log("FKBossHealthBar: A mod attempted to modify a healthbar before calling 'hbStart'. \n" + new System.Diagnostics.StackTrace()); break; }
                         if (args[1] != null) cacheHealthBarType1.ForceSmall = (bool)args[1];
                         break;
                     case "hbForceNoChip":
+                        if (DEBUG_LOGGER) { ErrorLogger.Log("hbForceNoChip"); }
                         if (cacheHealthBarType1 == null) { ErrorLogger.Log("FKBossHealthBar: A mod attempted to modify a healthbar before calling 'hbStart'. \n" + new System.Diagnostics.StackTrace()); break; }
                         if (args[1] != null) cacheHealthBarType1.ForceNoChip = (bool)args[1];
                         break;
                     case "hbLoopMidBar":
+                        if (DEBUG_LOGGER) { ErrorLogger.Log("hbLoopMidBar"); }
                         if (cacheHealthBarType1 == null) { ErrorLogger.Log("FKBossHealthBar: A mod attempted to modify a healthbar before calling 'hbStart'. \n" + new System.Diagnostics.StackTrace()); break; }
                         if (args[1] != null) cacheHealthBarType1.LoopMidBar = (bool)args[1];
                         break;
                     case "hbSetTexture":
+                        args = WrapArgsSafely(args, 5);
+                        if (DEBUG_LOGGER) { ErrorLogger.Log("hbSetTexture"); }
                         if (cacheHealthBarType1 == null) { ErrorLogger.Log("FKBossHealthBar: A mod attempted to modify a healthbar before calling 'hbStart'. \n" + new System.Diagnostics.StackTrace()); break; }
                         if (args[1] != null) cacheHealthBarType1.leftBar = args[1] as Texture2D;
                         if (args[2] != null) cacheHealthBarType1.midBar = args[2] as Texture2D;
@@ -67,12 +73,16 @@ namespace FKBossHealthBar
                         if (args[4] != null) cacheHealthBarType1.fillTexture = args[4] as Texture2D;
                         break;
                     case "hbSetTextureExpert":
+                        args = WrapArgsSafely(args, 4);
+                        if (DEBUG_LOGGER) { ErrorLogger.Log("hbSetTextureExpert"); }
                         if (cacheHealthBarType1 == null) { ErrorLogger.Log("FKBossHealthBar: A mod attempted to modify a healthbar before calling 'hbStart'. \n" + new System.Diagnostics.StackTrace()); break; }
                         if (args[1] != null) cacheHealthBarType1.leftBarEXP = args[1] as Texture2D;
                         if (args[2] != null) cacheHealthBarType1.midBarEXP = args[2] as Texture2D;
                         if (args[3] != null) cacheHealthBarType1.rightBarEXP = args[3] as Texture2D;
                         break;
                     case "hbSetTextureSmall":
+                        args = WrapArgsSafely(args, 5);
+                        if (DEBUG_LOGGER) { ErrorLogger.Log("hbSetTextureSmall"); }
                         if (cacheHealthBarType1 == null) { ErrorLogger.Log("FKBossHealthBar: A mod attempted to modify a healthbar before calling 'hbStart'. \n" + new System.Diagnostics.StackTrace()); break; }
                         if (args[1] != null) cacheHealthBarType1.leftBarSM = args[1] as Texture2D;
                         if (args[2] != null) cacheHealthBarType1.midBarSM = args[2] as Texture2D;
@@ -80,45 +90,55 @@ namespace FKBossHealthBar
                         if (args[4] != null) cacheHealthBarType1.fillTextureSM = args[4] as Texture2D;
                         break;
                     case "hbSetTextureSmallExpert":
+                        args = WrapArgsSafely(args, 4);
+                        if (DEBUG_LOGGER) { ErrorLogger.Log("hbSetTextureSmallExpert"); }
                         if (cacheHealthBarType1 == null) { ErrorLogger.Log("FKBossHealthBar: A mod attempted to modify a healthbar before calling 'hbStart'. \n" + new System.Diagnostics.StackTrace()); break; }
                         if (args[1] != null) cacheHealthBarType1.leftBarSMEXP = args[1] as Texture2D;
                         if (args[2] != null) cacheHealthBarType1.midBarSMEXP = args[2] as Texture2D;
                         if (args[3] != null) cacheHealthBarType1.rightBarSMEXP = args[3] as Texture2D;
                         break;
                     case "hbSetMidBarOffsetY":
+                        if (DEBUG_LOGGER) { ErrorLogger.Log("hbSetMidBarOffsetY"); }
                         if (cacheHealthBarType1 == null) { ErrorLogger.Log("FKBossHealthBar: A mod attempted to modify a healthbar before calling 'hbStart'. \n" + new System.Diagnostics.StackTrace()); break; }
                         if (args[1] != null) cacheHealthBarType1.midBarOffsetY = (int)args[1];
                         break;
                     case "hbSetMidBarOffset":
+                        if (DEBUG_LOGGER) { ErrorLogger.Log("hbSetMidBarOffset"); }
                         if (cacheHealthBarType1 == null) { ErrorLogger.Log("FKBossHealthBar: A mod attempted to modify a healthbar before calling 'hbStart'. \n" + new System.Diagnostics.StackTrace()); break; }
                         if (args[1] != null) cacheHealthBarType1.midBarOffsetX = (int)args[1];
                         if (args[2] != null) cacheHealthBarType1.midBarOffsetY = (int)args[2];
                         break;
                     case "hbSetBossHeadCentre":
+                        if (DEBUG_LOGGER) { ErrorLogger.Log("hbSetBossHeadCentre"); }
                         if (cacheHealthBarType1 == null) { ErrorLogger.Log("FKBossHealthBar: A mod attempted to modify a healthbar before calling 'hbStart'. \n" + new System.Diagnostics.StackTrace()); break; }
                         if (args[1] != null) cacheHealthBarType1.bossHeadCentreOffsetX = (int)args[1];
                         if (args[2] != null) cacheHealthBarType1.bossHeadCentreOffsetY = (int)args[2];
                         break;
                     case "hbSetBossHeadCentreSmall":
+                        if (DEBUG_LOGGER) { ErrorLogger.Log("hbSetBossHeadCentreSmall"); }
                         if (cacheHealthBarType1 == null) { ErrorLogger.Log("FKBossHealthBar: A mod attempted to modify a healthbar before calling 'hbStart'. \n" + new System.Diagnostics.StackTrace()); break; }
                         if (args[1] != null) cacheHealthBarType1.bossHeadCentreOffsetXSM = (int)args[1];
                         if (args[2] != null) cacheHealthBarType1.bossHeadCentreOffsetYSM = (int)args[2];
                         break;
                     case "hbSetFillDecoOffset":
+                        if (DEBUG_LOGGER) { ErrorLogger.Log("hbSetFillDecoOffset"); }
                         if (cacheHealthBarType1 == null) { ErrorLogger.Log("FKBossHealthBar: A mod attempted to modify a healthbar before calling 'hbStart'. \n" + new System.Diagnostics.StackTrace()); break; }
                         if (args[1] != null) cacheHealthBarType1.fillDecoOffsetX = (int)args[1];
                         break;
                     case "hbSetFillDecoOffsetSmall":
+                        if (DEBUG_LOGGER) { ErrorLogger.Log("hbSetFillDecoOffsetSmall"); }
                         if (cacheHealthBarType1 == null) { ErrorLogger.Log("FKBossHealthBar: A mod attempted to modify a healthbar before calling 'hbStart'. \n" + new System.Diagnostics.StackTrace()); break; }
                         if (args[1] != null) cacheHealthBarType1.fillDecoOffsetXSM = (int)args[1];
                         break;
                     case "hbSetColours":
+                        if (DEBUG_LOGGER) { ErrorLogger.Log("hbSetColours"); }
                         if (cacheHealthBarType1 == null) { ErrorLogger.Log("FKBossHealthBar: A mod attempted to modify a healthbar before calling 'hbStart'. \n" + new System.Diagnostics.StackTrace()); break; }
                         if (args[1] != null) cacheHealthBarType1.barColourFull = (Color)args[1];
                         if (args[2] != null) cacheHealthBarType1.barColourMid = (Color)args[2];
                         if (args[3] != null) cacheHealthBarType1.barColourEmpty = (Color)args[3];
                         break;
                     case "hbSetBossHeadTexture":
+                        if (DEBUG_LOGGER) { ErrorLogger.Log("hbSetBossHeadTexture"); }
                         if (cacheHealthBarType1 == null) { ErrorLogger.Log("FKBossHealthBar: A mod attempted to modify a healthbar before calling 'hbStart'. \n" + new System.Diagnostics.StackTrace()); break; }
                         if (args[1] != null) cacheHealthBarType1.customBossHeadIcon = args[1] as Texture2D;
                         break;
@@ -167,17 +187,20 @@ namespace FKBossHealthBar
 
                     #region RegisterHealthBar
                     case "RegisterHealthBar":
+                        if (DEBUG_LOGGER) { ErrorLogger.Log("RegisterHealthBar : " + Convert.ToInt32(args[1])); }
                         hb = new HealthBar();
                         BossDisplayInfo.SetCustomHealthBar(Convert.ToInt32(args[1]), hb);
                         break;
                     #endregion
                     #region RegisterHealthBarMulti
                     case "RegisterHealthBarMulti":
+                        if (DEBUG_LOGGER) { ErrorLogger.Log("RegisterHealthBarMulti"); }
                         hb = new HealthBar();
                         int[] npcTypes2 = new int[args.Length - 1];
                         for (int i = 1; i < args.Length; i++)
                         {
                             npcTypes2[i - 1] = Convert.ToInt32(args[i]);
+                            if (DEBUG_LOGGER) { ErrorLogger.Log("RegisterHealthBarMulti : " + Convert.ToInt32(args[i])); }
                         }
                         BossDisplayInfo.SetCustomHealthBarMultiple(hb, npcTypes2);
                         break;
@@ -185,6 +208,7 @@ namespace FKBossHealthBar
 
                     #region RegisterHealthBarMini
                     case "RegisterHealthBarMini":
+                        if (DEBUG_LOGGER) { ErrorLogger.Log("RegisterHealthBarMini : " + Convert.ToInt32(args[1])); }
                         hb = new HealthBar();
                         hb.ForceSmall = true;
                         BossDisplayInfo.SetCustomHealthBar(Convert.ToInt32(args[1]), hb);
@@ -192,12 +216,14 @@ namespace FKBossHealthBar
                     #endregion
                     #region RegisterHealthBarMultiMini
                     case "RegisterHealthBarMultiMini":
+                        if (DEBUG_LOGGER) { ErrorLogger.Log("RegisterHealthBarMultiMini"); }
                         hb = new HealthBar();
                         hb.ForceSmall = true;
                         int[] npcSmTypes = new int[args.Length - 1];
                         for (int i = 1; i < args.Length; i++)
                         {
                             npcSmTypes[i - 1] = Convert.ToInt32(args[i]);
+                            if (DEBUG_LOGGER) { ErrorLogger.Log("RegisterHealthBarMultiMini : " + Convert.ToInt32(args[i])); }
                         }
                         BossDisplayInfo.SetCustomHealthBarMultiple(hb, npcSmTypes);
                         break;
@@ -273,6 +299,31 @@ namespace FKBossHealthBar
                     // int fillDecoOffsetXSM, int bossHeadCentreOffsetXSM, int bossHeadCentreOffsetYSM
                     // bool LoopMidBar
                     case "RegisterCustomHealthBar":
+                        args = WrapArgsSafely(args, 21);
+                        if (DEBUG_LOGGER)
+                        {
+                            ErrorLogger.Log("RegisterCustomHealthBar: ");
+                            ErrorLogger.Log(" [ 2 " + args[2] as string);
+                            ErrorLogger.Log(" [ 3 " + args[3] as string);
+                            ErrorLogger.Log(" [ 4 " + args[4] as string);
+                            ErrorLogger.Log(" [ 5 " + args[5] as string);
+                            ErrorLogger.Log(" [ 6 " + args[6] as string);
+                            ErrorLogger.Log(" [ 7 " + args[7] as string);
+                            ErrorLogger.Log(" [ 8 " + args[8] as string);
+                            ErrorLogger.Log(" [ 9 " + args[9] as string);
+                            ErrorLogger.Log(" [ 10 " + args[10] as string);
+                            ErrorLogger.Log(" [ 11 " + args[11] as string);
+                            ErrorLogger.Log(" [ 12 " + args[12] as string);
+                            ErrorLogger.Log(" [ 13 " + args[13] as string);
+                            ErrorLogger.Log(" [ 14 " + args[14] as string);
+                            ErrorLogger.Log(" [ 15 " + args[15] as string);
+                            ErrorLogger.Log(" [ 16 " + args[16] as string);
+                            ErrorLogger.Log(" [ 17 " + args[17] as string);
+                            ErrorLogger.Log(" [ 18 " + args[18] as string);
+                            ErrorLogger.Log(" [ 19 " + args[19] as string);
+                            ErrorLogger.Log(" [ 20 " + args[20] as string);
+                            ErrorLogger.Log(" [ 1 " + args[1] as string);
+                        }
                         ModTextureHealthBar thb = new ModTextureHealthBar();
                         if (args[2] != null) thb.ForceSmall = (bool)args[2];
                         if (args[3] != null) thb.displayName = args[3] as string;
@@ -303,6 +354,31 @@ namespace FKBossHealthBar
                     #endregion
                     #region RegisterCustomHealthBarMulti
                     case "RegisterCustomHealthBarMulti":
+                        args = WrapArgsSafely(args, 21);
+                        if (DEBUG_LOGGER)
+                        {
+                            ErrorLogger.Log("RegisterCustomHealthBarMulti: ");
+                            ErrorLogger.Log(" [ 2 " + args[2] as string);
+                            ErrorLogger.Log(" [ 3 " + args[3] as string);
+                            ErrorLogger.Log(" [ 4 " + args[4] as string);
+                            ErrorLogger.Log(" [ 5 " + args[5] as string);
+                            ErrorLogger.Log(" [ 6 " + args[6] as string);
+                            ErrorLogger.Log(" [ 7 " + args[7] as string);
+                            ErrorLogger.Log(" [ 8 " + args[8] as string);
+                            ErrorLogger.Log(" [ 9 " + args[9] as string);
+                            ErrorLogger.Log(" [ 10 " + args[10] as string);
+                            ErrorLogger.Log(" [ 11 " + args[11] as string);
+                            ErrorLogger.Log(" [ 12 " + args[12] as string);
+                            ErrorLogger.Log(" [ 13 " + args[13] as string);
+                            ErrorLogger.Log(" [ 14 " + args[14] as string);
+                            ErrorLogger.Log(" [ 15 " + args[15] as string);
+                            ErrorLogger.Log(" [ 16 " + args[16] as string);
+                            ErrorLogger.Log(" [ 17 " + args[17] as string);
+                            ErrorLogger.Log(" [ 18 " + args[18] as string);
+                            ErrorLogger.Log(" [ 19 " + args[19] as string);
+                            ErrorLogger.Log(" [ 20 " + args[20] as string);
+                            ErrorLogger.Log(" [ 1 " + args[1] as string);
+                        }
                         ModTextureHealthBar thbm = new ModTextureHealthBar();
                         if (args[2] != null) thbm.ForceSmall = (bool)args[2];
                         if (args[3] != null) thbm.displayName = args[3] as string;
@@ -334,6 +410,8 @@ namespace FKBossHealthBar
 
                     #region RegisterCustomMethodHealthBar
                     case "RegisterCustomMethodHealthBar":
+                        args = WrapArgsSafely(args, 21);
+                        if (DEBUG_LOGGER) { ErrorLogger.Log("RegisterHealthBarMini"); }
                         ModMethodHealthBar mhb = new ModMethodHealthBar();
                         if (args[2] != null) mhb.ForceSmall = (bool)args[2];
                         if (args[3] != null) mhb.getBossDisplayNameNPC = args[3] as Func<NPC, string>;
@@ -363,6 +441,7 @@ namespace FKBossHealthBar
                     #endregion
                     #region RegisterCustomMethodHealthBarMulti
                     case "RegisterCustomMethodHealthBarMulti":
+                        args = WrapArgsSafely(args, 21);
                         ModMethodHealthBar mhbm = new ModMethodHealthBar();
                         if (args[2] != null) mhbm.ForceSmall = (bool)args[2];
                         if (args[3] != null) mhbm.getBossDisplayNameNPC = args[3] as Func<NPC, string>;
@@ -394,6 +473,18 @@ namespace FKBossHealthBar
             }
             catch { }
             return null;
+        }
+
+        private static object[] WrapArgsSafely(object[] args, int paramsLength)
+        {
+            if (args.Length < paramsLength)
+            {
+                object[] newArgs = new object[paramsLength];
+                for (int i = 0; i < args.Length; i++) { newArgs[i] = args[i]; }
+                args = newArgs;
+            }
+
+            return args;
         }
 
         public override void Load()
@@ -436,15 +527,15 @@ namespace FKBossHealthBar
             Call("RegisterMechHealthBar", NPCID.Spazmatism);
             Call("RegisterMechHealthBar", NPCID.Retinazer);
             Call("RegisterMechHealthBar", NPCID.SkeletronPrime);
-            
-            Call("RegisterHealthBarMulti", 
+
+            Call("RegisterHealthBarMulti",
                 NPCID.EaterofWorldsHead,
                 NPCID.EaterofWorldsBody,
                 NPCID.EaterofWorldsTail);
 
-            Call("RegisterHealthBarMulti", 
+            Call("RegisterHealthBarMulti",
                 NPCID.BrainofCthulhu, NPCID.Creeper);
-            
+
             Call("hbStart");
             Call("hbSetBossHeadTexture", Main.npcHeadBossTexture[5]);
             Call("hbFinishPhases", NPCID.GolemHead, NPCID.Golem);
@@ -452,6 +543,7 @@ namespace FKBossHealthBar
             Call("RegisterHealthBarMulti",
                 NPCID.MartianSaucerCore, NPCID.MartianSaucerCannon, NPCID.MartianSaucerTurret);
 
+            //Silently Caught Exception: Object reference not set to an instance of an object.
             Call("RegisterCustomHealthBar",
                 NPCID.Plantera,
                 null, //ForceSmall
@@ -519,12 +611,12 @@ namespace FKBossHealthBar
             Call("hbStart");
             Call("hbSetColours", new Color(0f, 1f, 0.6f), new Color(0.8f, 1f, 0f), new Color(1f, 0f, 0f));
             Call("hbSetBossHeadTexture", GetTexture("BossHeads/8_2"));
-            Call("hbSetTexture", 
-                GetTexture("UI/MoonLordBarStart"), null, 
-                GetTexture("UI/MoonLordBarEnd"));
-            Call("hbSetTextureExpert", 
-                GetTexture("UI/MoonLordBarStart_Exp"), null, 
-                GetTexture("UI/MoonLordBarEnd_Exp"));
+            Call("hbSetTexture",
+                GetTexture("UI/MoonLordBarStart"), null,
+                GetTexture("UI/MoonLordBarEnd"), null);
+            Call("hbSetTextureExpert",
+                GetTexture("UI/MoonLordBarStart_Exp"), null,
+                GetTexture("UI/MoonLordBarEnd_Exp"), null);
             Call("hbFinishSingle", NPCID.MoonLordCore);
             #endregion
 
