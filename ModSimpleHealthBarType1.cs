@@ -56,17 +56,6 @@ namespace FKBossHealthBar
             }
         }
 
-        public override bool DisableFadeInFor(int type)
-        {
-            if (DisplayMode != DisplayType.Phase) return false;
-            return type != multiNPCType[0];
-        }
-        public override bool DisableFadeOutFor(int type)
-        {
-            if (DisplayMode != DisplayType.Phase) return false;
-            return type != multiNPCType[multiNPCType.Length - 1];
-        }
-
         protected override void ShowHealthBarLifeOverride(NPC npc, ref int life, ref int lifeMax)
         {
             if (DisplayMode == DisplayType.Phase)

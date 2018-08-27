@@ -150,8 +150,8 @@ namespace FKBossHealthBar
                     // Not in list yet?
                     if (!TrackedNPCs.ContainsKey(npc))
                     {
-                        if (DEBUG_TRACKER) Main.NewText(npc.GivenOrTypeName + " [" + npc.whoAmI + "] added");
                         TrackedNPCs.Add(npc, (short)Config.HealthBarUIFadeTime);
+                        if (DEBUG_TRACKER) Main.NewText(npc.GivenOrTypeName + " [" + npc.whoAmI + "] added - " + TrackedNPCs[npc]);
                     }
                 }
                 else
@@ -224,7 +224,7 @@ namespace FKBossHealthBar
                 {
                     // Fade to 0
                     TrackedNPCs[tracked]--;
-                    
+
                     if (disableFadeIn) // No fade in, immediate
                     { TrackedNPCs[tracked] = 0; }
                 }
@@ -250,6 +250,7 @@ namespace FKBossHealthBar
         {
             // First check if it's a multi-bar NPC
             HealthBar hb = BossDisplayInfo.GetHealthBarForNPCOrNull(npc.type);
+            int fadeTime = Config.HealthBarUIFadeTime - TrackedNPCs[npc];
             if (hb != null)
             {
                 if (hb.DisplayMode == HealthBar.DisplayType.Multiple && hb.multiShowCount > 1)
@@ -262,11 +263,16 @@ namespace FKBossHealthBar
 
             // Make a temp copy that won't be changing
             // Do this to keep info of dead NPCs for a while
-            NPC temp = new NPC();
-            temp = (NPC)npc.Clone();
-            temp.whoAmI = -1 - npc.whoAmI;
-            if (temp.life <= 0 || (temp.dontTakeDamage && npc.life == npc.lifeMax)) temp.life = 0;
-            TrackedNPCs.Add(temp, -Config.HealthBarUIFadeTime - 1);
+            // Also, if fade time is 1 or less, just skip this.
+            if (fadeTime > 1)
+            {
+                NPC temp = new NPC();
+                temp = (NPC)npc.Clone();
+                temp.whoAmI = -1 - npc.whoAmI;
+                if (temp.life <= 0 || (temp.dontTakeDamage && npc.life == npc.lifeMax)) temp.life = 0;
+                TrackedNPCs.Add(temp, -fadeTime - 1);
+            }
+
             TrackedNPCs.Remove(npc);
 
             if (DEBUG_TRACKER) Main.NewText(npc.GivenOrTypeName + " [" + npc.whoAmI + "] removed");
